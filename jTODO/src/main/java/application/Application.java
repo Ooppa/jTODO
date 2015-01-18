@@ -7,6 +7,7 @@ package application;
 
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import ui.MainWindow;
 
 /**
  * Starting point for the application.
@@ -28,7 +29,7 @@ public class Application {
             logger.setLevel(Level.OFF);
         }
         
-        System.out.println("Starting application");
+        MainWindow mainWindow = new MainWindow();
     }
     
 }
