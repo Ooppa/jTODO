@@ -98,8 +98,13 @@ public class MainWindow extends JFrame {
 
         menuItemFileNew = new JMenuItem();
         menuItemFileNew.setText("New");
+        
+        System.out.println(System.getProperty("user.dir"));
+        
+        //menuItemFileNew.setIcon(new ImageIcon(getClass().getResource("/images/menubar/newsave.png")));
+        
         menuTabFile.add(menuItemFileNew);
-        // TODO EI TOIMI menuItemFileSave.setIcon(new ImageIcon(getClass().getResource("/images/menubar/newsave.png")));
+        
 
         menuItemFileSave = new JMenuItem();
         menuItemFileSave.setText("Save");
