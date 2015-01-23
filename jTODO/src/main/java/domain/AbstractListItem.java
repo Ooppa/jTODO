@@ -16,10 +16,12 @@ public abstract class AbstractListItem<E> {
 
     private String name, description;
     private final ArrayList<E> subElements;
+    private ListItemColor color;
 
     public AbstractListItem(String name, String description) {
         this.name = name;
         this.description = description;
+        this.color = ListItemColor.WHITE;
         this.subElements = new ArrayList<>();
     }
 
@@ -41,6 +43,14 @@ public abstract class AbstractListItem<E> {
 
     public ArrayList<E> getSubElements() {
         return subElements;
+    }
+
+    public ListItemColor getColor() {
+        return color;
+    }
+
+    public void setColor(ListItemColor color) {
+        this.color = color;
     }
 
     public void addSubElement(E subElement) {

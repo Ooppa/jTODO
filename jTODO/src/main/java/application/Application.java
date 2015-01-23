@@ -5,6 +5,9 @@
  */
 package application;
 
+import domain.Category;
+import domain.Task;
+import domain.TaskList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import ui.MainWindow;
@@ -29,7 +32,17 @@ public class Application {
             logger.setLevel(Level.OFF);
         }
         
-        MainWindow mainWindow = new MainWindow();
+        MainWindow gui = new MainWindow();
+        
+        TaskList list = new TaskList();
+        
+        Task task = new Task("Vie pyykit", "Muista viedä pyykit");
+        Category category = new Category("OTM", "Ohjelmistotekniikan menetelmät");
+        category.addSubElement(task);
+        
+        list.add(category);
+        
+        
     }
     
 }
