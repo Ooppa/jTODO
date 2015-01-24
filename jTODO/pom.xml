@@ -3,7 +3,7 @@
     <modelVersion>4.0.0</modelVersion>
     <groupId>fi.ooppa</groupId>
     <artifactId>jTODO</artifactId>
-    <version>V1.10</version>
+    <version>V2.10</version><!-- Viikko 2 Päivitys 1 -->
     <packaging>jar</packaging>
     
     <dependencies>
