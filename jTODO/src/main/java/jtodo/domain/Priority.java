@@ -34,5 +34,5 @@ public enum Priority {
     public double getValueAsDouble() {
         return this.value;
     }
-    
+
 }

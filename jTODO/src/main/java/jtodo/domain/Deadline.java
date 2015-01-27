@@ -5,7 +5,9 @@
  */
 package jtodo.domain;
 
+import java.util.Objects;
 import org.joda.time.DateTime;
+import org.joda.time.format.DateTimeFormat;
 
 /**
  * Defines a deadline for a Task
@@ -26,6 +28,20 @@ public class Deadline {
     public Deadline() {
         this.active = false;
         this.dateTime = new DateTime().plusWeeks(1);
+    }
+
+    /**
+     * Creates a new Deadline with given date and status true.
+     *
+     * @param datetime
+     */
+    public Deadline(DateTime datetime) {
+        if(datetime!=null) {
+            this.active = true;
+            this.dateTime = datetime;
+        } else {
+            this.dateTime = new DateTime().plusWeeks(1);
+        }
     }
 
     public boolean isActive() {
@@ -51,19 +67,48 @@ public class Deadline {
      */
     public boolean isPastDeadline() {
         DateTime currentDateTime = new DateTime();
-        return this.dateTime.isAfter(currentDateTime);
+        return currentDateTime.isAfter(this.dateTime);
     }
 
     /*
-     * If the deadline is set return the datetime, else return text ("None").
+     * If the deadline is set return the datetime, else return text "None".
      */
     @Override
     public String toString() {
         if(this.active==false) {
             return "None";
         } else {
-            return this.dateTime.toString();
+            org.joda.time.format.DateTimeFormatter formatter;
+            formatter = DateTimeFormat.forPattern("dd.MM.YYYY HH:mm");
+
+            return this.dateTime.toString(formatter);
         }
+    }
+
+    @Override
+    public int hashCode() {
+        int hash = 5;
+        hash = 83*hash+(this.active?1:0);
+        hash = 83*hash+Objects.hashCode(this.dateTime);
+        return hash;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if(obj==null) {
+            return false;
+        }
+        if(getClass()!=obj.getClass()) {
+            return false;
+        }
+        final Deadline other = (Deadline) obj;
+        if(this.active!=other.active) {
+            return false;
+        }
+        if(!Objects.equals(this.dateTime, other.dateTime)) {
+            return false;
+        }
+        return true;
     }
 
 }

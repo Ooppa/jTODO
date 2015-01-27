@@ -27,7 +27,5 @@ public class TooLongInputException extends Exception {
     public TooLongInputException(String message, Throwable cause) {
         super(message, cause);
     }
-    
-    
-    
+
 }

@@ -5,15 +5,30 @@
  */
 package jtodo.domain;
 
+import jtodo.excptions.TooLongInputException;
+import jtodo.excptions.TooShortInputException;
+
 /**
+ * Category used to separate different Tasks
  *
  * @author Ooppa
  * @param <E>
+ *
  * @see AbstractListItem
  */
 public class Category<E> extends AbstractListItem {
 
-    public Category(String name, String description) {
+    /**
+     * Creates a new Category
+     *
+     * @param name        Name for the Category
+     * @param description Description for the Category
+     *
+     * @throws TooShortInputException
+     * @throws TooLongInputException
+     * @see AbstractListItem
+     */
+    public Category(String name, String description) throws TooShortInputException, TooLongInputException {
         super(name, description);
     }
 

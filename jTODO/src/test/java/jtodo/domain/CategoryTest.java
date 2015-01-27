@@ -5,7 +5,12 @@
  */
 package jtodo.domain;
 
+import java.lang.reflect.Method;
+import java.util.Arrays;
+import jtodo.excptions.TooLongInputException;
+import jtodo.excptions.TooShortInputException;
 import org.junit.*;
+import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
 
 /**
@@ -13,29 +18,32 @@ import static org.junit.Assert.fail;
  * @author Ooppa
  */
 public class CategoryTest {
-    
+
+    private final String EXCEPTIONMESSAGE = "Exception during a test: ";
+
     public CategoryTest() {
-    }
-    
-    @BeforeClass
-    public static void setUpClass() {
-    }
-    
-    @AfterClass
-    public static void tearDownClass() {
-    }
-    
-    @Before
-    public void setUp() {
-    }
-    
-    @After
-    public void tearDown() {
     }
 
     @Test
-    public void testSomeMethod() {
-        fail("The test case is a prototype.");
+    public void testCategoryCreation() {
+        try {
+            Category category = new Category("Name", "Description");
+            
+            assertTrue(category.getName().equals("Name")
+                    &&category.getName().equals("Description")
+            );
+            
+        } catch(TooShortInputException|TooLongInputException ex) {
+            fail(EXCEPTIONMESSAGE+ex);
+        }
     }
-    
+
+    @Test
+    public void testCategoryExtendsAbstractListItemProperly() {
+        Method[] categoryMethods = Category.class.getMethods();
+        Method[] abstractListItemMethods = AbstractListItem.class.getMethods();
+
+        assertTrue(Arrays.equals(categoryMethods, abstractListItemMethods));
+    }
+
 }

@@ -9,11 +9,13 @@ import java.awt.Color;
 
 /**
  * Defines a highlight color for AbstractListItem.
+ *
  * @author Ooppa
  * @see AbstractListItem
+ * @see Color
  */
 public enum ListItemColor {
-    
+
     RED(Color.decode("#ffbfbf")),
     ORANGE(Color.decode("#ffdfbf")),
     YELLOW(Color.decode("#ffff40")),
@@ -22,7 +24,7 @@ public enum ListItemColor {
     PURPLE(Color.decode("#dfbfff")),
     GREY(Color.decode("#bfbfbf")),
     WHITE(Color.decode("#ffffff"));
-    
+
     private final Color color;
 
     private ListItemColor(Color color) {
@@ -32,5 +34,5 @@ public enum ListItemColor {
     public Color getColor() {
         return color;
     }
-    
+
 }

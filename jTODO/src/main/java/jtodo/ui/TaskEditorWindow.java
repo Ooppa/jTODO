@@ -6,8 +6,13 @@
 package jtodo.ui;
 
 import java.awt.Dimension;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JFrame;
 import javax.swing.WindowConstants;
+import jtodo.domain.Task;
+import jtodo.excptions.TooLongInputException;
+import jtodo.excptions.TooShortInputException;
 
 /**
  * Window displayed during creation and editing of a Task
@@ -16,12 +21,29 @@ import javax.swing.WindowConstants;
  * @see Task
  */
 public class TaskEditorWindow extends JFrame {
+    
+    private Task task;
+    private static final Logger logger = Logger.getLogger(TaskEditorWindow.class.getName());
 
     public TaskEditorWindow() {
+        try {
+            this.task = new Task("Name", "Description");
+            setTitle("New Task");
+            initComponents();
+            
+        } catch(TooShortInputException|TooLongInputException ex) {
+            logger.log(Level.WARNING, "Failed to create Task in TaskEditorWindow");
+        }
+    }
+    
+    public TaskEditorWindow(Task task) {
+        this.task = task;
+        setTitle("Edit Task");
         initComponents();
     }
 
     private void initComponents() {
+        // TODO components
         pack();
     }
     
@@ -34,7 +56,6 @@ public class TaskEditorWindow extends JFrame {
         setPreferredSize(preferred);
         setMaximumSize(minimum);
 
-        setTitle("jTODO");
         setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
         setLocationRelativeTo(null);
         setVisible(true);

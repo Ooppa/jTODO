@@ -5,65 +5,79 @@
  */
 package jtodo.domain;
 
+import jtodo.excptions.TooLongInputException;
+import jtodo.excptions.TooShortInputException;
 import org.junit.*;
-import static org.junit.Assert.fail;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
 
 /**
  *
  * @author Ooppa
  */
 public class TaskTest {
-    
+
+    private Task testTask;
+
+    private final String EXCEPTIONFAILTEXT = "Exception failed the test.";
+    private final String EXCEPTIONMESSAGE = "Exception during a test: ";
+
     public TaskTest() {
     }
-    
-    @BeforeClass
-    public static void setUpClass() {
-    }
-    
-    @AfterClass
-    public static void tearDownClass() {
-    }
-    
+
     @Before
     public void setUp() {
+        try {
+            testTask = new Task("Task Name", "Task Description");
+            testTask.setPriority(Priority.HIGH);
+            testTask.setDeadline("01.01.2015 12:00");
+        } catch(TooShortInputException|TooLongInputException ex) {
+            System.out.println("Exception during a setup process: "+ex.toString());
+        }
     }
-    
+
     @After
     public void tearDown() {
+        testTask = null;
     }
 
     @Test
     public void testGetPriority() {
-        fail("The test case is a prototype.");
+        assertTrue(testTask.getPriority()==Priority.HIGH);
     }
 
-    /**
-     * Test of setPriority method, of class Task.
-     */
     @Test
     public void testSetPriority() {
-        fail("The test case is a prototype.");
+        testTask.setPriority(Priority.LOW);
+        assertTrue(testTask.getPriority()==Priority.LOW);
     }
 
     @Test
-    public void testIsDeadlineActive() {
-        fail("The test case is a prototype.");
+    public void testIfDeadlineIsActive() {
+        assertTrue(testTask.isDeadlineActive()==true);
     }
 
     @Test
     public void testSetDeadlineActive() {
-        fail("The test case is a prototype.");
+        testTask.setDeadlineActive(false);
+        assertTrue(testTask.isDeadlineActive()==false);
     }
 
     @Test
     public void testGetDeadlineAsString() {
-        fail("The test case is a prototype.");
+        assertEquals(testTask.getDeadlineAsString(), "01.01.2015 12:00");
+    }
+    
+    @Test
+    public void testGetDeadlineAsStringWhenNotActive() {
+        testTask.setDeadlineActive(false);
+        assertEquals(testTask.getDeadlineAsString(), "None");
     }
 
     @Test
     public void testSetDeadline() {
-        fail("The test case is a prototype.");
+        testTask.setDeadline("02.02.2015 20:20");
+        assertEquals(testTask.getDeadlineAsString(), "02.02.2015 20:20");
     }
-    
+
 }

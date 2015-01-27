@@ -5,65 +5,101 @@
  */
 package jtodo.domain;
 
+import org.joda.time.DateTime;
 import org.junit.*;
-import static org.junit.Assert.fail;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
 
 /**
  *
  * @author Ooppa
  */
 public class DeadlineTest {
-    
+
+    private Deadline future;
+    private Deadline past;
+    private Deadline disabled;
+
     public DeadlineTest() {
     }
-    
-    @BeforeClass
-    public static void setUpClass() {
-    }
-    
-    @AfterClass
-    public static void tearDownClass() {
-    }
-    
+
     @Before
     public void setUp() {
+        // 2 weeks and 1 day in the future
+        future = new Deadline(new DateTime().plusWeeks(2).plusDays(1));
+
+        // 1 hour ago
+        past = new Deadline(new DateTime().minusHours(1));
+
+        // Not active
+        disabled = new Deadline();
     }
-    
+
     @After
     public void tearDown() {
+        future = null;
+        past = null;
+        disabled = null;
     }
 
     @Test
-    public void testIsActive() {
-        fail("The test case is a prototype.");
+    public void testReturnsTrueIfActive() {
+        assertFalse(disabled.isActive());
+    }
+
+    @Test
+    public void testReturnsFalseIfNotActive() {
+        assertTrue(future.isActive()&&past.isActive());
     }
 
     @Test
     public void testSetActive() {
-        fail("The test case is a prototype.");
+        future.setActive(false);
+        disabled.setActive(true);
+        assertTrue(
+                future.isActive()==false
+                &&disabled.isActive()==true
+        );
     }
 
     @Test
-    public void testGetDateTime() {
-        fail("The test case is a prototype.");
+    public void testGetDateTimeNotNull() {
+        Deadline nulled = new Deadline(null);
+        assertTrue(nulled.getDateTime()!=null);
     }
 
     @Test
     public void testSetDateTime() {
-        fail("The test case is a prototype.");
+        DateTime previous = future.getDateTime();
+        future.setDateTime(new DateTime().plusYears(42));
+        assertTrue(previous!=future.getDateTime());
     }
 
-    /**
-     * Test of isPastDeadline method, of class Deadline.
-     */
     @Test
     public void testIsPastDeadline() {
-        fail("The test case is a prototype.");
+        assertTrue(
+                future.isPastDeadline()==false
+                &&past.isPastDeadline()==true
+        );
     }
 
     @Test
     public void testToString() {
-        fail("The test case is a prototype.");
+        assertTrue(
+                disabled.toString().equals("None")
+                &&future.toString().equals(future.getDateTime().toString())
+        );
+    }
+
+    @Test
+    public void testHashCode() {
+        assertTrue(future.hashCode()!=past.hashCode()
+                &&future.hashCode()==future.hashCode());
     }
     
+    @Test
+    public void testEquals() {
+        assertTrue(future.equals(future) == true);
+    }
+
 }
