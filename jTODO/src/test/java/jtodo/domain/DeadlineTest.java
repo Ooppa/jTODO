@@ -6,6 +6,7 @@
 package jtodo.domain;
 
 import org.joda.time.DateTime;
+import org.joda.time.format.DateTimeFormat;
 import org.junit.*;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
@@ -25,11 +26,10 @@ public class DeadlineTest {
 
     @Before
     public void setUp() {
-        // 2 weeks and 1 day in the future
-        future = new Deadline(new DateTime().plusWeeks(2).plusDays(1));
-
-        // 1 hour ago
-        past = new Deadline(new DateTime().minusHours(1));
+        org.joda.time.format.DateTimeFormatter formatter;
+        formatter = DateTimeFormat.forPattern("dd.MM.YYYY HH:mm");
+        future = new Deadline(formatter.parseDateTime("01.01.2099 12:12"));
+        past = new Deadline(formatter.parseDateTime("01.01.1999 12:12"));
 
         // Not active
         disabled = new Deadline();
@@ -85,9 +85,11 @@ public class DeadlineTest {
 
     @Test
     public void testToString() {
+        System.out.println("Eka: "+ disabled.toString());
+        System.out.println("Toka: "+ future.toString());
         assertTrue(
-                disabled.toString().equals("None")
-                &&future.toString().equals(future.getDateTime().toString())
+                disabled.toString().contains("None")
+                &&future.toString().contains("01.01.2099 12:12")
         );
     }
 
@@ -96,10 +98,10 @@ public class DeadlineTest {
         assertTrue(future.hashCode()!=past.hashCode()
                 &&future.hashCode()==future.hashCode());
     }
-    
+
     @Test
     public void testEquals() {
-        assertTrue(future.equals(future) == true);
+        assertTrue(future.equals(future)==true);
     }
 
 }

@@ -30,7 +30,7 @@ public class CategoryTest {
             Category category = new Category("Name", "Description");
             
             assertTrue(category.getName().equals("Name")
-                    &&category.getName().equals("Description")
+                    &&category.getDescription().equals("Description")
             );
             
         } catch(TooShortInputException|TooLongInputException ex) {

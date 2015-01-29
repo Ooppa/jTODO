@@ -44,16 +44,6 @@ public class AbstractListItemTest {
         listItem = null;
     }
     
-    private String getTooLongString(int length) {
-        StringBuilder sb = new StringBuilder();
-        
-        for(int i = 0; i<length; i++) {
-            sb.append("a");
-        }
-        
-        return sb.toString();
-    }
-
     @Test
     public void testGetName() {
         assertTrue(listItem.getName().contains("Test Name"));
@@ -94,9 +84,6 @@ public class AbstractListItemTest {
 
     }
 
-    /**
-     * Attempts to add an item with 1000 characters long name.
-     */
     @Test
     public void testSetTooLongName() {
         try {
@@ -304,6 +291,16 @@ public class AbstractListItemTest {
     @Test
     public void testNotEqualNull() {
         assertFalse(listItem.equals(null));
+    }
+    
+    private String getTooLongString(int length) {
+        StringBuilder sb = new StringBuilder();
+        
+        for(int i = 0; i<length; i++) {
+            sb.append("a");
+        }
+        
+        return sb.toString();
     }
 
 }

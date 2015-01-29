@@ -7,3 +7,4 @@
 | 22.01.2015    | Luokkakaavio ja pohjat luokille | 2h |
 | 23.01.2015    | Sekalaisia lisäyksiä, jatkettu luokkia | 2h |
 | 27.01.2015    | Unit testejä, Pari uutta exceptionia | 5h |
+| 29.01.2015    | Pit-raportti, testejä korjattu, luokkakaavio | 1h |
