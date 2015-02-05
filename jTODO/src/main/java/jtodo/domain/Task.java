@@ -101,4 +101,10 @@ public class Task<E> extends AbstractListItem {
         this.deadline.setDateTime(formatter.parseDateTime(dateTime));
     }
 
+    @Override
+    public String toString() {
+        return "Task "+this.getName()+": "+this.getDescription()
+                +" (Priority: "+this.getPriority().toString()+" Deadline: + "
+                +this.getDeadlineAsString()+")";
+    }
 }

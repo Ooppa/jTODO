@@ -8,13 +8,13 @@ package jtodo.domain;
 import java.util.ArrayList;
 
 /**
- * ArrayList that contains all Tasks and Categories
  *
  * @author Ooppa
- *
- * @see Task
- * @see Category
  */
 public class TaskList extends ArrayList<AbstractListItem> {
 
+    public void getListItems(){
+        
+    }
+    
 }

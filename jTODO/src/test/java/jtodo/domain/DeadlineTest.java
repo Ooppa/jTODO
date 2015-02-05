@@ -5,11 +5,14 @@
  */
 package jtodo.domain;
 
+import jtodo.excptions.TooLongInputException;
+import jtodo.excptions.TooShortInputException;
 import org.joda.time.DateTime;
 import org.joda.time.format.DateTimeFormat;
 import org.junit.*;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.fail;
 
 /**
  *
@@ -20,6 +23,8 @@ public class DeadlineTest {
     private Deadline future;
     private Deadline past;
     private Deadline disabled;
+    
+    private final String EXCEPTIONMESSAGE = "Exception during a test: ";
 
     public DeadlineTest() {
     }
@@ -85,8 +90,6 @@ public class DeadlineTest {
 
     @Test
     public void testToString() {
-        System.out.println("Eka: "+ disabled.toString());
-        System.out.println("Toka: "+ future.toString());
         assertTrue(
                 disabled.toString().contains("None")
                 &&future.toString().contains("01.01.2099 12:12")
@@ -98,10 +101,32 @@ public class DeadlineTest {
         assertTrue(future.hashCode()!=past.hashCode()
                 &&future.hashCode()==future.hashCode());
     }
+    
 
     @Test
     public void testEquals() {
-        assertTrue(future.equals(future)==true);
+        assertTrue(future.equals(future));
+    }
+    
+    @Test
+    public void testNotEquals() {
+        assertFalse(future.equals(past));
+    }
+    
+    @Test
+    public void testEqualsWrongClass() {
+        try {
+            Task task = new Task("TODO", "Something");
+            assertFalse(future.equals(task));
+            
+        } catch(TooShortInputException|TooLongInputException ex) {
+            fail(EXCEPTIONMESSAGE+ex.toString());
+        }
+    }
+    
+    @Test
+    public void testEqualsNull() {
+        assertFalse(future.equals(null));
     }
 
 }

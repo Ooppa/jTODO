@@ -32,4 +32,11 @@ public class Category<E> extends AbstractListItem {
         super(name, description);
     }
 
+    @Override
+    public String toString() {
+        return "Category "+ this.getName() + ": "+ this.getDescription();
+    }
+    
+    
+
 }

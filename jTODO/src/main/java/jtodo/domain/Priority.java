@@ -13,17 +13,19 @@ package jtodo.domain;
  */
 public enum Priority {
     
-    VERY_HIGH(1.5),
-    HIGH(1.25),
-    NORMAL(1.0),
-    LOW(0.75),
-    VERY_LOW(0.5),
-    IGNORE(0.0);
+    VERY_HIGH(1.5, "Very high"),
+    HIGH(1.25, "High"),
+    NORMAL(1.0, "Normal"),
+    LOW(0.75, "Low"),
+    VERY_LOW(0.5, "Very low"),
+    IGNORE(0.0, "Ignored");
 
     private final double value;
+    private final String literal;
 
-    private Priority(double value) {
+    private Priority(double value, String literal) {
         this.value = value;
+        this.literal = literal;
     }
 
     /**
@@ -34,5 +36,12 @@ public enum Priority {
     public double getValueAsDouble() {
         return this.value;
     }
+
+    @Override
+    public String toString() {
+        return this.literal;
+    }
+    
+    
 
 }

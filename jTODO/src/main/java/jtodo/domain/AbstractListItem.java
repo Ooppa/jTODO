@@ -7,10 +7,7 @@ package jtodo.domain;
 
 import java.util.ArrayList;
 import java.util.Objects;
-import jtodo.excptions.CouldNotAddSubElementException;
-import jtodo.excptions.TooLongInputException;
-import jtodo.excptions.TooManySubElementsException;
-import jtodo.excptions.TooShortInputException;
+import jtodo.excptions.*;
 
 /**
  * Defines items (Task/Category) in a a TaskList
@@ -150,7 +147,7 @@ public abstract class AbstractListItem<E> {
      * @throws TooManySubElementsException
      * @throws CouldNotAddSubElementException
      */
-    public void addSubElement(E subElement) throws TooManySubElementsException, CouldNotAddSubElementException {
+    public void addSubElement(E subElement) throws TooManySubElementsException, CouldNotAddSubElementException, WrongTypeOfSubElementException {
         if(this.subElements.size()>100) {
             throw new TooManySubElementsException("You can't have more than 100 subelements per item.");
         }
@@ -165,6 +162,11 @@ public abstract class AbstractListItem<E> {
 
         if(this.equals(subElement)) {
             throw new CouldNotAddSubElementException("Sub-element can't be sub-element for itself.");
+        }
+
+        // If you try to add Category as a subelement to Task
+        if(subElement instanceof Category&&this instanceof Task) {
+            throw new WrongTypeOfSubElementException("Category can't be sub-element to Task");
         }
 
         this.subElements.add(subElement);
@@ -187,7 +189,7 @@ public abstract class AbstractListItem<E> {
     public void clearSubElements() {
         this.subElements.clear();
     }
-
+    
     @Override
     public int hashCode() {
         int hash = 3;

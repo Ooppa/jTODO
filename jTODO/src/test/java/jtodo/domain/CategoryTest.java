@@ -5,8 +5,6 @@
  */
 package jtodo.domain;
 
-import java.lang.reflect.Method;
-import java.util.Arrays;
 import jtodo.excptions.TooLongInputException;
 import jtodo.excptions.TooShortInputException;
 import org.junit.*;
@@ -28,22 +26,28 @@ public class CategoryTest {
     public void testCategoryCreation() {
         try {
             Category category = new Category("Name", "Description");
-            
+
             assertTrue(category.getName().equals("Name")
                     &&category.getDescription().equals("Description")
             );
-            
+
         } catch(TooShortInputException|TooLongInputException ex) {
             fail(EXCEPTIONMESSAGE+ex);
         }
     }
 
     @Test
-    public void testCategoryExtendsAbstractListItemProperly() {
-        Method[] categoryMethods = Category.class.getMethods();
-        Method[] abstractListItemMethods = AbstractListItem.class.getMethods();
+    public void testCategoryToString() {
+        try {
+            Category category = new Category("Name", "Description");
+            String toString = category.toString();
 
-        assertTrue(Arrays.equals(categoryMethods, abstractListItemMethods));
+            assertTrue(toString.contains("Category")
+                    &&toString.contains(category.getName())
+                    &&toString.contains(category.getDescription()));
+
+        } catch(TooShortInputException|TooLongInputException ex) {
+            fail(EXCEPTIONMESSAGE+ex);
+        }
     }
-
 }

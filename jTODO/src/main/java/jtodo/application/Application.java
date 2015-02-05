@@ -7,7 +7,7 @@ package jtodo.application;
 
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import jtodo.ui.MainWindow;
+import jtodo.ui.TaskView;
 
 /**
  * Starting point for the application.
@@ -25,13 +25,14 @@ public class Application {
      */
     public static void main(String[] args) {
 
-        try {
-            logger.setLevel(Level.parse(args[0]));
-        } catch(IllegalArgumentException|ArrayIndexOutOfBoundsException exception) {
-            logger.setLevel(Level.OFF);
-        }
-
-        MainWindow gui = new MainWindow();
+            try {
+                logger.setLevel(Level.parse(args[0]));
+            } catch(IllegalArgumentException|ArrayIndexOutOfBoundsException exception) {
+                logger.setLevel(Level.OFF);
+            }
+            
+            // Main interface for the application
+            TaskView taskview = new TaskView();
 
     }
 

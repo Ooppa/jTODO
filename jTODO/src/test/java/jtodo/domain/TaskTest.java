@@ -67,7 +67,7 @@ public class TaskTest {
     public void testGetDeadlineAsString() {
         assertEquals(testTask.getDeadlineAsString(), "01.01.2015 12:00");
     }
-    
+
     @Test
     public void testGetDeadlineAsStringWhenNotActive() {
         testTask.setDeadlineActive(false);
@@ -78,6 +78,17 @@ public class TaskTest {
     public void testSetDeadline() {
         testTask.setDeadline("02.02.2015 20:20");
         assertEquals(testTask.getDeadlineAsString(), "02.02.2015 20:20");
+    }
+
+    @Test
+    public void testToString() {
+        String toString = testTask.toString();
+
+        assertTrue(toString.contains(testTask.getName())
+                &&toString.contains(testTask.getDescription())
+                &&toString.contains(testTask.getPriority().toString())
+                &&toString.contains(testTask.getDeadlineAsString())
+        );
     }
 
 }
