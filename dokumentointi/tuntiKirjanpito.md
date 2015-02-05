@@ -10,3 +10,4 @@
 | 29.01.2015    | Pit-raportti, testejä korjattu, luokkakaavio | 1h |
 | 31.01.2015    | Pieniä lisäyksiä, pohjustettu TaskList => JTree muunnosta | 3h |
 | 01.02.2015    | UI Suunnitelmia | 2h |
+| 05.02.2015    | Parannettu testejä (exceptionit) ja jatkettu UI | 3h |
