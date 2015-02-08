@@ -6,6 +6,7 @@
 package jtodo.ui;
 
 import java.awt.Window;
+import java.awt.event.ActionEvent;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import jtodo.domain.Priority;
@@ -18,7 +19,7 @@ import org.joda.time.format.DateTimeFormatter;
 
 /**
  * Creates a new window for editing or creating a new task
- * 
+ *
  * TODO: Created using Netbeans, will clean up later.
  *
  * @author Ooppa
@@ -46,6 +47,9 @@ public class TaskEditorWindow extends javax.swing.JFrame {
         this.task = task;
         createWindow(window, "Edit Task");
         fillInValues();
+
+        logger.log(Level.INFO, "Created a new TaskEditorWindow window "
+                +"with predetermined Task object.");
     }
 
     /**
@@ -59,11 +63,13 @@ public class TaskEditorWindow extends javax.swing.JFrame {
     public TaskEditorWindow(Window window) {
         try {
             this.task = new Task("Name", "Description");
-            createWindow(window, "Create new Task");
+            createWindow(window, "Create new task");
             fillInValues();
         } catch(TooShortInputException|TooLongInputException ex) {
             logger.log(Level.WARNING, "Default task created caused an exception: "+ex.toString());
         }
+
+        logger.log(Level.INFO, "Created a new TaskEditorWindow window.");
     }
 
     private void createWindow(Window window, String title) {
@@ -96,6 +102,7 @@ public class TaskEditorWindow extends javax.swing.JFrame {
             created.setDeadline(fieldFormattedDate.getText());
             created.setDeadlineActive(checkBoxDeadlineActive.isSelected());
             created.setPriority((Priority) comboBoxPriority.getSelectedItem());
+            // TODO Apply changes OR create new Task
         } catch(TooShortInputException ex) {
             // TODO
             logger.log(Level.INFO, "Tried to add Task with too short input. User notified.");
@@ -120,7 +127,6 @@ public class TaskEditorWindow extends javax.swing.JFrame {
 
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
-        java.awt.GridBagConstraints gridBagConstraints;
 
         labelDeadline = new javax.swing.JLabel();
         labelDescription = new javax.swing.JLabel();
@@ -135,7 +141,7 @@ public class TaskEditorWindow extends javax.swing.JFrame {
 
         FormListener formListener = new FormListener();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setName("Form"); // NOI18N
         setResizable(false);
 
@@ -235,11 +241,11 @@ public class TaskEditorWindow extends javax.swing.JFrame {
     private class FormListener implements java.awt.event.ActionListener {
         FormListener() {}
         public void actionPerformed(java.awt.event.ActionEvent evt) {
-            if (evt.getSource() == checkBoxDeadlineActive) {
-                TaskEditorWindow.this.checkBoxDeadlineActiveActionPerformed(evt);
-            }
-            else if (evt.getSource() == buttonSave) {
+            if (evt.getSource() == buttonSave) {
                 TaskEditorWindow.this.buttonSaveActionPerformed(evt);
+            }
+            else if (evt.getSource() == checkBoxDeadlineActive) {
+                TaskEditorWindow.this.checkBoxDeadlineActiveActionPerformed(evt);
             }
         }
     }// </editor-fold>//GEN-END:initComponents
@@ -250,17 +256,23 @@ public class TaskEditorWindow extends javax.swing.JFrame {
      */
     private void checkBoxDeadlineActiveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_checkBoxDeadlineActiveActionPerformed
         this.fieldFormattedDate.setEditable(this.checkBoxDeadlineActive.isSelected());
-        logger.log(Level.FINE, "User clicked a checkbox in "+this.getClass().toString()+": "+evt.toString());
+        logEvent(evt);
     }//GEN-LAST:event_checkBoxDeadlineActiveActionPerformed
 
     /*
      * Saving the new task or saving changes to the old one
      */
     private void buttonSaveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonSaveActionPerformed
-        logger.log(Level.FINE, "User clicked a button in "+this.getClass().toString()+": "+evt.toString());
         attemptToCreateTaskFromForm();
+        logEvent(evt);
     }//GEN-LAST:event_buttonSaveActionPerformed
 
+    /*
+     * Logs the ActionEvents that the user performs.
+     */
+    private void logEvent(ActionEvent evt) {
+        logger.log(Level.INFO, "User performed action: "+evt.toString());
+    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton buttonSave;

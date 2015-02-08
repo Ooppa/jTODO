@@ -2,6 +2,37 @@
 
 <Form version="1.5" maxVersion="1.9" type="org.netbeans.modules.form.forminfo.JFrameFormInfo">
   <NonVisualComponents>
+    <Container class="javax.swing.JPopupMenu" name="tablePopupMenuContextMenu">
+      <Properties>
+        <Property name="name" type="java.lang.String" value="tablePopupMenuContextMenu" noResource="true"/>
+      </Properties>
+
+      <Layout class="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout">
+        <Property name="useNullLayout" type="boolean" value="true"/>
+      </Layout>
+      <SubComponents>
+        <MenuItem class="javax.swing.JMenuItem" name="popupMenuItemEditTask">
+          <Properties>
+            <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
+              <Image iconType="2" name="T:\Gits\jTODO\jTODO\src\main\resources\images\menuicons\edit.png"/>
+            </Property>
+            <Property name="text" type="java.lang.String" value="Edit..."/>
+            <Property name="toolTipText" type="java.lang.String" value=""/>
+            <Property name="name" type="java.lang.String" value="popupMenuItemEditTask" noResource="true"/>
+          </Properties>
+        </MenuItem>
+        <MenuItem class="javax.swing.JMenuItem" name="popupMenuItemDeleteTask">
+          <Properties>
+            <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
+              <Image iconType="2" name="T:\Gits\jTODO\jTODO\src\main\resources\images\menuicons\cross.png"/>
+            </Property>
+            <Property name="text" type="java.lang.String" value="Delete..."/>
+            <Property name="toolTipText" type="java.lang.String" value=""/>
+            <Property name="name" type="java.lang.String" value="popupMenuItemDeleteTask" noResource="true"/>
+          </Properties>
+        </MenuItem>
+      </SubComponents>
+    </Container>
     <Menu class="javax.swing.JMenuBar" name="menubarMain">
       <Properties>
         <Property name="name" type="java.lang.String" value="menubarMain" noResource="true"/>
@@ -9,6 +40,9 @@
       <SubComponents>
         <Menu class="javax.swing.JMenu" name="submenuFile">
           <Properties>
+            <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
+              <Image iconType="2" name="T:\Gits\jTODO\jTODO\src\main\resources\images\menuicons\database.png"/>
+            </Property>
             <Property name="text" type="java.lang.String" value="File"/>
             <Property name="name" type="java.lang.String" value="submenuFile" noResource="true"/>
           </Properties>
@@ -17,6 +51,9 @@
               <Properties>
                 <Property name="accelerator" type="javax.swing.KeyStroke" editor="org.netbeans.modules.form.editors.KeyStrokeEditor">
                   <KeyStroke key="Ctrl+N"/>
+                </Property>
+                <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
+                  <Image iconType="2" name="T:\Gits\jTODO\jTODO\src\main\resources\images\menuicons\newsave.png"/>
                 </Property>
                 <Property name="text" type="java.lang.String" value="New Tasklist"/>
                 <Property name="name" type="java.lang.String" value="menuItemNewTasklist" noResource="true"/>
@@ -30,6 +67,9 @@
                 <Property name="accelerator" type="javax.swing.KeyStroke" editor="org.netbeans.modules.form.editors.KeyStrokeEditor">
                   <KeyStroke key="Ctrl+S"/>
                 </Property>
+                <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
+                  <Image iconType="2" name="T:\Gits\jTODO\jTODO\src\main\resources\images\menuicons\savesave.png"/>
+                </Property>
                 <Property name="text" type="java.lang.String" value="Save Tasklist"/>
                 <Property name="name" type="java.lang.String" value="menuItemSaveTasklist" noResource="true"/>
               </Properties>
@@ -39,6 +79,9 @@
             </MenuItem>
             <MenuItem class="javax.swing.JMenuItem" name="menuItemLoadTasklist">
               <Properties>
+                <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
+                  <Image iconType="2" name="T:\Gits\jTODO\jTODO\src\main\resources\images\menuicons\loadsave.png"/>
+                </Property>
                 <Property name="text" type="java.lang.String" value="Load Tasklist"/>
                 <Property name="name" type="java.lang.String" value="menuItemLoadTasklist" noResource="true"/>
               </Properties>
@@ -50,13 +93,15 @@
         </Menu>
         <Menu class="javax.swing.JMenu" name="submenuEdit">
           <Properties>
+            <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
+              <Image iconType="2" name="T:\Gits\jTODO\jTODO\src\main\resources\images\menuicons\cog.png"/>
+            </Property>
             <Property name="text" type="java.lang.String" value="Edit"/>
             <Property name="name" type="java.lang.String" value="submenuEdit" noResource="true"/>
           </Properties>
           <SubComponents>
             <MenuItem class="javax.swing.JCheckBoxMenuItem" name="menuItemCheckboxAutosave">
               <Properties>
-                <Property name="selected" type="boolean" value="true"/>
                 <Property name="text" type="java.lang.String" value="Autosave"/>
                 <Property name="name" type="java.lang.String" value="menuItemCheckboxAutosave" noResource="true"/>
               </Properties>
@@ -66,12 +111,46 @@
             </MenuItem>
             <MenuItem class="javax.swing.JCheckBoxMenuItem" name="menuItemCheckboxAlwaysOnTop">
               <Properties>
-                <Property name="selected" type="boolean" value="true"/>
                 <Property name="text" type="java.lang.String" value="Always on top"/>
                 <Property name="name" type="java.lang.String" value="menuItemCheckboxAlwaysOnTop" noResource="true"/>
               </Properties>
               <Events>
                 <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="menuItemCheckboxAlwaysOnTopActionPerformed"/>
+              </Events>
+            </MenuItem>
+          </SubComponents>
+        </Menu>
+        <Menu class="javax.swing.JMenu" name="submenuCategory">
+          <Properties>
+            <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
+              <Image iconType="2" name="T:\Gits\jTODO\jTODO\src\main\resources\images\menuicons\category.png"/>
+            </Property>
+            <Property name="text" type="java.lang.String" value="Categories"/>
+            <Property name="name" type="java.lang.String" value="submenuCategory" noResource="true"/>
+          </Properties>
+          <SubComponents>
+            <MenuItem class="javax.swing.JMenuItem" name="menuItemNewCategory">
+              <Properties>
+                <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
+                  <Image iconType="2" name="T:\Gits\jTODO\jTODO\src\main\resources\images\menuicons\categoryadd.png"/>
+                </Property>
+                <Property name="text" type="java.lang.String" value="New Category"/>
+                <Property name="name" type="java.lang.String" value="menuItemNewCategory" noResource="true"/>
+              </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="menuItemNewCategoryActionPerformed"/>
+              </Events>
+            </MenuItem>
+            <MenuItem class="javax.swing.JMenuItem" name="menuItemViewCategories">
+              <Properties>
+                <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
+                  <Image iconType="2" name="T:\Gits\jTODO\jTODO\src\main\resources\images\menuicons\categoryview.png"/>
+                </Property>
+                <Property name="text" type="java.lang.String" value="View Categories"/>
+                <Property name="name" type="java.lang.String" value="menuItemViewCategories" noResource="true"/>
+              </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="menuItemViewCategoriesActionPerformed"/>
               </Events>
             </MenuItem>
           </SubComponents>
@@ -124,22 +203,16 @@
         <Component class="javax.swing.JTable" name="tableTasks">
           <Properties>
             <Property name="model" type="javax.swing.table.TableModel" editor="org.netbeans.modules.form.editors2.TableModelEditor">
-              <Table columnCount="5" rowCount="4">
-                <Column editable="true" title="Compeleted" type="java.lang.Object"/>
-                <Column editable="true" title="Category" type="java.lang.Object"/>
+              <Table columnCount="4" rowCount="10">
+                <Column editable="false" title="Done" type="java.lang.Object"/>
                 <Column editable="true" title="Task Name" type="java.lang.Object"/>
                 <Column editable="true" title="Task Description" type="java.lang.Object"/>
                 <Column editable="true" title="Deadline" type="java.lang.Object"/>
               </Table>
             </Property>
-            <Property name="columnModel" type="javax.swing.table.TableColumnModel" editor="org.netbeans.modules.form.editors2.TableColumnModelEditor">
-              <TableColumnModel selectionModel="1">
-                <Column maxWidth="-1" minWidth="-1" prefWidth="-1" resizable="true">
-                  <Title/>
-                  <Editor/>
-                  <Renderer/>
-                </Column>
-                <Column maxWidth="-1" minWidth="-1" prefWidth="-1" resizable="true">
+            <Property name="columnModel" type="javax.swing.table.TableColumnModel" editor="org.netbeans.modules.form.editors2.TableColumnModelEditor" postCode="// Rightclick menu&#xa;tableTasks.setComponentPopupMenu(tablePopupMenuContextMenu);">
+              <TableColumnModel selectionModel="2">
+                <Column maxWidth="-1" minWidth="-1" prefWidth="5" resizable="false">
                   <Title/>
                   <Editor/>
                   <Renderer/>
@@ -167,6 +240,9 @@
               <TableHeader reorderingAllowed="true" resizingAllowed="true"/>
             </Property>
           </Properties>
+          <Events>
+            <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="tableTasksMouseClicked"/>
+          </Events>
         </Component>
       </SubComponents>
     </Container>
@@ -184,6 +260,9 @@
       <SubComponents>
         <Component class="javax.swing.JButton" name="buttonAdd">
           <Properties>
+            <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
+              <Image iconType="2" name="T:\Gits\jTODO\jTODO\src\main\resources\images\menuicons\plus.png"/>
+            </Property>
             <Property name="text" type="java.lang.String" value="New Task"/>
             <Property name="name" type="java.lang.String" value="buttonAdd" noResource="true"/>
           </Properties>
@@ -198,6 +277,9 @@
         </Component>
         <Component class="javax.swing.JTextField" name="textfieldFilter">
           <Properties>
+            <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+              <Font name="Tahoma" size="11" style="2"/>
+            </Property>
             <Property name="horizontalAlignment" type="int" value="4"/>
             <Property name="text" type="java.lang.String" value="Filter..."/>
             <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">

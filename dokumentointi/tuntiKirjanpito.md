@@ -11,3 +11,4 @@
 | 31.01.2015    | Pieniä lisäyksiä, pohjustettu TaskList => JTree muunnosta | 3h |
 | 01.02.2015    | UI Suunnitelmia | 2h |
 | 05.02.2015    | Parannettu testejä (exceptionit) ja jatkettu UI | 3h |
+| 08.02.2015    | Luotu uusia ikkunoita, context menu, pelkkää UI kehitystä | 2h |
