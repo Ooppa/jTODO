@@ -3,7 +3,7 @@
     <modelVersion>4.0.0</modelVersion>
     <groupId>jtodo</groupId>
     <artifactId>jTODO</artifactId>
-    <version>V3.30</version><!-- Viikko 3 Päivitys 3 -->
+    <version>V4.10</version><!-- Viikko 4 Päivitys 1 -->
     <packaging>jar</packaging>
     
     <dependencies>
