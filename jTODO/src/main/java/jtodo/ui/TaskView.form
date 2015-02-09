@@ -14,7 +14,7 @@
         <MenuItem class="javax.swing.JMenuItem" name="popupMenuItemEditTask">
           <Properties>
             <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-              <Image iconType="2" name="T:\Gits\jTODO\jTODO\src\main\resources\images\menuicons\edit.png"/>
+              <Image iconType="3" name="/images/edit.png"/>
             </Property>
             <Property name="text" type="java.lang.String" value="Edit..."/>
             <Property name="toolTipText" type="java.lang.String" value=""/>
@@ -24,7 +24,7 @@
         <MenuItem class="javax.swing.JMenuItem" name="popupMenuItemDeleteTask">
           <Properties>
             <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-              <Image iconType="2" name="T:\Gits\jTODO\jTODO\src\main\resources\images\menuicons\cross.png"/>
+              <Image iconType="3" name="/images/cross.png"/>
             </Property>
             <Property name="text" type="java.lang.String" value="Delete..."/>
             <Property name="toolTipText" type="java.lang.String" value=""/>
@@ -41,7 +41,7 @@
         <Menu class="javax.swing.JMenu" name="submenuFile">
           <Properties>
             <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-              <Image iconType="2" name="T:\Gits\jTODO\jTODO\src\main\resources\images\menuicons\database.png"/>
+              <Image iconType="3" name="/images/database.png"/>
             </Property>
             <Property name="text" type="java.lang.String" value="File"/>
             <Property name="name" type="java.lang.String" value="submenuFile" noResource="true"/>
@@ -53,7 +53,7 @@
                   <KeyStroke key="Ctrl+N"/>
                 </Property>
                 <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-                  <Image iconType="2" name="T:\Gits\jTODO\jTODO\src\main\resources\images\menuicons\newsave.png"/>
+                  <Image iconType="3" name="/images/newsave.png"/>
                 </Property>
                 <Property name="text" type="java.lang.String" value="New Tasklist"/>
                 <Property name="name" type="java.lang.String" value="menuItemNewTasklist" noResource="true"/>
@@ -68,7 +68,7 @@
                   <KeyStroke key="Ctrl+S"/>
                 </Property>
                 <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-                  <Image iconType="2" name="T:\Gits\jTODO\jTODO\src\main\resources\images\menuicons\savesave.png"/>
+                  <Image iconType="3" name="/images/savesave.png"/>
                 </Property>
                 <Property name="text" type="java.lang.String" value="Save Tasklist"/>
                 <Property name="name" type="java.lang.String" value="menuItemSaveTasklist" noResource="true"/>
@@ -80,7 +80,7 @@
             <MenuItem class="javax.swing.JMenuItem" name="menuItemLoadTasklist">
               <Properties>
                 <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-                  <Image iconType="2" name="T:\Gits\jTODO\jTODO\src\main\resources\images\menuicons\loadsave.png"/>
+                  <Image iconType="3" name="/images/loadsave.png"/>
                 </Property>
                 <Property name="text" type="java.lang.String" value="Load Tasklist"/>
                 <Property name="name" type="java.lang.String" value="menuItemLoadTasklist" noResource="true"/>
@@ -94,7 +94,7 @@
         <Menu class="javax.swing.JMenu" name="submenuEdit">
           <Properties>
             <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-              <Image iconType="2" name="T:\Gits\jTODO\jTODO\src\main\resources\images\menuicons\cog.png"/>
+              <Image iconType="3" name="/images/cog.png"/>
             </Property>
             <Property name="text" type="java.lang.String" value="Edit"/>
             <Property name="name" type="java.lang.String" value="submenuEdit" noResource="true"/>
@@ -123,7 +123,7 @@
         <Menu class="javax.swing.JMenu" name="submenuCategory">
           <Properties>
             <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-              <Image iconType="2" name="T:\Gits\jTODO\jTODO\src\main\resources\images\menuicons\category.png"/>
+              <Image iconType="3" name="/images/category.png"/>
             </Property>
             <Property name="text" type="java.lang.String" value="Categories"/>
             <Property name="name" type="java.lang.String" value="submenuCategory" noResource="true"/>
@@ -132,7 +132,7 @@
             <MenuItem class="javax.swing.JMenuItem" name="menuItemNewCategory">
               <Properties>
                 <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-                  <Image iconType="2" name="T:\Gits\jTODO\jTODO\src\main\resources\images\menuicons\categoryadd.png"/>
+                  <Image iconType="3" name="/images/categoryadd.png"/>
                 </Property>
                 <Property name="text" type="java.lang.String" value="New Category"/>
                 <Property name="name" type="java.lang.String" value="menuItemNewCategory" noResource="true"/>
@@ -144,7 +144,7 @@
             <MenuItem class="javax.swing.JMenuItem" name="menuItemViewCategories">
               <Properties>
                 <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-                  <Image iconType="2" name="T:\Gits\jTODO\jTODO\src\main\resources\images\menuicons\categoryview.png"/>
+                  <Image iconType="3" name="/images/categoryview.png"/>
                 </Property>
                 <Property name="text" type="java.lang.String" value="View Categories"/>
                 <Property name="name" type="java.lang.String" value="menuItemViewCategories" noResource="true"/>
@@ -261,7 +261,7 @@
         <Component class="javax.swing.JButton" name="buttonAdd">
           <Properties>
             <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-              <Image iconType="2" name="T:\Gits\jTODO\jTODO\src\main\resources\images\menuicons\plus.png"/>
+              <Image iconType="3" name="/images/plus.png"/>
             </Property>
             <Property name="text" type="java.lang.String" value="New Task"/>
             <Property name="name" type="java.lang.String" value="buttonAdd" noResource="true"/>

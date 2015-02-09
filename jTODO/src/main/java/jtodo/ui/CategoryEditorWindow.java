@@ -116,6 +116,7 @@ public class CategoryEditorWindow extends javax.swing.JFrame {
         fieldName = new javax.swing.JTextField();
         fieldDescription = new javax.swing.JTextField();
         buttonSave = new javax.swing.JButton();
+        comboboxColor = new javax.swing.JComboBox();
 
         FormListener formListener = new FormListener();
 
@@ -145,6 +146,10 @@ public class CategoryEditorWindow extends javax.swing.JFrame {
         buttonSave.setName("buttonSave"); // NOI18N
         buttonSave.addActionListener(formListener);
 
+        comboboxColor.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        comboboxColor.setToolTipText(bundle.getString("CategoryEditorWindow.comboboxColor.toolTipText")); // NOI18N
+        comboboxColor.setName("comboboxColor"); // NOI18N
+
         org.jdesktop.layout.GroupLayout layout = new org.jdesktop.layout.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -165,7 +170,8 @@ public class CategoryEditorWindow extends javax.swing.JFrame {
                         .add(fieldDescription, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, 355, Short.MAX_VALUE))
                     .add(org.jdesktop.layout.GroupLayout.LEADING, layout.createSequentialGroup()
                         .add(labelIcon, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 95, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
-                        .add(0, 0, Short.MAX_VALUE)))
+                        .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
+                        .add(comboboxColor, 0, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
@@ -180,7 +186,9 @@ public class CategoryEditorWindow extends javax.swing.JFrame {
                     .add(labelDescription, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 30, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
                     .add(fieldDescription))
                 .addPreferredGap(org.jdesktop.layout.LayoutStyle.UNRELATED)
-                .add(labelIcon, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 30, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
+                .add(layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING, false)
+                    .add(labelIcon, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, 30, Short.MAX_VALUE)
+                    .add(comboboxColor))
                 .addPreferredGap(org.jdesktop.layout.LayoutStyle.UNRELATED)
                 .add(buttonSave, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 27, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
@@ -218,6 +226,7 @@ public class CategoryEditorWindow extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton buttonSave;
     private javax.swing.JComboBox comboBoxPriority;
+    private javax.swing.JComboBox comboboxColor;
     private javax.swing.JTextField fieldDescription;
     private javax.swing.JTextField fieldName;
     private javax.swing.JLabel labelCategoryName;

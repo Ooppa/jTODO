@@ -57,7 +57,7 @@
     <Component class="javax.swing.JLabel" name="errorMessageLabel">
       <Properties>
         <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-          <Image iconType="2" name="T:\Gits\jTODO\jTODO\src\main\resources\images\labels\warning.png"/>
+          <Image iconType="3" name="/images/warning.png"/>
         </Property>
         <Property name="text" type="java.lang.String" editor="org.netbeans.modules.i18n.form.FormI18nStringEditor">
           <ResourceString bundle="jtodo/ui/Bundle.properties" key="ErrorWindow.errorMessageLabel.text" replaceFormat="java.util.ResourceBundle.getBundle(&quot;{bundleNameSlashes}&quot;).getString(&quot;{key}&quot;)"/>

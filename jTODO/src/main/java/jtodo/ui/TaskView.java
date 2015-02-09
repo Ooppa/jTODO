@@ -53,13 +53,13 @@ public class TaskView extends javax.swing.JFrame {
 
         tablePopupMenuContextMenu.setName("tablePopupMenuContextMenu"); // NOI18N
 
-        popupMenuItemEditTask.setIcon(new javax.swing.ImageIcon("T:\\Gits\\jTODO\\jTODO\\src\\main\\resources\\images\\menuicons\\edit.png")); // NOI18N
+        popupMenuItemEditTask.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/edit.png"))); // NOI18N
         popupMenuItemEditTask.setText("Edit...");
         popupMenuItemEditTask.setToolTipText("");
         popupMenuItemEditTask.setName("popupMenuItemEditTask"); // NOI18N
         tablePopupMenuContextMenu.add(popupMenuItemEditTask);
 
-        popupMenuItemDeleteTask.setIcon(new javax.swing.ImageIcon("T:\\Gits\\jTODO\\jTODO\\src\\main\\resources\\images\\menuicons\\cross.png")); // NOI18N
+        popupMenuItemDeleteTask.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/cross.png"))); // NOI18N
         popupMenuItemDeleteTask.setText("Delete...");
         popupMenuItemDeleteTask.setToolTipText("");
         popupMenuItemDeleteTask.setName("popupMenuItemDeleteTask"); // NOI18N
@@ -117,7 +117,7 @@ public class TaskView extends javax.swing.JFrame {
         bottomPanel.setName("bottomPanel"); // NOI18N
         bottomPanel.setLayout(new java.awt.BorderLayout());
 
-        buttonAdd.setIcon(new javax.swing.ImageIcon("T:\\Gits\\jTODO\\jTODO\\src\\main\\resources\\images\\menuicons\\plus.png")); // NOI18N
+        buttonAdd.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/plus.png"))); // NOI18N
         buttonAdd.setText("New Task");
         buttonAdd.setName("buttonAdd"); // NOI18N
         buttonAdd.addActionListener(new java.awt.event.ActionListener() {
@@ -153,12 +153,12 @@ public class TaskView extends javax.swing.JFrame {
 
         menubarMain.setName("menubarMain"); // NOI18N
 
-        submenuFile.setIcon(new javax.swing.ImageIcon("T:\\Gits\\jTODO\\jTODO\\src\\main\\resources\\images\\menuicons\\database.png")); // NOI18N
+        submenuFile.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/database.png"))); // NOI18N
         submenuFile.setText("File");
         submenuFile.setName("submenuFile"); // NOI18N
 
         menuItemNewTasklist.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_N, java.awt.event.InputEvent.CTRL_MASK));
-        menuItemNewTasklist.setIcon(new javax.swing.ImageIcon("T:\\Gits\\jTODO\\jTODO\\src\\main\\resources\\images\\menuicons\\newsave.png")); // NOI18N
+        menuItemNewTasklist.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/newsave.png"))); // NOI18N
         menuItemNewTasklist.setText("New Tasklist");
         menuItemNewTasklist.setName("menuItemNewTasklist"); // NOI18N
         menuItemNewTasklist.addActionListener(new java.awt.event.ActionListener() {
@@ -169,7 +169,7 @@ public class TaskView extends javax.swing.JFrame {
         submenuFile.add(menuItemNewTasklist);
 
         menuItemSaveTasklist.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_S, java.awt.event.InputEvent.CTRL_MASK));
-        menuItemSaveTasklist.setIcon(new javax.swing.ImageIcon("T:\\Gits\\jTODO\\jTODO\\src\\main\\resources\\images\\menuicons\\savesave.png")); // NOI18N
+        menuItemSaveTasklist.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/savesave.png"))); // NOI18N
         menuItemSaveTasklist.setText("Save Tasklist");
         menuItemSaveTasklist.setName("menuItemSaveTasklist"); // NOI18N
         menuItemSaveTasklist.addActionListener(new java.awt.event.ActionListener() {
@@ -179,7 +179,7 @@ public class TaskView extends javax.swing.JFrame {
         });
         submenuFile.add(menuItemSaveTasklist);
 
-        menuItemLoadTasklist.setIcon(new javax.swing.ImageIcon("T:\\Gits\\jTODO\\jTODO\\src\\main\\resources\\images\\menuicons\\loadsave.png")); // NOI18N
+        menuItemLoadTasklist.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/loadsave.png"))); // NOI18N
         menuItemLoadTasklist.setText("Load Tasklist");
         menuItemLoadTasklist.setName("menuItemLoadTasklist"); // NOI18N
         menuItemLoadTasklist.addActionListener(new java.awt.event.ActionListener() {
@@ -191,7 +191,7 @@ public class TaskView extends javax.swing.JFrame {
 
         menubarMain.add(submenuFile);
 
-        submenuEdit.setIcon(new javax.swing.ImageIcon("T:\\Gits\\jTODO\\jTODO\\src\\main\\resources\\images\\menuicons\\cog.png")); // NOI18N
+        submenuEdit.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/cog.png"))); // NOI18N
         submenuEdit.setText("Edit");
         submenuEdit.setName("submenuEdit"); // NOI18N
 
@@ -215,11 +215,11 @@ public class TaskView extends javax.swing.JFrame {
 
         menubarMain.add(submenuEdit);
 
-        submenuCategory.setIcon(new javax.swing.ImageIcon("T:\\Gits\\jTODO\\jTODO\\src\\main\\resources\\images\\menuicons\\category.png")); // NOI18N
+        submenuCategory.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/category.png"))); // NOI18N
         submenuCategory.setText("Categories");
         submenuCategory.setName("submenuCategory"); // NOI18N
 
-        menuItemNewCategory.setIcon(new javax.swing.ImageIcon("T:\\Gits\\jTODO\\jTODO\\src\\main\\resources\\images\\menuicons\\categoryadd.png")); // NOI18N
+        menuItemNewCategory.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/categoryadd.png"))); // NOI18N
         menuItemNewCategory.setText("New Category");
         menuItemNewCategory.setName("menuItemNewCategory"); // NOI18N
         menuItemNewCategory.addActionListener(new java.awt.event.ActionListener() {
@@ -229,7 +229,7 @@ public class TaskView extends javax.swing.JFrame {
         });
         submenuCategory.add(menuItemNewCategory);
 
-        menuItemViewCategories.setIcon(new javax.swing.ImageIcon("T:\\Gits\\jTODO\\jTODO\\src\\main\\resources\\images\\menuicons\\categoryview.png")); // NOI18N
+        menuItemViewCategories.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/categoryview.png"))); // NOI18N
         menuItemViewCategories.setText("View Categories");
         menuItemViewCategories.setName("menuItemViewCategories"); // NOI18N
         menuItemViewCategories.addActionListener(new java.awt.event.ActionListener() {

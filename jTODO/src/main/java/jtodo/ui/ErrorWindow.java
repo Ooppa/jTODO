@@ -42,7 +42,7 @@ public class ErrorWindow extends javax.swing.JFrame {
         setName("Form"); // NOI18N
         setResizable(false);
 
-        errorMessageLabel.setIcon(new javax.swing.ImageIcon("T:\\Gits\\jTODO\\jTODO\\src\\main\\resources\\images\\labels\\warning.png")); // NOI18N
+        errorMessageLabel.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/warning.png"))); // NOI18N
         errorMessageLabel.setText(bundle.getString("ErrorWindow.errorMessageLabel.text")); // NOI18N
         errorMessageLabel.setName("errorMessageLabel"); // NOI18N
 

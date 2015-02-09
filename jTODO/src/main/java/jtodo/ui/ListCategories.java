@@ -59,18 +59,18 @@ public class ListCategories extends javax.swing.JFrame {
         categoryList.addMouseListener(formListener);
         categoryListScrollPane.setViewportView(categoryList);
 
-        buttonAdd.setIcon(new javax.swing.ImageIcon("T:\\Gits\\jTODO\\jTODO\\src\\main\\resources\\images\\menuicons\\categoryadd.png")); // NOI18N
+        buttonAdd.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/categoryadd.png"))); // NOI18N
         java.util.ResourceBundle bundle = java.util.ResourceBundle.getBundle("jtodo/ui/Bundle"); // NOI18N
         buttonAdd.setText(bundle.getString("ListCategories.buttonAdd.text")); // NOI18N
         buttonAdd.setName("buttonAdd"); // NOI18N
         buttonAdd.addActionListener(formListener);
 
-        buttonEdit.setIcon(new javax.swing.ImageIcon("T:\\Gits\\jTODO\\jTODO\\src\\main\\resources\\images\\menuicons\\categoryedit.png")); // NOI18N
+        buttonEdit.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/categoryedit.png"))); // NOI18N
         buttonEdit.setText(bundle.getString("ListCategories.buttonEdit.text")); // NOI18N
         buttonEdit.setName("buttonEdit"); // NOI18N
         buttonEdit.addActionListener(formListener);
 
-        buttonDelete.setIcon(new javax.swing.ImageIcon("T:\\Gits\\jTODO\\jTODO\\src\\main\\resources\\images\\menuicons\\cross.png")); // NOI18N
+        buttonDelete.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/cross.png"))); // NOI18N
         buttonDelete.setText(bundle.getString("ListCategories.buttonDelete.text")); // NOI18N
         buttonDelete.setName("buttonDelete"); // NOI18N
         buttonDelete.addActionListener(formListener);
@@ -113,14 +113,14 @@ public class ListCategories extends javax.swing.JFrame {
     private class FormListener implements java.awt.event.ActionListener, java.awt.event.MouseListener {
         FormListener() {}
         public void actionPerformed(java.awt.event.ActionEvent evt) {
-            if (evt.getSource() == buttonDelete) {
-                ListCategories.this.buttonDeleteActionPerformed(evt);
-            }
-            else if (evt.getSource() == buttonAdd) {
+            if (evt.getSource() == buttonAdd) {
                 ListCategories.this.buttonAddActionPerformed(evt);
             }
             else if (evt.getSource() == buttonEdit) {
                 ListCategories.this.buttonEditActionPerformed(evt);
+            }
+            else if (evt.getSource() == buttonDelete) {
+                ListCategories.this.buttonDeleteActionPerformed(evt);
             }
         }
 
@@ -163,7 +163,7 @@ public class ListCategories extends javax.swing.JFrame {
     }//GEN-LAST:event_buttonDeleteActionPerformed
 
     private void buttonAddActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonAddActionPerformed
-        // TODO add your handling code here:
+        CategoryEditorWindow categoryEditorWindow = new CategoryEditorWindow(this);
         logEvent(evt);
     }//GEN-LAST:event_buttonAddActionPerformed
 

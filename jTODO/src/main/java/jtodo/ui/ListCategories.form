@@ -92,7 +92,7 @@
     <Component class="javax.swing.JButton" name="buttonAdd">
       <Properties>
         <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-          <Image iconType="2" name="T:\Gits\jTODO\jTODO\src\main\resources\images\menuicons\categoryadd.png"/>
+          <Image iconType="3" name="/images/categoryadd.png"/>
         </Property>
         <Property name="text" type="java.lang.String" editor="org.netbeans.modules.i18n.form.FormI18nStringEditor">
           <ResourceString bundle="jtodo/ui/Bundle.properties" key="ListCategories.buttonAdd.text" replaceFormat="java.util.ResourceBundle.getBundle(&quot;{bundleNameSlashes}&quot;).getString(&quot;{key}&quot;)"/>
@@ -106,7 +106,7 @@
     <Component class="javax.swing.JButton" name="buttonEdit">
       <Properties>
         <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-          <Image iconType="2" name="T:\Gits\jTODO\jTODO\src\main\resources\images\menuicons\categoryedit.png"/>
+          <Image iconType="3" name="/images/categoryedit.png"/>
         </Property>
         <Property name="text" type="java.lang.String" editor="org.netbeans.modules.i18n.form.FormI18nStringEditor">
           <ResourceString bundle="jtodo/ui/Bundle.properties" key="ListCategories.buttonEdit.text" replaceFormat="java.util.ResourceBundle.getBundle(&quot;{bundleNameSlashes}&quot;).getString(&quot;{key}&quot;)"/>
@@ -120,7 +120,7 @@
     <Component class="javax.swing.JButton" name="buttonDelete">
       <Properties>
         <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-          <Image iconType="2" name="T:\Gits\jTODO\jTODO\src\main\resources\images\menuicons\cross.png"/>
+          <Image iconType="3" name="/images/cross.png"/>
         </Property>
         <Property name="text" type="java.lang.String" editor="org.netbeans.modules.i18n.form.FormI18nStringEditor">
           <ResourceString bundle="jtodo/ui/Bundle.properties" key="ListCategories.buttonDelete.text" replaceFormat="java.util.ResourceBundle.getBundle(&quot;{bundleNameSlashes}&quot;).getString(&quot;{key}&quot;)"/>
