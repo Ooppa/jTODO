@@ -9,6 +9,7 @@ import java.awt.Window;
 import java.awt.event.ActionEvent;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.JFrame;
 import jtodo.domain.Category;
 import jtodo.domain.ListItemColor;
 import jtodo.domain.Task;
@@ -26,7 +27,7 @@ import org.joda.time.format.DateTimeFormatter;
  * @author Ooppa
  * @see Task
  */
-public class CategoryEditorWindow extends javax.swing.JFrame {
+public class CategoryEditorWindow extends JFrame {
 
     /*
      * Task to be edited or created

@@ -8,13 +8,14 @@ package jtodo.ui;
 import java.awt.event.ActionEvent;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.JFrame;
 
 /**
  * TODO: Created using Netbeans, will clean up later.
  *
  * @author Ooppa
  */
-public class TaskView extends javax.swing.JFrame {
+public class TaskView extends JFrame {
 
     private static final Logger logger = Logger.getLogger(TaskView.class.getName());
 
@@ -53,13 +54,11 @@ public class TaskView extends javax.swing.JFrame {
 
         tablePopupMenuContextMenu.setName("tablePopupMenuContextMenu"); // NOI18N
 
-        popupMenuItemEditTask.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/edit.png"))); // NOI18N
         popupMenuItemEditTask.setText("Edit...");
         popupMenuItemEditTask.setToolTipText("");
         popupMenuItemEditTask.setName("popupMenuItemEditTask"); // NOI18N
         tablePopupMenuContextMenu.add(popupMenuItemEditTask);
 
-        popupMenuItemDeleteTask.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/cross.png"))); // NOI18N
         popupMenuItemDeleteTask.setText("Delete...");
         popupMenuItemDeleteTask.setToolTipText("");
         popupMenuItemDeleteTask.setName("popupMenuItemDeleteTask"); // NOI18N

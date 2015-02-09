@@ -13,9 +13,6 @@
       <SubComponents>
         <MenuItem class="javax.swing.JMenuItem" name="popupMenuItemEditTask">
           <Properties>
-            <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-              <Image iconType="3" name="/images/edit.png"/>
-            </Property>
             <Property name="text" type="java.lang.String" value="Edit..."/>
             <Property name="toolTipText" type="java.lang.String" value=""/>
             <Property name="name" type="java.lang.String" value="popupMenuItemEditTask" noResource="true"/>
@@ -23,9 +20,6 @@
         </MenuItem>
         <MenuItem class="javax.swing.JMenuItem" name="popupMenuItemDeleteTask">
           <Properties>
-            <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-              <Image iconType="3" name="/images/cross.png"/>
-            </Property>
             <Property name="text" type="java.lang.String" value="Delete..."/>
             <Property name="toolTipText" type="java.lang.String" value=""/>
             <Property name="name" type="java.lang.String" value="popupMenuItemDeleteTask" noResource="true"/>

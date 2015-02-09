@@ -9,6 +9,7 @@ import java.awt.Window;
 import java.awt.event.ActionEvent;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.JFrame;
 
 /**
  * List categories saved in the system, allows the user to add and edit.
@@ -16,7 +17,7 @@ import java.util.logging.Logger;
  * @author Ooppa
  * @see Category
  */
-public class ListCategories extends javax.swing.JFrame {
+public class ListCategories extends JFrame {
     
     private static final Logger logger = Logger.getLogger(ListCategories.class.getName());
 
@@ -36,6 +37,7 @@ public class ListCategories extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        jSeparator1 = new javax.swing.JSeparator();
         categoryListScrollPane = new javax.swing.JScrollPane();
         categoryList = new javax.swing.JList();
         buttonAdd = new javax.swing.JButton();
@@ -43,6 +45,8 @@ public class ListCategories extends javax.swing.JFrame {
         buttonDelete = new javax.swing.JButton();
 
         FormListener formListener = new FormListener();
+
+        jSeparator1.setName("jSeparator1"); // NOI18N
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setName("Form"); // NOI18N
@@ -186,5 +190,6 @@ public class ListCategories extends javax.swing.JFrame {
     private javax.swing.JButton buttonEdit;
     private javax.swing.JList categoryList;
     private javax.swing.JScrollPane categoryListScrollPane;
+    private javax.swing.JSeparator jSeparator1;
     // End of variables declaration//GEN-END:variables
 }

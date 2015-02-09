@@ -5,47 +5,52 @@
  */
 package jtodo.domain;
 
-import java.lang.reflect.Method;
 import org.junit.*;
-import static org.junit.Assert.assertTrue;
 
 /**
- * Tests if TaskList properly extends ArrayList
- *
+ * 
  * @author Ooppa
- * @see ArrayList
  */
 public class TaskListTest {
 
-    private final Method[] methods;
+    private TaskList tasklist;
 
     public TaskListTest() {
-        methods = TaskList.class.getMethods();
+    }
+
+    @Before
+    public void setUp() {
+        tasklist = new TaskList();
+    }
+
+    @After
+    public void tearDown() {
+        tasklist = null;
     }
 
     @Test
-    public void TaskListContainsMethodAdd() {
-        assertTrue(arrayContainsMethod("add"));
+    public void testLoadDB() {
+        // TODO
     }
 
     @Test
-    public void TaskListContainsMethodRemove() {
-        assertTrue(arrayContainsMethod("remove"));
+    public void testSaveDB() {
+        // TODO
     }
 
     @Test
-    public void TaskListContainsMethodSize() {
-        assertTrue(arrayContainsMethod("size"));
+    public void testGetCategories() {
+        // TODO
     }
 
-    private boolean arrayContainsMethod(String methodName) {
-        for(Method method : methods) {
-            if(method.getName()==methodName) {
-                return true;
-            }
-        }
+    @Test
+    public void testGetTasks() {
+        // TODO
+    }
 
-        return false;
+    @Test
+    public void testClearAll() {
+        // TODO
     }
 
 }

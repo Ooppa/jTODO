@@ -6,13 +6,14 @@
 package jtodo.ui;
 
 import java.awt.Window;
+import javax.swing.JFrame;
 
 /**
  * Creates a error message pop-up for the user to see.
  *
  * @author Ooppa
  */
-public class ErrorWindow extends javax.swing.JFrame {
+public class ErrorWindow extends JFrame {
 
     /**
      * Creates a new ErrorWindow dialog for the user to see

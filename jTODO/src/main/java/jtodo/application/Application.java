@@ -21,18 +21,21 @@ public class Application {
     /**
      * Main-method for the application
      *
-     * @param args Select what level logger you want to run with the program.
+     * @param args Select what level logger you want to run the program with
      */
     public static void main(String[] args) {
 
-            try {
-                logger.setLevel(Level.parse(args[0]));
-            } catch(IllegalArgumentException|ArrayIndexOutOfBoundsException exception) {
-                logger.setLevel(Level.OFF);
-            }
-            
-            // Main interface for the application
-            TaskView taskview = new TaskView();
+        try {
+            logger.setLevel(Level.parse(args[0]));
+        } catch(IllegalArgumentException|ArrayIndexOutOfBoundsException exception) {
+            logger.setLevel(Level.OFF);
+        }
+
+        logger.log(Level.INFO, "Application started with class path: {0}",
+                System.getProperty("java.class.path"));
+
+        // Main interface for the application
+        TaskView taskview = new TaskView();
 
     }
 
