@@ -6,9 +6,11 @@
 package jtodo.ui;
 
 import java.awt.event.ActionEvent;
+import java.awt.event.MouseEvent;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JFrame;
+import jtodo.domain.TaskList;
 
 /**
  * TODO: Created using Netbeans, will clean up later.
@@ -17,12 +19,21 @@ import javax.swing.JFrame;
  */
 public class TaskView extends JFrame {
 
+    /*
+     * Used to save the current tasks
+     */
+    private TaskList tasklist;
+
     private static final Logger logger = Logger.getLogger(TaskView.class.getName());
 
     /**
      * Creates new form TaskView window.
+     *
+     * @param tasklist TaskList to view
      */
-    public TaskView() {
+    public TaskView(TaskList tasklist) {
+        this.tasklist = tasklist;
+
         this.setTitle("jTODO");
         this.initComponents();
         this.setVisible(true);
@@ -300,18 +311,64 @@ public class TaskView extends JFrame {
     }//GEN-LAST:event_menuItemViewCategoriesActionPerformed
 
     /*
-     * Right click menu trigger
+     * Click menu trigger
      */
     private void tableTasksMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tableTasksMouseClicked
         int button = evt.getButton();
-        System.out.println("button = "+button);
+
+        logEvent(evt);
     }//GEN-LAST:event_tableTasksMouseClicked
+
+    public void addNewTask() {
+        // TODO? Varmaan kannattaa antaa vaan TaskEditorWindowille toi TaskList 
+        // olio ja päivittää siitä se eikä antaa TaskEditorWindowille this 
+        // muuttujaa ja kutsua addNewTask() metodia
+    }
+
+    /**
+     * Updates the JTable that contains the tasks to match the data in the DB
+     */
+    public void updateTable() {
+        // TODO tableTasks.setModel(null);
+    }
+
+    /**
+     * Returns the TaskList
+     *
+     * @return Current TaskList
+     *
+     * @see TaskList
+     */
+    public TaskList getTasklist() {
+        return tasklist;
+    }
+
+    /**
+     * Set a new TaskList
+     *
+     * @param tasklist the TaskList to set
+     *
+     * @see TaskList
+     */
+    public void setTasklist(TaskList tasklist) {
+        this.tasklist = tasklist;
+    }
 
     /*
      * Logs the ActionEvents that the user performs.
      */
     private void logEvent(ActionEvent evt) {
         logger.log(Level.INFO, "User performed action: "+evt.toString());
+    }
+
+    /*
+     * Logs the MouseEvent that the user performs.
+     */
+    private void logEvent(MouseEvent evt) {
+        logger.log(Level.INFO, "User performed mouse-action: "
+                +"mousebutton_"+evt.getButton()+" at ["+evt.getXOnScreen()
+                +","+evt.getYOnScreen()+"] with "+evt.getClickCount()+" clicks"
+        );
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -335,4 +392,5 @@ public class TaskView extends JFrame {
     private javax.swing.JTable tableTasks;
     private javax.swing.JTextField textfieldFilter;
     // End of variables declaration//GEN-END:variables
+
 }

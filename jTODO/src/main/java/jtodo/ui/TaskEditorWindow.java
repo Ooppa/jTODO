@@ -102,11 +102,15 @@ public class TaskEditorWindow extends javax.swing.JFrame {
             created.setDeadline(fieldFormattedDate.getText());
             created.setDeadlineActive(checkBoxDeadlineActive.isSelected());
             created.setPriority((Priority) comboBoxPriority.getSelectedItem());
+            // TODO Catch wrong deadline DateTime
+            
             // TODO Apply changes OR create new Task
         } catch(TooShortInputException ex) {
+            Error error = new Error("Your task name is too short.");
             // TODO
             logger.log(Level.INFO, "Tried to add Task with too short input. User notified.");
         } catch(TooLongInputException ex) {
+            Error error = new Error("Your task name or description is too long.");
             // TODO
             logger.log(Level.INFO, "Tried to add Task with too long input. User notified.");
         }

@@ -13,3 +13,5 @@
 | 05.02.2015    | Parannettu testejä (exceptionit) ja jatkettu UI | 3h |
 | 08.02.2015    | Luotu uusia ikkunoita, context menu, pelkkää UI kehitystä | 2h |
 | 09.02.2015    | Yritetty ratkoa ongelmia, korjattu toimimattomat ikonit | 3h |
+| 12.02.2015    | Pajassa selvitelty jar-pakkausta | 1h |
+| 12.02.2015    | Sekvenssikaaviot ja TaskList, TaskView muutoksia | 2h |

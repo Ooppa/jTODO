@@ -7,6 +7,7 @@ package jtodo.application;
 
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import jtodo.domain.TaskList;
 import jtodo.ui.TaskView;
 
 /**
@@ -35,7 +36,7 @@ public class Application {
                 System.getProperty("java.class.path"));
 
         // Main interface for the application
-        TaskView taskview = new TaskView();
+        TaskView taskview = new TaskView(new TaskList()); // TODO  tasklist
 
     }
 
