@@ -5,6 +5,7 @@
  */
 package jtodo.domain;
 
+import java.io.Serializable;
 import java.util.Objects;
 import org.joda.time.DateTime;
 import org.joda.time.format.DateTimeFormat;
@@ -15,7 +16,7 @@ import org.joda.time.format.DateTimeFormat;
  * @author Ooppa
  * @see Task
  */
-public class Deadline {
+public class Deadline implements Serializable {
 
     private boolean active;
     private DateTime dateTime;

@@ -92,7 +92,16 @@ public class CategoryEditorWindow extends JFrame {
     }
 
     private void attemptToCreateCategoryFromForm() {
-        // TODO
+        try {
+            Category category = new Category(this.fieldName.getText(), this.fieldDescription.getText());
+            // TODO category.setColor(ListItemColor.);
+        } catch(TooShortInputException ex) {
+            ErrorWindow error = new ErrorWindow("Your category name is too short.");
+            logger.log(Level.INFO, "Tried to add Category with too short input. User notified.");
+        } catch(TooLongInputException ex) {
+            ErrorWindow error = new ErrorWindow("Your category name or description is too long.");
+            logger.log(Level.INFO, "Tried to add Category with too long input. User notified.");
+        }
     }
 
     /*
@@ -117,7 +126,7 @@ public class CategoryEditorWindow extends JFrame {
         fieldName = new javax.swing.JTextField();
         fieldDescription = new javax.swing.JTextField();
         buttonSave = new javax.swing.JButton();
-        comboboxColor = new javax.swing.JComboBox();
+        comboboxColor = new javax.swing.JComboBox(ListItemColor.getColorsInArray());
 
         FormListener formListener = new FormListener();
 
@@ -147,9 +156,9 @@ public class CategoryEditorWindow extends JFrame {
         buttonSave.setName("buttonSave"); // NOI18N
         buttonSave.addActionListener(formListener);
 
-        comboboxColor.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
         comboboxColor.setToolTipText(bundle.getString("CategoryEditorWindow.comboboxColor.toolTipText")); // NOI18N
         comboboxColor.setName("comboboxColor"); // NOI18N
+        comboboxColor.setRenderer(new ColorChooserCellRenderer());
 
         org.jdesktop.layout.GroupLayout layout = new org.jdesktop.layout.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);

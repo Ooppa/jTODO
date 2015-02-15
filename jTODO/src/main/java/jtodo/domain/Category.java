@@ -5,6 +5,7 @@
  */
 package jtodo.domain;
 
+import java.io.Serializable;
 import jtodo.excptions.TooLongInputException;
 import jtodo.excptions.TooShortInputException;
 
@@ -16,7 +17,7 @@ import jtodo.excptions.TooShortInputException;
  *
  * @see AbstractListItem
  */
-public class Category<E> extends AbstractListItem {
+public class Category<E> extends AbstractListItem implements Serializable {
 
     /**
      * Creates a new Category

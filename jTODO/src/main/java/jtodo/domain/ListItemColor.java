@@ -35,4 +35,21 @@ public enum ListItemColor {
         return color;
     }
 
+    /**
+     * Returns all ListItemColors as Color
+     *
+     * @return Colors
+     */
+    public static Color[] getColorsInArray() {
+        Color[] colors = new Color[ListItemColor.values().length];
+        int currentIndex = 0;
+
+        for(ListItemColor colorToAdd : ListItemColor.values()) {
+            colors[currentIndex] = colorToAdd.getColor();
+            currentIndex++;
+        }
+
+        return colors;
+    }
+
 }

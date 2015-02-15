@@ -14,35 +14,47 @@ import java.util.ArrayList;
  * @author Ooppa
  */
 public class Database implements Serializable {
-    
+
     private ArrayList<Category> categories;
     private ArrayList<Task> tasks;
 
     private long savetime;
 
+    /**
+     * Creates a new Database object
+     */
     public Database() {
         categories = new ArrayList<>();
         tasks = new ArrayList<>();
-        
+
         updateSavetime();
     }
 
+    /**
+     * Returns the Categories packed in ArrayList
+     *
+     * @return Categories
+     *
+     * @see Category
+     */
     public ArrayList<Category> getCategories() {
         return categories;
     }
 
+    /**
+     * Returns the Tasks packed in ArrayList
+     *
+     * @return Tasks
+     *
+     * @see Task
+     */
     public ArrayList<Task> getTasks() {
         return tasks;
     }
 
-    public void setCategories(ArrayList<Category> categories) {
-        this.categories = categories;
-    }
-
-    public void setTasks(ArrayList<Task> tasks) {
-        this.tasks = tasks;
-    }
-
+    /*
+     * Updates the "last edited" timestamp
+     */
     public void updateSavetime() {
         savetime = System.nanoTime();
     }

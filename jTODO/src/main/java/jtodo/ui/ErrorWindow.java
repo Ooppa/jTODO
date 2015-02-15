@@ -5,7 +5,6 @@
  */
 package jtodo.ui;
 
-import java.awt.Window;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JFrame;
@@ -25,13 +24,13 @@ public class ErrorWindow extends JFrame {
      * @param text   Error text to display
      * @param window Window which TaskEditorWindow should be attached to
      */
-    public ErrorWindow(String text, Window window) {
+    public ErrorWindow(String text) {
         logger.log(Level.FINE, "Displaying Error window for ''{0}''.", text);
         
         initComponents();
-        setLocationRelativeTo(window);
+        setLocationRelativeTo(null);
 
-        this.errorMessageLabel.setText(text);
+        errorMessageLabel.setText(text);
 
         setVisible(true);
         setAlwaysOnTop(true);

@@ -128,18 +128,18 @@ public class TaskEditorWindow extends javax.swing.JFrame {
 
         } catch(TooShortInputException ex) {
 
-            Error error = new Error("Your task name is too short.");
+            ErrorWindow error = new ErrorWindow("Your task name is too short.");
             logger.log(Level.INFO, "Tried to add Task with too short input. User notified.");
 
         } catch(TooLongInputException ex) {
 
-            Error error = new Error("Your task name or description is too long.");
+            ErrorWindow error = new ErrorWindow("Your task name or description is too long.");
             logger.log(Level.INFO, "Tried to add Task with too long input. User notified.");
 
         } catch(IllegalArgumentException ex) {
 
-            Error error = new Error("Could not parse the date your gave. Check it for errors.");
-            logger.log(Level.INFO, "Error during the parsing of datetime. Could not parse the date given.");
+            ErrorWindow error = new ErrorWindow("Could not parse the date your gave. Check it for errors.");
+            logger.log(Level.INFO, "ErrorWindow during the parsing of datetime. Could not parse the date given.");
 
         }
 

@@ -5,6 +5,7 @@
  */
 package jtodo.domain;
 
+import java.io.Serializable;
 import jtodo.excptions.TooLongInputException;
 import jtodo.excptions.TooShortInputException;
 import org.joda.time.format.DateTimeFormat;
@@ -16,7 +17,7 @@ import org.joda.time.format.DateTimeFormat;
  *
  * @see AbstractListItem
  */
-public class Task<E> extends AbstractListItem {
+public class Task<E> extends AbstractListItem implements Serializable {
 
     private Priority priority;
     private final Deadline deadline;

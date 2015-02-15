@@ -5,6 +5,7 @@
  */
 package jtodo.domain;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Objects;
 import jtodo.excptions.*;
@@ -19,7 +20,7 @@ import jtodo.excptions.*;
  * @see Category
  * @see TaskList
  */
-public abstract class AbstractListItem<E> {
+public abstract class AbstractListItem<E> implements Serializable {
 
     private String name, description;
     private final ArrayList<E> subElements;

@@ -16,3 +16,4 @@
 | 12.02.2015    | Pajassa selvitelty jar-pakkausta | 1h |
 | 12.02.2015    | Sekvenssikaaviot ja TaskList, TaskView muutoksia | 2h |
 | 15.02.2015    | Tehtävien lisäys, tallennus ja lähes täysin avaus | 4h |
+| 15.02.2015    | Tallennus toimii, kategoriaan voi valita värin | 2h |
