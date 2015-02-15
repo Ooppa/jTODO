@@ -6,6 +6,8 @@
 package jtodo.ui;
 
 import java.awt.Window;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JFrame;
 
 /**
@@ -14,6 +16,8 @@ import javax.swing.JFrame;
  * @author Ooppa
  */
 public class ErrorWindow extends JFrame {
+    
+    private static final Logger logger = Logger.getLogger(ErrorWindow.class.getName());
 
     /**
      * Creates a new ErrorWindow dialog for the user to see
@@ -22,6 +26,8 @@ public class ErrorWindow extends JFrame {
      * @param window Window which TaskEditorWindow should be attached to
      */
     public ErrorWindow(String text, Window window) {
+        logger.log(Level.FINE, "Displaying Error window for ''{0}''.", text);
+        
         initComponents();
         setLocationRelativeTo(window);
 

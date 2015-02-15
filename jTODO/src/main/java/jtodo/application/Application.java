@@ -35,8 +35,8 @@ public class Application {
         logger.log(Level.INFO, "Application started with class path: {0}",
                 System.getProperty("java.class.path"));
 
-        DatabaseManager taskList = new DatabaseManager();
-        TaskViewWindow taskview = new TaskViewWindow(taskList);
+        DatabaseManager manager = new DatabaseManager();
+        TaskViewWindow taskview = new TaskViewWindow(manager);
 
     }
 
