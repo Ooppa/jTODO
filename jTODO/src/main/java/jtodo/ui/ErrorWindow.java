@@ -22,11 +22,13 @@ public class ErrorWindow extends JFrame {
      * @param window Window which TaskEditorWindow should be attached to
      */
     public ErrorWindow(String text, Window window) {
-        this.initComponents();
-        this.setLocationRelativeTo(window);
+        initComponents();
+        setLocationRelativeTo(window);
+
         this.errorMessageLabel.setText(text);
-        this.setVisible(true);
-        this.setAlwaysOnTop(true);
+
+        setVisible(true);
+        setAlwaysOnTop(true);
     }
 
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents

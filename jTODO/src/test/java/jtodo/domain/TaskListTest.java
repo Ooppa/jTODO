@@ -13,14 +13,14 @@ import org.junit.*;
  */
 public class TaskListTest {
 
-    private TaskList tasklist;
+    private DatabaseManager tasklist;
 
     public TaskListTest() {
     }
 
     @Before
     public void setUp() {
-        tasklist = new TaskList();
+        tasklist = new DatabaseManager();
     }
 
     @After

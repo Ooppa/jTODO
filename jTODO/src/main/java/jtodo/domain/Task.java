@@ -86,14 +86,19 @@ public class Task<E> extends AbstractListItem {
         return this.deadline.toString();
     }
 
+    public Deadline getDeadline() {
+        return deadline;
+    }
+
     /**
      * Set new DateTime as the Deadline time from a string input.
      *
      * @param dateTime DateTime as a String
      *
      * @see DateTime
+     * @see IllegalArgumentException
      */
-    public void setDeadline(String dateTime) {
+    public void setDeadline(String dateTime) throws IllegalArgumentException {
         org.joda.time.format.DateTimeFormatter formatter;
         formatter = DateTimeFormat.forPattern("dd.MM.YYYY HH:mm");
 

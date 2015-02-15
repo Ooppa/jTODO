@@ -7,8 +7,8 @@ package jtodo.application;
 
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import jtodo.domain.TaskList;
-import jtodo.ui.TaskView;
+import jtodo.domain.DatabaseManager;
+import jtodo.ui.TaskViewWindow;
 
 /**
  * Starting point for the application.
@@ -35,8 +35,8 @@ public class Application {
         logger.log(Level.INFO, "Application started with class path: {0}",
                 System.getProperty("java.class.path"));
 
-        // Main interface for the application
-        TaskView taskview = new TaskView(new TaskList()); // TODO  tasklist
+        DatabaseManager taskList = new DatabaseManager();
+        TaskViewWindow taskview = new TaskViewWindow(taskList);
 
     }
 
