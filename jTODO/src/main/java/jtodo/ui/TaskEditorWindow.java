@@ -34,6 +34,8 @@ public class TaskEditorWindow extends javax.swing.JFrame {
      */
     private Task task;
 
+    private boolean newTask;
+
     private TaskViewWindow taskViewWindow;
 
     private static final Logger logger = Logger.getLogger(TaskEditorWindow.class.getName());
@@ -50,6 +52,7 @@ public class TaskEditorWindow extends javax.swing.JFrame {
     public TaskEditorWindow(TaskViewWindow taskViewWindow, Task task) {
         this.task = task;
         this.taskViewWindow = taskViewWindow;
+        this.newTask = false;
 
         createWindow(taskViewWindow, "Edit Task");
         fillInValues();
@@ -70,6 +73,7 @@ public class TaskEditorWindow extends javax.swing.JFrame {
         try {
             this.task = new Task("Name", "Description");
             this.taskViewWindow = taskViewWindow;
+            this.newTask = true;
 
             createWindow(taskViewWindow, "Create new task");
             fillInValues();
@@ -92,7 +96,7 @@ public class TaskEditorWindow extends javax.swing.JFrame {
      */
     private void fillInValues() {
         logger.log(Level.INFO, "Automatically filling in the values for the task");
-        
+
         fieldName.setText(task.getName());
         fieldDescription.setText(task.getDescription());
         comboBoxPriority.setSelectedItem(task.getPriority());
@@ -103,9 +107,9 @@ public class TaskEditorWindow extends javax.swing.JFrame {
 
             comboBoxDay.setSelectedIndex(dateTime.getDayOfMonth()-1);
             comboBoxMonth.setSelectedIndex(dateTime.getMonthOfYear()-1);
-            fieldYear.setText("" + dateTime.getYear());
-            comboBoxTime.setSelectedItem(dateTime.getHourOfDay() + ":" + dateTime.getMinuteOfHour());
-            
+            fieldYear.setText(""+dateTime.getYear());
+            comboBoxTime.setSelectedItem(dateTime.getHourOfDay()+":"+dateTime.getMinuteOfHour());
+
             checkBoxDeadlineActive.setSelected(true);
         } else {
             checkBoxDeadlineActive.setSelected(false);
@@ -113,36 +117,30 @@ public class TaskEditorWindow extends javax.swing.JFrame {
 
     }
 
-    private void attemptToCreateTaskFromForm() {
+    private Task attemptToCreateTaskFromForm() throws TooLongInputException, TooShortInputException {
+        logger.log(Level.INFO, "Attempting to create task from the form input.");
+
+        Task created = new Task(fieldName.getText(), fieldDescription.getText());
+        created.setDeadline(getDeadlineFromFieldAsString());
+        created.setDeadlineActive(checkBoxDeadlineActive.isSelected());
+        created.setPriority((Priority) comboBoxPriority.getSelectedItem());
+
+        return created;
+    }
+    
+    private void attemptToEditTaskFromForm() throws TooLongInputException, TooShortInputException {
         logger.log(Level.INFO, "Attempting to create task from the form input.");
         
-        try {
-            Task created = new Task(fieldName.getText(), fieldDescription.getText());
-            created.setDeadline(getDeadlineFromFieldAsString());
-            created.setDeadlineActive(checkBoxDeadlineActive.isSelected());
-            created.setPriority((Priority) comboBoxPriority.getSelectedItem());
-
-            taskViewWindow.addNewTask(created);
-
-            dispose();
-
-        } catch(TooShortInputException ex) {
-
-            ErrorWindow error = new ErrorWindow("Your task name is too short.");
-            logger.log(Level.INFO, "Tried to add Task with too short input. User notified.");
-
-        } catch(TooLongInputException ex) {
-
-            ErrorWindow error = new ErrorWindow("Your task name or description is too long.");
-            logger.log(Level.INFO, "Tried to add Task with too long input. User notified.");
-
-        } catch(IllegalArgumentException ex) {
-
-            ErrorWindow error = new ErrorWindow("Could not parse the date your gave. Check it for errors.");
-            logger.log(Level.INFO, "ErrorWindow during the parsing of datetime. Could not parse the date given.");
-
+        task.setName(fieldName.getText());
+        task.setDescription(fieldDescription.getText());
+        
+        if(checkBoxDeadlineActive.isSelected()){
+            task.setDeadline(getDeadlineFromFieldAsString());
+        } else {
+            task.setDeadlineActive(false);
         }
-
+        
+        task.setPriority((Priority) comboBoxPriority.getSelectedItem());
     }
 
     /*
@@ -325,7 +323,7 @@ public class TaskEditorWindow extends javax.swing.JFrame {
         comboBoxMonth.setEnabled(checkBoxDeadlineActive.isSelected());
         fieldYear.setEnabled(checkBoxDeadlineActive.isSelected());
         comboBoxTime.setEnabled(checkBoxDeadlineActive.isSelected());
-        
+
         logEvent(evt);
     }//GEN-LAST:event_checkBoxDeadlineActiveActionPerformed
 
@@ -333,7 +331,54 @@ public class TaskEditorWindow extends javax.swing.JFrame {
      * Saving the new task or saving changes to the old one
      */
     private void buttonSaveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonSaveActionPerformed
-        attemptToCreateTaskFromForm();
+        if(newTask) {
+            // Creating a new task
+            try {
+                Task created = attemptToCreateTaskFromForm();
+                taskViewWindow.addNewTask(created);
+
+                dispose();
+            } catch(TooShortInputException ex) {
+
+                ErrorWindow error = new ErrorWindow("Your task name is too short.");
+                logger.log(Level.INFO, "Tried to add Task with too short input. User notified.");
+
+            } catch(TooLongInputException ex) {
+
+                ErrorWindow error = new ErrorWindow("Your task name or description is too long.");
+                logger.log(Level.INFO, "Tried to add Task with too long input. User notified.");
+
+            } catch(IllegalArgumentException ex) {
+
+                ErrorWindow error = new ErrorWindow("Could not parse the date your gave. Check it for errors.");
+                logger.log(Level.INFO, "ErrorWindow during the parsing of datetime. Could not parse the date given.");
+
+            }
+
+        } else {
+            // Editing old task
+            try {
+                attemptToEditTaskFromForm();
+                taskViewWindow.updateTable();
+                dispose();
+            } catch(TooShortInputException ex) {
+
+                ErrorWindow error = new ErrorWindow("Your task name is too short.");
+                logger.log(Level.INFO, "Tried to add Task with too short input. User notified.");
+
+            } catch(TooLongInputException ex) {
+
+                ErrorWindow error = new ErrorWindow("Your task name or description is too long.");
+                logger.log(Level.INFO, "Tried to add Task with too long input. User notified.");
+
+            } catch(IllegalArgumentException ex) {
+
+                ErrorWindow error = new ErrorWindow("Could not parse the date your gave. Check it for errors.");
+                logger.log(Level.INFO, "ErrorWindow during the parsing of datetime. Could not parse the date given.");
+
+            }
+        }
+
         logEvent(evt);
     }//GEN-LAST:event_buttonSaveActionPerformed
 

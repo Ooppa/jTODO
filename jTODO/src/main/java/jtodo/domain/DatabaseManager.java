@@ -42,38 +42,12 @@ public class DatabaseManager {
         int returnValue = fileChooser.showOpenDialog(null);
 
         if(returnValue==JFileChooser.APPROVE_OPTION) {
-            FileInputStream fileInputStream = null;
-
-            try {
-                // Remember what file we opened
-                setDatabaseFile(fileChooser.getSelectedFile());
-
-                fileInputStream = new FileInputStream(fileChooser.getSelectedFile());
-                ObjectInputStream objectInputStream = new ObjectInputStream(fileInputStream);
-
-                this.database = (Database) objectInputStream.readObject();
-                objectInputStream.close();
-            } catch(FileNotFoundException ex) {
-                ErrorWindow error = new ErrorWindow("File was not found.");
-                logger.log(Level.WARNING, "File was not found: "+ex.toString());
-            } catch(IOException ex) {
-                ErrorWindow error = new ErrorWindow("File could not be read. Might not be proper savefile.");
-                logger.log(Level.WARNING, "File could not be read (might not be proper savefile): "+ex.toString());
-            } catch(ClassNotFoundException ex) {
-                ErrorWindow error = new ErrorWindow("File was not found.");
-                logger.log(Level.WARNING, "Could not close File Output Stream: "+ex.toString());
-            } finally {
-                // Finally we close the connection no matter what
-                try {
-                    fileInputStream.close();
-                } catch(IOException ex) {
-                    logger.log(Level.WARNING, "Could not close File Output Stream.");
-                }
-            }
-
+            attemptToLoadDB(fileChooser.getSelectedFile());
         } else {
-            ErrorWindow error = new ErrorWindow("FileChooser doesn't approve option given.");
-            logger.log(Level.INFO, "FileChooser doesn't approve option given.");
+            if(returnValue!=JFileChooser.CANCEL_OPTION) {
+                ErrorWindow error = new ErrorWindow("FileChooser doesn't approve option given.");
+                logger.log(Level.INFO, "FileChooser doesn''t approve option given ({0}).", returnValue);
+            }
         }
     }
 
@@ -82,7 +56,7 @@ public class DatabaseManager {
      */
     public void saveDB() {
         database.updateSavetime();
-        
+
         if(getDatabaseFile()==null) {
             // No database found
             JFileChooser fileChooser = new JFileChooser();
@@ -91,8 +65,10 @@ public class DatabaseManager {
             if(returnValue==JFileChooser.APPROVE_OPTION) {
                 attemptToSaveDB(fileChooser.getSelectedFile());
             } else {
-                ErrorWindow error = new ErrorWindow("FileChooser doesn't approve option given.");
-                logger.log(Level.INFO, "FileChooser doesn't approve option given.");
+                if(returnValue!=JFileChooser.CANCEL_OPTION) {
+                    ErrorWindow error = new ErrorWindow("FileChooser doesn't approve option given.");
+                    logger.log(Level.INFO, "FileChooser doesn''t approve option given ({0}).", returnValue);
+                }
             }
         } else {
             // Database file already found, use that
@@ -140,16 +116,49 @@ public class DatabaseManager {
             objectOutputStream.close();
         } catch(FileNotFoundException ex) {
             ErrorWindow error = new ErrorWindow("File was not found.");
-            logger.log(Level.WARNING, "File was not found: "+ex.toString());
+            logger.log(Level.WARNING, "File was not found: {0}", ex.toString());
         } catch(IOException ex) {
             ErrorWindow error = new ErrorWindow("File could not be read.");
-            logger.log(Level.WARNING, "File could not be read: "+ex.toString());
+            logger.log(Level.WARNING, "File could not be read: {0}", ex.toString());
         } finally {
             // Finally we close the connection no matter what
             try {
                 fileOutputStream.close();
             } catch(IOException ex) {
-                logger.log(Level.WARNING, "Could not close File Output Stream: "+ex.toString());
+                logger.log(Level.WARNING, "Could not close File Output Stream: {0}", ex.toString());
+            }
+        }
+    }
+
+    /*
+     * Attempts to load the Database object from file given
+     */
+    private void attemptToLoadDB(File file) {
+        FileInputStream fileInputStream = null;
+
+        try {
+            // Remember what file we opened
+            setDatabaseFile(file);
+
+            fileInputStream = new FileInputStream(file);
+            try (ObjectInputStream objectInputStream = new ObjectInputStream(fileInputStream)) {
+                this.database = (Database) objectInputStream.readObject();
+            }
+        } catch(FileNotFoundException ex) {
+            ErrorWindow error = new ErrorWindow("File was not found.");
+            logger.log(Level.WARNING, "File was not found: {0}", ex.toString());
+        } catch(IOException ex) {
+            ErrorWindow error = new ErrorWindow("File could not be read. Might not be proper savefile.");
+            logger.log(Level.WARNING, "File could not be read (might not be proper savefile): {0}", ex.toString());
+        } catch(ClassNotFoundException ex) {
+            ErrorWindow error = new ErrorWindow("File was not found.");
+            logger.log(Level.WARNING, "Could not close File Output Stream: {0}", ex.toString());
+        } finally {
+            // Finally we close the connection no matter what
+            try {
+                fileInputStream.close();
+            } catch(IOException ex) {
+                logger.log(Level.WARNING, "Could not close File Output Stream.");
             }
         }
     }
@@ -182,6 +191,10 @@ public class DatabaseManager {
      */
     public File getDatabaseFile() {
         return databaseFile;
+    }
+    
+    public Task getTaskAtIndex(int index){
+        return database.getTasks().get(index);
     }
 
     /*

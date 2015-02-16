@@ -12,6 +12,8 @@ import java.awt.event.MouseEvent;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JFrame;
+import javax.swing.JPopupMenu;
+import javax.swing.JTable;
 import jtodo.domain.DatabaseManager;
 import jtodo.domain.Task;
 
@@ -74,14 +76,26 @@ public class TaskViewWindow extends JFrame {
 
         tablePopupMenuContextMenu.setName("tablePopupMenuContextMenu"); // NOI18N
 
+        popupMenuItemEditTask.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/edit.png"))); // NOI18N
         popupMenuItemEditTask.setText("Edit...");
         popupMenuItemEditTask.setToolTipText("");
         popupMenuItemEditTask.setName("popupMenuItemEditTask"); // NOI18N
+        popupMenuItemEditTask.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                popupMenuItemEditTaskActionPerformed(evt);
+            }
+        });
         tablePopupMenuContextMenu.add(popupMenuItemEditTask);
 
+        popupMenuItemDeleteTask.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/cross.png"))); // NOI18N
         popupMenuItemDeleteTask.setText("Delete...");
         popupMenuItemDeleteTask.setToolTipText("");
         popupMenuItemDeleteTask.setName("popupMenuItemDeleteTask"); // NOI18N
+        popupMenuItemDeleteTask.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                popupMenuItemDeleteTaskActionPerformed(evt);
+            }
+        });
         tablePopupMenuContextMenu.add(popupMenuItemDeleteTask);
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -127,18 +141,18 @@ public class TaskViewWindow extends JFrame {
         tableTasks.setColumnSelectionAllowed(true);
         tableTasks.setName("tableTasks"); // NOI18N
         tableTasks.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                tableTasksMouseClicked(evt);
+            public void mouseReleased(java.awt.event.MouseEvent evt) {
+                tableTasksMouseReleased(evt);
             }
         });
         scrollPanelForTasks.setViewportView(tableTasks);
-        tableTasks.getColumnModel().getSelectionModel().setSelectionMode(javax.swing.ListSelectionModel.SINGLE_INTERVAL_SELECTION);
+        tableTasks.getColumnModel().getSelectionModel().setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
         if (tableTasks.getColumnModel().getColumnCount() > 0) {
             tableTasks.getColumnModel().getColumn(0).setResizable(false);
             tableTasks.getColumnModel().getColumn(0).setPreferredWidth(5);
         }
-        // Rightclick menu
-        tableTasks.setComponentPopupMenu(tablePopupMenuContextMenu);
+        // Right-click popup menu
+        //TODO tableTasks.setComponentPopupMenu(tablePopupMenuContextMenu);
 
         getContentPane().add(scrollPanelForTasks, java.awt.BorderLayout.CENTER);
 
@@ -302,6 +316,7 @@ public class TaskViewWindow extends JFrame {
 
     private void menuItemLoadTasklistActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuItemLoadTasklistActionPerformed
         databaseManager.loadDB();
+        updateTable();
         logEvent(evt);
     }//GEN-LAST:event_menuItemLoadTasklistActionPerformed
 
@@ -354,14 +369,6 @@ public class TaskViewWindow extends JFrame {
         logEvent(evt);
     }//GEN-LAST:event_menuItemViewCategoriesActionPerformed
 
-    /*
-     * Click menu trigger
-     */
-    private void tableTasksMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tableTasksMouseClicked
-        // TODO, toistaiseksi turha, myöhemmin muuttuuu
-        logEvent(evt);
-    }//GEN-LAST:event_tableTasksMouseClicked
-
     private void menuItemRefreshActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuItemRefreshActionPerformed
         updateTable();
         logEvent(evt);
@@ -372,7 +379,7 @@ public class TaskViewWindow extends JFrame {
 
         // If Ctrl+N is pressed
         if(evt.getKeyChar()==KeyEvent.VK_N&&evt.getModifiers()==InputEvent.CTRL_MASK) {
-
+            // Turha? :D TODO
         }
 
 
@@ -383,9 +390,51 @@ public class TaskViewWindow extends JFrame {
 
         // If Ctrl+N is pressed
         if(evt.getKeyChar()==KeyEvent.VK_N&&evt.getModifiers()==InputEvent.CTRL_MASK) {
-
+            // Turha? :D TODO
         }
     }//GEN-LAST:event_formKeyTyped
+
+    private void popupMenuItemEditTaskActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_popupMenuItemEditTaskActionPerformed
+        // Only if row is selected
+        if(tableTasks.getSelectedRow()!=-1) {
+            TaskEditorWindow taskEditorWindow = new TaskEditorWindow(this, databaseManager.getTaskAtIndex(tableTasks.getSelectedRow()));
+        }
+
+        logEvent(evt);
+    }//GEN-LAST:event_popupMenuItemEditTaskActionPerformed
+
+    private void popupMenuItemDeleteTaskActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_popupMenuItemDeleteTaskActionPerformed
+        // Only if row is selected
+        if(tableTasks.getSelectedRow()!=-1) {
+            databaseManager.getTasks().remove(databaseManager.getTaskAtIndex(tableTasks.getSelectedRow()));
+            updateTable(); // TODO?
+        }
+
+        logEvent(evt);
+    }//GEN-LAST:event_popupMenuItemDeleteTaskActionPerformed
+
+    private void tableTasksMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tableTasksMouseReleased
+        int rowPoint = tableTasks.rowAtPoint(evt.getPoint());
+
+        if(rowPoint>=0&&rowPoint<tableTasks.getRowCount()) {
+            tableTasks.setRowSelectionInterval(rowPoint, rowPoint);
+        } else {
+            tableTasks.clearSelection();
+        }
+
+        int rowindex = tableTasks.getSelectedRow();
+
+        if(rowindex<0) {
+            return;
+        }
+
+        if(evt.isPopupTrigger()&&evt.getComponent() instanceof JTable) {
+            JPopupMenu popup = this.tablePopupMenuContextMenu;
+            popup.show(evt.getComponent(), evt.getX(), evt.getY());
+        }
+
+        logEvent(evt);
+    }//GEN-LAST:event_tableTasksMouseReleased
 
     /**
      * Add a new task to table and update the table
