@@ -36,6 +36,17 @@ public enum ListItemColor {
     }
 
     /**
+     * Returns true if this is the same color as the other.
+     *
+     * @param ListItemColor Color to compare to
+     *
+     * @return boolean
+     */
+    public boolean equals(ListItemColor otherColor) {
+        return this.getColor().equals(otherColor.getColor());
+    }
+
+    /**
      * Returns all ListItemColors as Color
      *
      * @return Colors
@@ -50,6 +61,34 @@ public enum ListItemColor {
         }
 
         return colors;
+    }
+
+    /**
+     * Returns ListItemColors from given index.
+     * If not in range - returns white.
+     *
+     * @return ListItemColor
+     */
+    public static ListItemColor getListItemColorFromIndex(int index) {
+        ListItemColor[] listItemColors = ListItemColor.values();
+
+        try {
+            return listItemColors[index];
+        } catch(ArrayIndexOutOfBoundsException ex) {
+            return ListItemColor.WHITE;
+        }
+    }
+    
+    public static int getIndexFromListItemColor(ListItemColor color) {
+        ListItemColor[] values = ListItemColor.values();
+        
+        for(int i = 0; i<values.length; i++) {
+            if(values[i].equals(color)){
+                return i;
+            }
+        }
+        
+        return values.length-1;
     }
 
 }

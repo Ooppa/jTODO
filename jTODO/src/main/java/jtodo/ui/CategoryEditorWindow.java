@@ -11,6 +11,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JFrame;
 import jtodo.domain.Category;
+import jtodo.domain.DatabaseManager;
 import jtodo.domain.ListItemColor;
 import jtodo.domain.Task;
 import jtodo.excptions.TooLongInputException;
@@ -30,9 +31,12 @@ import org.joda.time.format.DateTimeFormatter;
 public class CategoryEditorWindow extends JFrame {
 
     /*
-     * Task to be edited or created
+     * Category to be edited or created
      */
     private Category category;
+
+    private DatabaseManager databaseManager;
+    private ListCategoriesWindow listCategoriesWindow;
 
     private static final Logger logger = Logger.getLogger(CategoryEditorWindow.class.getName());
 
@@ -62,9 +66,10 @@ public class CategoryEditorWindow extends JFrame {
      *
      * @see Task
      */
-    public CategoryEditorWindow(Window window) {
+    public CategoryEditorWindow(Window window, DatabaseManager databaseManager) {
         try {
             this.category = new Category("Name", "Description");
+            this.databaseManager = databaseManager;
             createWindow(window, "Create new category");
             fillInValues();
         } catch(TooShortInputException|TooLongInputException ex) {
@@ -72,6 +77,10 @@ public class CategoryEditorWindow extends JFrame {
         }
 
         logger.log(Level.INFO, "Created a new CategoryEditorWindow window.");
+    }
+
+    public void setListCategoriesWindow(ListCategoriesWindow listCategoriesWindow) {
+        this.listCategoriesWindow = listCategoriesWindow;
     }
 
     private void createWindow(Window window, String title) {
@@ -88,13 +97,23 @@ public class CategoryEditorWindow extends JFrame {
         fieldName.setText(category.getName());
         fieldDescription.setText(category.getDescription());
 
-        // TODO
+        ListItemColor color = category.getColor();
+
+        // TODO Color
     }
 
     private void attemptToCreateCategoryFromForm() {
         try {
             Category category = new Category(this.fieldName.getText(), this.fieldDescription.getText());
-            // TODO category.setColor(ListItemColor.);
+            category.setColor(ListItemColor.getListItemColorFromIndex(this.comboboxColor.getSelectedIndex()));
+            
+            databaseManager.getCategories().add(category);
+            
+            if(this.listCategoriesWindow!=null){
+                listCategoriesWindow.updateList();
+            }
+            
+            dispose();
         } catch(TooShortInputException ex) {
             ErrorWindow error = new ErrorWindow("Your category name is too short.");
             logger.log(Level.INFO, "Tried to add Category with too short input. User notified.");
@@ -158,7 +177,8 @@ public class CategoryEditorWindow extends JFrame {
 
         comboboxColor.setToolTipText(bundle.getString("CategoryEditorWindow.comboboxColor.toolTipText")); // NOI18N
         comboboxColor.setName("comboboxColor"); // NOI18N
-        comboboxColor.setRenderer(new ColorChooserCellRenderer());
+        comboboxColor.setRenderer(new ColorChooserCellRenderer()); // Custom renderer to show the colors on the combobox
+        comboboxColor.setSelectedIndex(ListItemColor.values().length-1); // Default value is white, the last one
 
         org.jdesktop.layout.GroupLayout layout = new org.jdesktop.layout.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -222,7 +242,9 @@ public class CategoryEditorWindow extends JFrame {
      * Saving the new task or saving changes to the old one
      */
     private void buttonSaveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonSaveActionPerformed
-        // TODO
+        attemptToCreateCategoryFromForm();
+        
+        
         logEvent(evt);
     }//GEN-LAST:event_buttonSaveActionPerformed
 

@@ -360,12 +360,12 @@ public class TaskViewWindow extends JFrame {
     }//GEN-LAST:event_buttonAddActionPerformed
 
     private void menuItemNewCategoryActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuItemNewCategoryActionPerformed
-        CategoryEditorWindow categoryEditorWindow = new CategoryEditorWindow(this);
+        CategoryEditorWindow categoryEditorWindow = new CategoryEditorWindow(this, databaseManager);
         logEvent(evt);
     }//GEN-LAST:event_menuItemNewCategoryActionPerformed
 
     private void menuItemViewCategoriesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuItemViewCategoriesActionPerformed
-        ListCategoriesWindow listCategories = new ListCategoriesWindow(this);
+        ListCategoriesWindow listCategories = new ListCategoriesWindow(this, databaseManager);
         logEvent(evt);
     }//GEN-LAST:event_menuItemViewCategoriesActionPerformed
 

@@ -5,11 +5,14 @@
  */
 package jtodo.ui;
 
-import java.awt.Window;
 import java.awt.event.ActionEvent;
+import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.AbstractListModel;
 import javax.swing.JFrame;
+import jtodo.domain.Category;
+import jtodo.domain.DatabaseManager;
 
 /**
  * List categories saved in the system, allows the user to add and edit.
@@ -18,7 +21,10 @@ import javax.swing.JFrame;
  * @see Category
  */
 public class ListCategoriesWindow extends JFrame {
-    
+
+    private DatabaseManager databaseManager;
+    private TaskViewWindow taskViewWindow;
+
     private static final Logger logger = Logger.getLogger(ListCategoriesWindow.class.getName());
 
     /**
@@ -26,11 +32,14 @@ public class ListCategoriesWindow extends JFrame {
      *
      * @param window Window which ListCategories should be attached to
      */
-    public ListCategoriesWindow(Window window) {
-        this.initComponents();
-        this.setVisible(true);
-        this.setLocationRelativeTo(window);
-        
+    public ListCategoriesWindow(TaskViewWindow taskViewWindow, DatabaseManager databaseManager) {
+        this.databaseManager = databaseManager;
+        this.taskViewWindow = taskViewWindow;
+
+        initComponents();
+        setVisible(true);
+        setLocationRelativeTo(taskViewWindow);
+
         logger.log(Level.INFO, "Created a new ListCategories window.");
     }
 
@@ -49,22 +58,23 @@ public class ListCategoriesWindow extends JFrame {
         jSeparator1.setName("jSeparator1"); // NOI18N
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        java.util.ResourceBundle bundle = java.util.ResourceBundle.getBundle("jtodo/ui/Bundle"); // NOI18N
+        setTitle(bundle.getString("ListCategoriesWindow.title")); // NOI18N
         setName("Form"); // NOI18N
 
         categoryListScrollPane.setName("categoryListScrollPane"); // NOI18N
 
         categoryList.setModel(new javax.swing.AbstractListModel() {
-            String[] strings = { "Example Category 1", "Example Category 2", "This pane doesn't work yet", "Example Category 3", "Example Category 4", "Example Category 5" };
+            String[] strings = getCategoryAsStringArray();
             public int getSize() { return strings.length; }
             public Object getElementAt(int i) { return strings[i]; }
+            // TODO updateList()
         });
         categoryList.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
         categoryList.setName("categoryList"); // NOI18N
-        categoryList.addMouseListener(formListener);
         categoryListScrollPane.setViewportView(categoryList);
 
         buttonAdd.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/categoryadd.png"))); // NOI18N
-        java.util.ResourceBundle bundle = java.util.ResourceBundle.getBundle("jtodo/ui/Bundle"); // NOI18N
         buttonAdd.setText(bundle.getString("ListCategoriesWindow.buttonAdd.text")); // NOI18N
         buttonAdd.setName("buttonAdd"); // NOI18N
         buttonAdd.addActionListener(formListener);
@@ -114,7 +124,7 @@ public class ListCategoriesWindow extends JFrame {
 
     // Code for dispatching events from components to event handlers.
 
-    private class FormListener implements java.awt.event.ActionListener, java.awt.event.MouseListener {
+    private class FormListener implements java.awt.event.ActionListener {
         FormListener() {}
         public void actionPerformed(java.awt.event.ActionEvent evt) {
             if (evt.getSource() == buttonAdd) {
@@ -127,63 +137,76 @@ public class ListCategoriesWindow extends JFrame {
                 ListCategoriesWindow.this.buttonDeleteActionPerformed(evt);
             }
         }
-
-        public void mouseClicked(java.awt.event.MouseEvent evt) {
-            if (evt.getSource() == categoryList) {
-                ListCategoriesWindow.this.categoryListMouseClicked(evt);
-            }
-        }
-
-        public void mouseEntered(java.awt.event.MouseEvent evt) {
-        }
-
-        public void mouseExited(java.awt.event.MouseEvent evt) {
-        }
-
-        public void mousePressed(java.awt.event.MouseEvent evt) {
-        }
-
-        public void mouseReleased(java.awt.event.MouseEvent evt) {
-        }
     }// </editor-fold>//GEN-END:initComponents
 
-    /**
-     * If list item is double-clicked (or spam-clicked)
-     */
-    private void categoryListMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_categoryListMouseClicked
-        // TODO
-        System.out.println("MouseClickEvent");
-        if(evt.getClickCount() >= 2){
-            int index = categoryList.locationToIndex(evt.getPoint());
-            System.out.println("index = "+index);
-        }
-        
-    }//GEN-LAST:event_categoryListMouseClicked
-
     private void buttonDeleteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonDeleteActionPerformed
-        // TODO
-        Object selectedValue = categoryList.getSelectedValue();
-        logEvent(evt, "Selected value was: "+ selectedValue.toString());
+        if(this.categoryList.getSelectedIndex()!=-1) {
+            Category selectedCategory = this.databaseManager.getCategories().get(this.categoryList.getSelectedIndex());
+
+            this.databaseManager.getCategories().remove(selectedCategory);
+            updateList();
+        }
+
+        logEvent(evt);
     }//GEN-LAST:event_buttonDeleteActionPerformed
 
     private void buttonAddActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonAddActionPerformed
-        CategoryEditorWindow categoryEditorWindow = new CategoryEditorWindow(this);
+        CategoryEditorWindow categoryEditorWindow = new CategoryEditorWindow(this, databaseManager);
+        categoryEditorWindow.setListCategoriesWindow(this); // Make the list auto-updateable
+
         logEvent(evt);
     }//GEN-LAST:event_buttonAddActionPerformed
 
     private void buttonEditActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonEditActionPerformed
-        // TODO add your handling code here:
+        if(this.categoryList.getSelectedIndex()!=-1) {
+            Category selectedCategory = this.databaseManager.getCategories().get(this.categoryList.getSelectedIndex());
+
+            CategoryEditorWindow categoryEditorWindow = new CategoryEditorWindow(this, selectedCategory);
+            categoryEditorWindow.setListCategoriesWindow(this); // Make the list auto-updateable
+        }
+
         logEvent(evt);
     }//GEN-LAST:event_buttonEditActionPerformed
+
+    /*
+     * Updates the list found on the ListCategoriesWindow
+     * @see AbstractListModel
+     */
+    public void updateList() {
+        categoryList.setModel(new AbstractListModel() {
+            String[] strings = getCategoryAsStringArray();
+
+            public int getSize() {
+                return strings.length;
+            }
+
+            public Object getElementAt(int i) {
+                return strings[i];
+            }
+        });
+    }
+
+    /*
+     * Converts a list of categories into a String array containing only their
+     * names
+     */
+    private String[] getCategoryAsStringArray() {
+        ArrayList<Category> categories = this.databaseManager.getCategories();
+
+        String[] strings = new String[categories.size()];
+        int currentIndex = 0;
+        for(Category category : categories) {
+            strings[currentIndex] = category.getName();
+            currentIndex++;
+        }
+
+        return strings;
+    }
 
     private void logEvent(ActionEvent evt) {
         logger.log(Level.INFO, "User performed action: "+evt.toString());
     }
-    
-    private void logEvent(ActionEvent evt, String customString) {
-        logger.log(Level.INFO, "User performed action: "+evt.toString() + "("+ customString + ")");
-    }
-    
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton buttonAdd;
     private javax.swing.JButton buttonDelete;

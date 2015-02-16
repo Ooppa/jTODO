@@ -148,7 +148,7 @@
       </Properties>
       <AuxValues>
         <AuxValue name="JavaCodeGenerator_CreateCodeCustom" type="java.lang.String" value="new javax.swing.JComboBox(ListItemColor.getColorsInArray())"/>
-        <AuxValue name="JavaCodeGenerator_InitCodePost" type="java.lang.String" value="comboboxColor.setRenderer(new ColorChooserCellRenderer());"/>
+        <AuxValue name="JavaCodeGenerator_InitCodePost" type="java.lang.String" value="comboboxColor.setRenderer(new ColorChooserCellRenderer()); // Custom renderer to show the colors on the combobox&#xa;comboboxColor.setSelectedIndex(ListItemColor.values().length-1); // Default value is white, the last one"/>
       </AuxValues>
     </Component>
   </SubComponents>
