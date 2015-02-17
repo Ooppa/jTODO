@@ -135,33 +135,12 @@ public class TaskViewWindow extends JFrame {
 
         scrollPanelForTasks.setName("scrollPanelForTasks"); // NOI18N
 
-        tableTasks.setModel(new javax.swing.table.DefaultTableModel(
-            new Object [][] {
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null}
-            },
-            new String [] {
-                "Done", "Task Name", "Task Description", "Priority", "Deadline"
-            }
-        ) {
-            boolean[] canEdit = new boolean [] {
-                false, false, false, false, false
-            };
-
-            public boolean isCellEditable(int rowIndex, int columnIndex) {
-                return canEdit [columnIndex];
-            }
-        });
+        TaskTableModel tableModel = new TaskTableModel(this.databaseManager.getTasks());
+        tableTasks.setModel(tableModel);
         tableTasks.setColumnSelectionAllowed(true);
         tableTasks.setName("tableTasks"); // NOI18N
+        tableTasks.setRowHeight(20);
+        tableTasks.setAutoCreateRowSorter(true); // Automatically creates the row sorters
         tableTasks.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseReleased(java.awt.event.MouseEvent evt) {
                 tableTasksMouseReleased(evt);
@@ -405,7 +384,8 @@ public class TaskViewWindow extends JFrame {
      */
     private void menuItemNewCategoryActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuItemNewCategoryActionPerformed
         CategoryEditorWindow categoryEditorWindow = new CategoryEditorWindow(this, databaseManager);
-        //TODO update
+        categoryEditorWindow.setTaskViewWindow(this); // So we can update the list later
+
         logEvent(evt);
     }//GEN-LAST:event_menuItemNewCategoryActionPerformed
 
@@ -414,6 +394,7 @@ public class TaskViewWindow extends JFrame {
      */
     private void menuItemViewCategoriesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuItemViewCategoriesActionPerformed
         ListCategoriesWindow listCategories = new ListCategoriesWindow(this, databaseManager);
+
         logEvent(evt);
     }//GEN-LAST:event_menuItemViewCategoriesActionPerformed
 
@@ -450,8 +431,8 @@ public class TaskViewWindow extends JFrame {
      */
     private void popupMenuItemEditTaskActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_popupMenuItemEditTaskActionPerformed
         // Only if row is selected
-        if(tableTasks.getSelectedRow()!=-1) {
-            TaskEditorWindow taskEditorWindow = new TaskEditorWindow(this, databaseManager.getTaskAtIndex(tableTasks.getSelectedRow()));
+        if(tableTasks.convertRowIndexToModel(tableTasks.getSelectedRow())!=-1) {
+            TaskEditorWindow taskEditorWindow = new TaskEditorWindow(this, databaseManager.getTaskAtIndex(tableTasks.convertRowIndexToModel(tableTasks.getSelectedRow())));
         }
 
         logEvent(evt);
@@ -462,8 +443,8 @@ public class TaskViewWindow extends JFrame {
      */
     private void popupMenuItemDeleteTaskActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_popupMenuItemDeleteTaskActionPerformed
         // Only if row is selected
-        if(tableTasks.getSelectedRow()!=-1) {
-            databaseManager.getTasks().remove(databaseManager.getTaskAtIndex(tableTasks.getSelectedRow()));
+        if(tableTasks.convertRowIndexToModel(tableTasks.getSelectedRow())!=-1) {
+            databaseManager.getTasks().remove(databaseManager.getTaskAtIndex(tableTasks.convertRowIndexToModel(tableTasks.getSelectedRow())));
             updateTable(); // TODO?
         }
 
@@ -479,7 +460,7 @@ public class TaskViewWindow extends JFrame {
             tableTasks.clearSelection();
         }
 
-        int rowindex = tableTasks.getSelectedRow();
+        int rowindex = tableTasks.convertRowIndexToModel(tableTasks.getSelectedRow());
 
         if(rowindex<0) {
             return; // -1 is mark for empty selection
@@ -498,8 +479,15 @@ public class TaskViewWindow extends JFrame {
      */
     private void popupMenuSubMenuCategoryItemDefaultActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_popupMenuSubMenuCategoryItemDefaultActionPerformed
         // Only if row is selected
-        if(tableTasks.getSelectedRow()!=-1) {
-            Task taskSelected = databaseManager.getTaskAtIndex(tableTasks.getSelectedRow());
+        if(tableTasks.convertRowIndexToModel(tableTasks.getSelectedRow())!=-1) {
+
+            // TODO this, maybe?
+            /*
+             * TableModel model = tableTasks.getModel();
+             * TaskTableModel taskTableModel = (TaskTableModel) model;
+             * taskTableModel.getTask(tableTasks.getSelectedRow());
+             */
+            Task taskSelected = databaseManager.getTaskAtIndex(tableTasks.convertRowIndexToModel(tableTasks.getSelectedRow()));
             taskSelected.setCategory(null); // No category is the default category
         }
 
@@ -534,7 +522,22 @@ public class TaskViewWindow extends JFrame {
             databaseManager.saveDB();
         }
 
-        tableTasks.setModel(databaseManager.getTasksAsDefaultTableModel());
+        TaskTableModel generatedTaskTableModel = databaseManager.getTasksAsTaskTableModel();
+        generatedTaskTableModel.setTable(tableTasks);
+        tableTasks.setModel(generatedTaskTableModel);
+
+        // Name
+        tableTasks.getColumnModel().getColumn(0).setCellRenderer(new TaskTableCategoryBasedCellRenderer(generatedTaskTableModel));
+
+        // Description
+        tableTasks.getColumnModel().getColumn(1).setCellRenderer(new TaskTableCategoryBasedCellRenderer(generatedTaskTableModel));
+
+        // Priority
+        tableTasks.getColumnModel().getColumn(2).setCellRenderer(new TaskTableCategoryBasedCellRenderer(generatedTaskTableModel));
+
+        // TODO Deadline
+        tableTasks.getColumnModel().getColumn(3).setCellRenderer(new TaskTableDeadlineBasedCellRenderer(generatedTaskTableModel));
+
         updateCategoryPopupSubmenu(); // Also update the submenu that contains the categories
     }
 
@@ -546,26 +549,50 @@ public class TaskViewWindow extends JFrame {
      */
     public void updateCategoryPopupSubmenu() {
         ArrayList<Category> categories = databaseManager.getCategories();
-        
+
+        // Clear the menu from old pop-up submenus
+        popupMenuSubmenuCategories.removeAll();
+
+        // Add the default menuitem
+        popupMenuSubmenuCategories.add(popupMenuSubMenuCategoryItemDefault);
+
+        // Add custom categories created by the user
         for(Category category : categories) {
             CustomCategoryJMenuItem jmenuItem = new CustomCategoryJMenuItem();
             jmenuItem.setCategory(category); // Associate the category
-            
+
             // Name of the Category
             jmenuItem.setText(category.getName());
-            
+
             // Description of the Category 
             if(category.getDescription().length()!=0) {
                 jmenuItem.setToolTipText(category.getDescription());
             } else {
                 jmenuItem.setToolTipText("No description");
             }
-            
+
             // Color or the Category
             jmenuItem.setBackground(category.getListItemColor().getColor());
-            
-            // TODO addActionListener
-            
+
+            jmenuItem.addActionListener(new java.awt.event.ActionListener() {
+
+                @Override
+                public void actionPerformed(java.awt.event.ActionEvent evt) {
+                    logEvent(evt);
+
+                    if(tableTasks.convertRowIndexToModel(tableTasks.convertRowIndexToModel(tableTasks.getSelectedRow()))!=-1) {
+                        Object sourceObject = evt.getSource();
+                        CustomCategoryJMenuItem customCategoryJMenuItem = (CustomCategoryJMenuItem) sourceObject;
+
+                        Task taskSelected = databaseManager.getTaskAtIndex(tableTasks.convertRowIndexToModel(tableTasks.getSelectedRow()));
+                        taskSelected.setCategory(customCategoryJMenuItem.getCategory());
+
+                        logger.log(Level.INFO, "Changing the category of '"+taskSelected.toString()+"' to '"+customCategoryJMenuItem.getCategory().toString()+"'");
+                    }
+                }
+
+            });
+
             popupMenuSubmenuCategories.add(jmenuItem);
         }
     }
@@ -574,7 +601,7 @@ public class TaskViewWindow extends JFrame {
      * Returns the DatabaseManager
      *
      * @return Current DatabaseManager
-     *s
+     *
      * @see DatabaseManager
      */
     public DatabaseManager getTasklist() {

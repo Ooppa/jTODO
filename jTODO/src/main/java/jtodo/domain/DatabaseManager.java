@@ -12,6 +12,7 @@ import java.util.logging.Logger;
 import javax.swing.JFileChooser;
 import javax.swing.table.DefaultTableModel;
 import jtodo.ui.ErrorWindow;
+import jtodo.ui.TaskTableModel;
 
 /**
  * Used to save, load and use Tasks and Categories
@@ -200,21 +201,8 @@ public class DatabaseManager {
     /*
      * Converts tasks to JTable readable form
      */
-    public DefaultTableModel getTasksAsDefaultTableModel() {
-
-        String[] taskColumns = new String[] {
-            "Done", "Task Name", "Task Description", "Priority", "Deadline"
-        };
-
-        Object[][] taskRows = new Object[getTasks().size()][taskColumns.length];
-        int currentIndex = 0;
-
-        for(Task task : database.getTasks()) {
-            taskRows[currentIndex] = new Object[] {"DONE", task.getName(), task.getDescription(), task.getPriority(), task.getDeadlineAsString()};
-            currentIndex++;
-        }
-
-        return new DefaultTableModel(taskRows, taskColumns);
+    public TaskTableModel getTasksAsTaskTableModel() {
+        return new TaskTableModel(database.getTasks());
     }
 
     /*

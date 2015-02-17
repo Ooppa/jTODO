@@ -20,7 +20,7 @@ import javax.swing.ListCellRenderer;
  */
 public class ColorChooserCellRenderer extends JButton implements ListCellRenderer {
 
-    boolean b = false;
+    static boolean hasBackgroundNotBeenSet = false;
 
     /*
      * Creates a new ColorChooserCellRenderer with opaque set to true
@@ -31,7 +31,7 @@ public class ColorChooserCellRenderer extends JButton implements ListCellRendere
 
     @Override
     public void setBackground(Color backgroundColor) {
-        if(!b) {
+        if(!hasBackgroundNotBeenSet) {
             return;
         }
 
@@ -46,10 +46,10 @@ public class ColorChooserCellRenderer extends JButton implements ListCellRendere
             boolean isSelected,
             boolean cellHasFocus) {
 
-        b = true;
+        hasBackgroundNotBeenSet = true;
         setText(" ");
         setBackground((Color) value);
-        b = false;
+        hasBackgroundNotBeenSet = false;
         return this;
     }
 }

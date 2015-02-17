@@ -6,6 +6,7 @@
 package jtodo.ui;
 
 import java.awt.event.ActionEvent;
+import java.awt.event.KeyEvent;
 import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -57,10 +58,12 @@ public class ListCategoriesWindow extends JFrame {
 
         jSeparator1.setName("jSeparator1"); // NOI18N
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DO_NOTHING_ON_CLOSE);
         java.util.ResourceBundle bundle = java.util.ResourceBundle.getBundle("jtodo/ui/Bundle"); // NOI18N
         setTitle(bundle.getString("ListCategoriesWindow.title")); // NOI18N
         setName("Form"); // NOI18N
+        addWindowListener(formListener);
+        addKeyListener(formListener);
 
         categoryListScrollPane.setName("categoryListScrollPane"); // NOI18N
 
@@ -124,7 +127,7 @@ public class ListCategoriesWindow extends JFrame {
 
     // Code for dispatching events from components to event handlers.
 
-    private class FormListener implements java.awt.event.ActionListener {
+    private class FormListener implements java.awt.event.ActionListener, java.awt.event.KeyListener, java.awt.event.WindowListener {
         FormListener() {}
         public void actionPerformed(java.awt.event.ActionEvent evt) {
             if (evt.getSource() == buttonAdd) {
@@ -136,6 +139,42 @@ public class ListCategoriesWindow extends JFrame {
             else if (evt.getSource() == buttonDelete) {
                 ListCategoriesWindow.this.buttonDeleteActionPerformed(evt);
             }
+        }
+
+        public void keyPressed(java.awt.event.KeyEvent evt) {
+        }
+
+        public void keyReleased(java.awt.event.KeyEvent evt) {
+            if (evt.getSource() == ListCategoriesWindow.this) {
+                ListCategoriesWindow.this.formKeyReleased(evt);
+            }
+        }
+
+        public void keyTyped(java.awt.event.KeyEvent evt) {
+        }
+
+        public void windowActivated(java.awt.event.WindowEvent evt) {
+        }
+
+        public void windowClosed(java.awt.event.WindowEvent evt) {
+        }
+
+        public void windowClosing(java.awt.event.WindowEvent evt) {
+            if (evt.getSource() == ListCategoriesWindow.this) {
+                ListCategoriesWindow.this.formWindowClosing(evt);
+            }
+        }
+
+        public void windowDeactivated(java.awt.event.WindowEvent evt) {
+        }
+
+        public void windowDeiconified(java.awt.event.WindowEvent evt) {
+        }
+
+        public void windowIconified(java.awt.event.WindowEvent evt) {
+        }
+
+        public void windowOpened(java.awt.event.WindowEvent evt) {
         }
     }// </editor-fold>//GEN-END:initComponents
 
@@ -167,6 +206,20 @@ public class ListCategoriesWindow extends JFrame {
 
         logEvent(evt);
     }//GEN-LAST:event_buttonEditActionPerformed
+
+    /*
+     * When closing the window update the table in TaskViewWindow one last time
+     */
+    private void formWindowClosing(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosing
+        taskViewWindow.updateTable();
+        dispose();
+    }//GEN-LAST:event_formWindowClosing
+
+    private void formKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_formKeyReleased
+        if(evt.getKeyCode()==KeyEvent.VK_F5){
+            updateList();
+        }
+    }//GEN-LAST:event_formKeyReleased
 
     /*
      * Updates the list found on the ListCategoriesWindow
@@ -201,6 +254,17 @@ public class ListCategoriesWindow extends JFrame {
         }
 
         return strings;
+    }
+
+    /*
+     * Attempts to update TaskViewWindow
+     * 
+     * @see TaskViewWindow
+     */
+    public void attemptToUpdateTaskViewWindow() {
+        if(taskViewWindow!=null) {
+            taskViewWindow.updateTable();
+        }
     }
 
     private void logEvent(ActionEvent evt) {

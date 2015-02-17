@@ -41,7 +41,9 @@ public class CategoryEditorWindow extends JFrame {
     private boolean newCategory;
 
     private DatabaseManager databaseManager;
+    
     private ListCategoriesWindow listCategoriesWindow;
+    private TaskViewWindow taskViewWindow;
 
     private static final Logger logger = Logger.getLogger(CategoryEditorWindow.class.getName());
 
@@ -91,6 +93,10 @@ public class CategoryEditorWindow extends JFrame {
     public void setListCategoriesWindow(ListCategoriesWindow listCategoriesWindow) {
         this.listCategoriesWindow = listCategoriesWindow;
     }
+    
+    public void setTaskViewWindow(TaskViewWindow taskViewWindow) {
+        this.taskViewWindow = taskViewWindow;
+    }
 
     private void createWindow(Window window, String title) {
         this.setTitle(title);
@@ -117,8 +123,15 @@ public class CategoryEditorWindow extends JFrame {
 
             databaseManager.getCategories().add(category);
 
+            // If the ListCategoryWindow was added, update it
             if(this.listCategoriesWindow!=null) {
                 listCategoriesWindow.updateList();
+                listCategoriesWindow.attemptToUpdateTaskViewWindow();
+            }
+            
+            // If TaskViewWindow was added, update it
+            if(this.taskViewWindow!=null) {
+                taskViewWindow.updateTable();
             }
 
             dispose();
@@ -139,6 +152,7 @@ public class CategoryEditorWindow extends JFrame {
 
             if(this.listCategoriesWindow!=null) {
                 listCategoriesWindow.updateList();
+                listCategoriesWindow.attemptToUpdateTaskViewWindow();
             }
 
             dispose();

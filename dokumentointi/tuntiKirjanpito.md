@@ -17,4 +17,5 @@
 | 12.02.2015    | Sekvenssikaaviot ja TaskList, TaskView muutoksia | 2h |
 | 15.02.2015    | Tehtävien lisäys, tallennus ja lähes täysin avaus | 4h |
 | 15.02.2015    | Tallennus toimii, kategoriaan voi valita värin | 2h |
-| 15.02.2015    | Muokkaus ja poisto toimii, kategorioita voi lisää ja poistaa | 4h |
+| 16.02.2015    | Muokkaus ja poisto toimii, kategorioita voi lisää ja poistaa | 4h |
+| 17.02.2015    | Kategorioiden värit näkyy listassa, uusia UI luokkia | 6h |
