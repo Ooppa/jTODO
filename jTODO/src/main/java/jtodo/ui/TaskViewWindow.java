@@ -9,11 +9,13 @@ import java.awt.event.ActionEvent;
 import java.awt.event.InputEvent;
 import java.awt.event.KeyEvent;
 import java.awt.event.MouseEvent;
+import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JFrame;
 import javax.swing.JPopupMenu;
 import javax.swing.JTable;
+import jtodo.domain.Category;
 import jtodo.domain.DatabaseManager;
 import jtodo.domain.Task;
 
@@ -37,15 +39,16 @@ public class TaskViewWindow extends JFrame {
      * Creates new form TaskView window.
      *
      * @param tasklist DatabaseManager to view
+     *
+     * @see DatabaseManager
      */
     public TaskViewWindow(DatabaseManager tasklist) {
         this.autosave = false; // On default this is off
         this.databaseManager = tasklist;
 
-        this.setTitle("jTODO");
-        this.initComponents();
-        this.setVisible(true);
-        this.setLocationRelativeTo(null);
+        initComponents();
+        setLocationRelativeTo(null);
+        setVisible(true);
 
         updateTable();
     }
@@ -55,6 +58,8 @@ public class TaskViewWindow extends JFrame {
 
         tablePopupMenuContextMenu = new javax.swing.JPopupMenu();
         popupMenuItemEditTask = new javax.swing.JMenuItem();
+        popupMenuSubmenuCategories = new javax.swing.JMenu();
+        popupMenuSubMenuCategoryItemDefault = new javax.swing.JMenuItem();
         popupMenuItemDeleteTask = new javax.swing.JMenuItem();
         scrollPanelForTasks = new javax.swing.JScrollPane();
         tableTasks = new javax.swing.JTable();
@@ -86,6 +91,23 @@ public class TaskViewWindow extends JFrame {
             }
         });
         tablePopupMenuContextMenu.add(popupMenuItemEditTask);
+
+        popupMenuSubmenuCategories.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/category.png"))); // NOI18N
+        popupMenuSubmenuCategories.setText("Set Category");
+        popupMenuSubmenuCategories.setName("popupMenuSubmenuCategories"); // NOI18N
+
+        popupMenuSubMenuCategoryItemDefault.setFont(new java.awt.Font("Segoe UI", 2, 12)); // NOI18N
+        popupMenuSubMenuCategoryItemDefault.setText("Default");
+        popupMenuSubMenuCategoryItemDefault.setToolTipText("Default category for all tasks.");
+        popupMenuSubMenuCategoryItemDefault.setName("popupMenuSubmenuCategoryItemDefault"); // NOI18N
+        popupMenuSubMenuCategoryItemDefault.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                popupMenuSubMenuCategoryItemDefaultActionPerformed(evt);
+            }
+        });
+        popupMenuSubmenuCategories.add(popupMenuSubMenuCategoryItemDefault);
+
+        tablePopupMenuContextMenu.add(popupMenuSubmenuCategories);
 
         popupMenuItemDeleteTask.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/cross.png"))); // NOI18N
         popupMenuItemDeleteTask.setText("Delete...");
@@ -299,6 +321,9 @@ public class TaskViewWindow extends JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    /*
+     * Button at the menubar - Under Edit - Always on top
+     */
     private void menuItemCheckboxAlwaysOnTopActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuItemCheckboxAlwaysOnTopActionPerformed
         if(menuItemCheckboxAlwaysOnTop.isSelected()) {
             this.setAlwaysOnTop(true);
@@ -309,22 +334,35 @@ public class TaskViewWindow extends JFrame {
         logEvent(evt);
     }//GEN-LAST:event_menuItemCheckboxAlwaysOnTopActionPerformed
 
+    /*
+     * Button at the menubar - Under Edit - Autosave
+     */
     private void menuItemCheckboxAutosaveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuItemCheckboxAutosaveActionPerformed
         this.autosave = menuItemCheckboxAutosave.getState();
         logEvent(evt);
     }//GEN-LAST:event_menuItemCheckboxAutosaveActionPerformed
 
+    /*
+     * Button at the menubar - Under File - Load Tasklist
+     */
     private void menuItemLoadTasklistActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuItemLoadTasklistActionPerformed
         databaseManager.loadDB();
         updateTable();
+
         logEvent(evt);
     }//GEN-LAST:event_menuItemLoadTasklistActionPerformed
 
+    /*
+     * Button at the menubar - Under File - Save Tasklist (shortcut: Ctrl+S)
+     */
     private void menuItemSaveTasklistActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuItemSaveTasklistActionPerformed
         databaseManager.saveDB();
         logEvent(evt);
     }//GEN-LAST:event_menuItemSaveTasklistActionPerformed
 
+    /*
+     * Button at the menubar - Under File - New Tasklist (shortcut: Ctrl+N)
+     */
     private void menuItemNewTasklistActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuItemNewTasklistActionPerformed
         databaseManager.createNewDatabase();
         logEvent(evt);
@@ -338,7 +376,7 @@ public class TaskViewWindow extends JFrame {
     }//GEN-LAST:event_textfieldFilterFocusGained
 
     /*
-     * When the caret is update, run a check which tasks fit the given
+     * When the caret is updated, run a check which tasks fit the given
      * requirements and only display those in the JTable
      */
     private void textfieldFilterCaretUpdate(javax.swing.event.CaretEvent evt) {//GEN-FIRST:event_textfieldFilterCaretUpdate
@@ -354,21 +392,34 @@ public class TaskViewWindow extends JFrame {
         logEvent(evt);
     }//GEN-LAST:event_textfieldFilterActionPerformed
 
+    /*
+     * Button at the bottom-right corner
+     */
     private void buttonAddActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonAddActionPerformed
         TaskEditorWindow taskEditorWindow = new TaskEditorWindow(this);
         logEvent(evt);
     }//GEN-LAST:event_buttonAddActionPerformed
 
+    /*
+     * Button at the menubar - Under categories - New Category
+     */
     private void menuItemNewCategoryActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuItemNewCategoryActionPerformed
         CategoryEditorWindow categoryEditorWindow = new CategoryEditorWindow(this, databaseManager);
+        //TODO update
         logEvent(evt);
     }//GEN-LAST:event_menuItemNewCategoryActionPerformed
 
+    /*
+     * Button at the menubar - Under categories - View Categories
+     */
     private void menuItemViewCategoriesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuItemViewCategoriesActionPerformed
         ListCategoriesWindow listCategories = new ListCategoriesWindow(this, databaseManager);
         logEvent(evt);
     }//GEN-LAST:event_menuItemViewCategoriesActionPerformed
 
+    /*
+     * Button at the menubar - Under Edit - Refresh (shortcut: F5)
+     */
     private void menuItemRefreshActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuItemRefreshActionPerformed
         updateTable();
         logEvent(evt);
@@ -394,6 +445,9 @@ public class TaskViewWindow extends JFrame {
         }
     }//GEN-LAST:event_formKeyTyped
 
+    /*
+     * Button at the JTable rightclick popupmenu - Edit...
+     */
     private void popupMenuItemEditTaskActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_popupMenuItemEditTaskActionPerformed
         // Only if row is selected
         if(tableTasks.getSelectedRow()!=-1) {
@@ -403,6 +457,9 @@ public class TaskViewWindow extends JFrame {
         logEvent(evt);
     }//GEN-LAST:event_popupMenuItemEditTaskActionPerformed
 
+    /*
+     * Button at the JTable rightclick popupmenu - Delete...
+     */
     private void popupMenuItemDeleteTaskActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_popupMenuItemDeleteTaskActionPerformed
         // Only if row is selected
         if(tableTasks.getSelectedRow()!=-1) {
@@ -425,7 +482,7 @@ public class TaskViewWindow extends JFrame {
         int rowindex = tableTasks.getSelectedRow();
 
         if(rowindex<0) {
-            return;
+            return; // -1 is mark for empty selection
         }
 
         if(evt.isPopupTrigger()&&evt.getComponent() instanceof JTable) {
@@ -436,22 +493,41 @@ public class TaskViewWindow extends JFrame {
         logEvent(evt);
     }//GEN-LAST:event_tableTasksMouseReleased
 
+    /*
+     * Button at the JTable rightclick popupmenu - Set Category - Default
+     */
+    private void popupMenuSubMenuCategoryItemDefaultActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_popupMenuSubMenuCategoryItemDefaultActionPerformed
+        // Only if row is selected
+        if(tableTasks.getSelectedRow()!=-1) {
+            Task taskSelected = databaseManager.getTaskAtIndex(tableTasks.getSelectedRow());
+            taskSelected.setCategory(null); // No category is the default category
+        }
+
+        logEvent(evt);
+    }//GEN-LAST:event_popupMenuSubMenuCategoryItemDefaultActionPerformed
+
     /**
      * Add a new task to table and update the table
      *
      * @param task Task to add
+     *
+     * @see Task
+     * @see DatabaseManager#getTasks()
      */
     public void addNewTask(Task task) {
         databaseManager.getTasks().add(task);
         updateTable();
 
-        logger.log(Level.INFO, "New task added to tasklist and JTable updated: "
-                +task.toString());
+        logger.log(Level.INFO, "New task added to tasklist and JTable updated: {0}", task.toString());
     }
 
     /**
      * Updates the JTable that contains the tasks to match the data in the DB
      * If the automatic saving is turned on this will also save the DB.
+     *
+     * @see TaskViewWindow#tableTasks
+     * @see TaskViewWindow#databaseManager
+     * @see TaskViewWindow#autosave
      */
     public void updateTable() {
         if(autosave==true) {
@@ -459,13 +535,46 @@ public class TaskViewWindow extends JFrame {
         }
 
         tableTasks.setModel(databaseManager.getTasksAsDefaultTableModel());
+        updateCategoryPopupSubmenu(); // Also update the submenu that contains the categories
     }
 
     /**
+     * Updates the pop-up menu which contains all the categories
      *
+     * @see Category
+     * @see TaskViewWindow#popupMenuSubMenuCategoryItemDefault
+     */
+    public void updateCategoryPopupSubmenu() {
+        ArrayList<Category> categories = databaseManager.getCategories();
+        
+        for(Category category : categories) {
+            CustomCategoryJMenuItem jmenuItem = new CustomCategoryJMenuItem();
+            jmenuItem.setCategory(category); // Associate the category
+            
+            // Name of the Category
+            jmenuItem.setText(category.getName());
+            
+            // Description of the Category 
+            if(category.getDescription().length()!=0) {
+                jmenuItem.setToolTipText(category.getDescription());
+            } else {
+                jmenuItem.setToolTipText("No description");
+            }
+            
+            // Color or the Category
+            jmenuItem.setBackground(category.getListItemColor().getColor());
+            
+            // TODO addActionListener
+            
+            popupMenuSubmenuCategories.add(jmenuItem);
+        }
+    }
+
+    /**
+     * Returns the DatabaseManager
      *
      * @return Current DatabaseManager
-     *
+     *s
      * @see DatabaseManager
      */
     public DatabaseManager getTasklist() {
@@ -487,24 +596,21 @@ public class TaskViewWindow extends JFrame {
      * Logs the ActionEvents that the user performs.
      */
     private void logEvent(ActionEvent evt) {
-        logger.log(Level.INFO, "User performed action: "+evt.toString());
+        logger.log(Level.INFO, "User performed action: {0}", evt.toString());
     }
 
     /*
      * Logs the MouseEvent that the user performs.
      */
     private void logEvent(MouseEvent evt) {
-        logger.log(Level.INFO, "User performed mouse-action: "
-                +"mousebutton_"+evt.getButton()+" at ["+evt.getXOnScreen()
-                +","+evt.getYOnScreen()+"] with "+evt.getClickCount()+" clicks"
-        );
+        logger.log(Level.INFO, "User performed mouse-action: "+"mousebutton_{0} at [{1},{2}] with {3} clicks", new Object[] {evt.getButton(), evt.getXOnScreen(), evt.getYOnScreen(), evt.getClickCount()});
     }
 
     /*
      * Logs the KeyEvent that the user performs.
      */
     private void logEvent(KeyEvent evt) {
-        logger.log(Level.INFO, "User performed keyboard-action: "+evt.getKeyChar()+" with modifier "+evt.getModifiers());
+        logger.log(Level.INFO, "User performed keyboard-action: {0} with modifier {1}", new Object[] {evt.getKeyChar(), evt.getModifiers()});
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -521,6 +627,8 @@ public class TaskViewWindow extends JFrame {
     private javax.swing.JMenuBar menubarMain;
     private javax.swing.JMenuItem popupMenuItemDeleteTask;
     private javax.swing.JMenuItem popupMenuItemEditTask;
+    private javax.swing.JMenuItem popupMenuSubMenuCategoryItemDefault;
+    private javax.swing.JMenu popupMenuSubmenuCategories;
     private javax.swing.JScrollPane scrollPanelForTasks;
     private javax.swing.JMenu submenuCategory;
     private javax.swing.JMenu submenuEdit;

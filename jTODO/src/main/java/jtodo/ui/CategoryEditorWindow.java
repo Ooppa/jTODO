@@ -35,6 +35,11 @@ public class CategoryEditorWindow extends JFrame {
      */
     private Category category;
 
+    /*
+     * Is the category new or old
+     */
+    private boolean newCategory;
+
     private DatabaseManager databaseManager;
     private ListCategoriesWindow listCategoriesWindow;
 
@@ -49,8 +54,10 @@ public class CategoryEditorWindow extends JFrame {
      *
      * @see Task
      */
-    public CategoryEditorWindow(Window window, Category category) {
-        this.category = category;
+    public CategoryEditorWindow(Window window, Category categoryToEdit) {
+        category = categoryToEdit;
+        newCategory = false;
+
         createWindow(window, "Edit Category");
         fillInValues();
 
@@ -66,14 +73,16 @@ public class CategoryEditorWindow extends JFrame {
      *
      * @see Task
      */
-    public CategoryEditorWindow(Window window, DatabaseManager databaseManager) {
+    public CategoryEditorWindow(Window window, DatabaseManager database) {
         try {
-            this.category = new Category("Name", "Description");
-            this.databaseManager = databaseManager;
+            category = new Category("Name", "Description");
+            databaseManager = database;
+            newCategory = true;
+
             createWindow(window, "Create new category");
             fillInValues();
         } catch(TooShortInputException|TooLongInputException ex) {
-            logger.log(Level.WARNING, "Default task created caused an exception: "+ex.toString());
+            logger.log(Level.WARNING, "Default task created caused an exception: {0}", ex.toString());
         }
 
         logger.log(Level.INFO, "Created a new CategoryEditorWindow window.");
@@ -97,22 +106,41 @@ public class CategoryEditorWindow extends JFrame {
         fieldName.setText(category.getName());
         fieldDescription.setText(category.getDescription());
 
-        ListItemColor color = category.getColor();
-
-        // TODO Color
+        int indexOfColor = ListItemColor.getIndexFromListItemColor(category.getListItemColor());
+        this.comboboxColor.setSelectedIndex(indexOfColor);
     }
 
     private void attemptToCreateCategoryFromForm() {
         try {
             Category category = new Category(this.fieldName.getText(), this.fieldDescription.getText());
             category.setColor(ListItemColor.getListItemColorFromIndex(this.comboboxColor.getSelectedIndex()));
-            
+
             databaseManager.getCategories().add(category);
-            
-            if(this.listCategoriesWindow!=null){
+
+            if(this.listCategoriesWindow!=null) {
                 listCategoriesWindow.updateList();
             }
-            
+
+            dispose();
+        } catch(TooShortInputException ex) {
+            ErrorWindow error = new ErrorWindow("Your category name is too short.");
+            logger.log(Level.INFO, "Tried to add Category with too short input. User notified.");
+        } catch(TooLongInputException ex) {
+            ErrorWindow error = new ErrorWindow("Your category name or description is too long.");
+            logger.log(Level.INFO, "Tried to add Category with too long input. User notified.");
+        }
+    }
+
+    private void attemptToEditCategoryFromForm() {
+        try {
+            category.setName(this.fieldName.getText());
+            category.setDescription(this.fieldDescription.getText());
+            category.setColor(ListItemColor.getListItemColorFromIndex(this.comboboxColor.getSelectedIndex()));
+
+            if(this.listCategoriesWindow!=null) {
+                listCategoriesWindow.updateList();
+            }
+
             dispose();
         } catch(TooShortInputException ex) {
             ErrorWindow error = new ErrorWindow("Your category name is too short.");
@@ -242,17 +270,20 @@ public class CategoryEditorWindow extends JFrame {
      * Saving the new task or saving changes to the old one
      */
     private void buttonSaveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonSaveActionPerformed
-        attemptToCreateCategoryFromForm();
-        
-        
         logEvent(evt);
+
+        if(newCategory) {
+            attemptToCreateCategoryFromForm();
+        } else {
+            attemptToEditCategoryFromForm();
+        }
     }//GEN-LAST:event_buttonSaveActionPerformed
 
     /*
      * Logs the ActionEvents that the user performs.
      */
     private void logEvent(ActionEvent evt) {
-        logger.log(Level.INFO, "User performed action: "+evt.toString());
+        logger.log(Level.INFO, "User performed action: {0}", evt.toString());
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

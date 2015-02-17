@@ -123,19 +123,19 @@ public class AbstractListItemTest {
 
     @Test
     public void testGetColorNotNull() {
-        assertTrue(listItem.getColor()!=null);
+        assertTrue(listItem.getListItemColor()!=null);
     }
 
     @Test
     public void testSetColor() {
         listItem.setColor(ListItemColor.RED);
-        assertEquals(listItem.getColor(), ListItemColor.RED);
+        assertEquals(listItem.getListItemColor(), ListItemColor.RED);
     }
 
     @Test
     public void testSetColorToNull() {
         listItem.setColor(null);
-        assertEquals(listItem.getColor(), ListItemColor.WHITE);
+        assertEquals(listItem.getListItemColor(), ListItemColor.WHITE);
     }
 
     @Test(expected = CouldNotAddSubElementException.class)

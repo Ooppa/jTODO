@@ -50,6 +50,8 @@ public enum ListItemColor {
      * Returns all ListItemColors as Color
      *
      * @return Colors
+     * 
+     * @see Color
      */
     public static Color[] getColorsInArray() {
         Color[] colors = new Color[ListItemColor.values().length];
@@ -68,6 +70,8 @@ public enum ListItemColor {
      * If not in range - returns white.
      *
      * @return ListItemColor
+     *
+     * @see ListItemColor
      */
     public static ListItemColor getListItemColorFromIndex(int index) {
         ListItemColor[] listItemColors = ListItemColor.values();
@@ -78,16 +82,25 @@ public enum ListItemColor {
             return ListItemColor.WHITE;
         }
     }
-    
+
+    /**
+     * Returns the index of the ListItemColor given
+     *
+     * @param color
+     *
+     * @return index of the ListItemColor
+     *
+     * @see ListItemColor
+     */
     public static int getIndexFromListItemColor(ListItemColor color) {
         ListItemColor[] values = ListItemColor.values();
-        
+
         for(int i = 0; i<values.length; i++) {
-            if(values[i].equals(color)){
+            if(values[i].equals(color)) {
                 return i;
             }
         }
-        
+
         return values.length-1;
     }
 

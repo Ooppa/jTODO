@@ -21,6 +21,7 @@ public class Task<E> extends AbstractListItem implements Serializable {
 
     private Priority priority;
     private final Deadline deadline;
+    private Category category;
 
     /**
      * Creates a new Task
@@ -107,10 +108,33 @@ public class Task<E> extends AbstractListItem implements Serializable {
         this.deadline.setDateTime(formatter.parseDateTime(dateTime));
     }
 
+    /**
+     * Returns the category associated with this task
+     *
+     * @return the category
+     *
+     * @see Category
+     */
+    public Category getCategory() {
+        return category;
+    }
+
+    /**
+     * Set new category to be associated with this task
+     *
+     * @param category the category to set
+     *
+     * @see Category
+     */
+    public void setCategory(Category category) {
+        this.category = category;
+    }
+
     @Override
     public String toString() {
         return "Task "+this.getName()+": "+this.getDescription()
                 +" (Priority: "+this.getPriority().toString()+" Deadline: + "
                 +this.getDeadlineAsString()+")";
     }
+
 }

@@ -118,7 +118,7 @@ public abstract class AbstractListItem<E> implements Serializable {
      *
      * @see ListItemColor
      */
-    public ListItemColor getColor() {
+    public ListItemColor getListItemColor() {
         return color;
     }
 
@@ -129,11 +129,11 @@ public abstract class AbstractListItem<E> implements Serializable {
      *
      * @see ListItemColor
      */
-    public void setColor(ListItemColor color) {
-        if(color==null) {
+    public void setColor(ListItemColor listItemColor) {
+        if(listItemColor==null) {
             this.color = ListItemColor.WHITE;
         } else {
-            this.color = color;
+            this.color = listItemColor;
         }
 
     }

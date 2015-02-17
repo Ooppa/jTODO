@@ -6,6 +6,7 @@
 package jtodo.domain;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import jtodo.excptions.TooLongInputException;
 import jtodo.excptions.TooShortInputException;
 
@@ -33,11 +34,28 @@ public class Category<E> extends AbstractListItem implements Serializable {
         super(name, description);
     }
 
+    /**
+     * Removes all tasks associated with this category
+     *
+     * @see Task#setCategory(jtodo.domain.Category) 
+     * @see Task#getCategory() 
+     */
+    public void removeAllTaskAssociations() {
+        ArrayList subElements = this.getSubElements();
+
+        for(Object subElement : subElements) {
+
+            if(subElement instanceof Task) {
+                Task task = (Task) subElement;
+                task.setCategory(null); // TODO?
+            }
+
+        }
+    }
+
     @Override
     public String toString() {
-        return "Category "+ this.getName() + ": "+ this.getDescription();
+        return "Category "+this.getName()+": "+this.getDescription();
     }
-    
-    
 
 }
