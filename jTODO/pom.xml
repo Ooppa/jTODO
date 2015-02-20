@@ -5,7 +5,7 @@
     <artifactId>jTODO</artifactId>
     <name>jTODO</name>
     <description>Javalla toteutettu tehtävälista-sovellus.</description>
-    <version>V5.4</version><!-- Viikko 5 Päivitys 4 -->
+    <version>V6.0</version><!-- Viikko 6 Päivitys 0 -->
     <packaging>jar</packaging>
 
     <dependencies>
@@ -51,8 +51,8 @@
             <plugin>
                 <artifactId>maven-compiler-plugin</artifactId>
                 <configuration>
-                    <source>1.8</source>
-                    <target>1.8</target>
+                    <source>1.7</source>
+                    <target>1.7</target>
                 </configuration>
                 <version>2.5</version>
             </plugin>
@@ -66,7 +66,7 @@
             <plugin>
                 <groupId>org.pitest</groupId>
                 <artifactId>pitest-maven</artifactId>
-                <version>0.30</version>
+                <version>1.1.4</version>
             </plugin>
             
             <plugin>
