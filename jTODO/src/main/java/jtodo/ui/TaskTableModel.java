@@ -140,7 +140,7 @@ public class TaskTableModel extends AbstractTableModel {
     public Task getTask(int rowIndex) {
         return tasks.get(rowIndex);
     }
-    
+
     /**
      * Returns the relative task at specified row
      *

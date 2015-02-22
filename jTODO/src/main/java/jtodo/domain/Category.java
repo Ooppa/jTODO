@@ -14,11 +14,10 @@ import jtodo.excptions.TooShortInputException;
  * Category used to separate different Tasks
  *
  * @author Ooppa
- * @param <E>
  *
  * @see AbstractListItem
  */
-public class Category<E> extends AbstractListItem implements Serializable {
+public class Category extends AbstractListItem implements Serializable {
 
     /**
      * Creates a new Category
@@ -26,8 +25,8 @@ public class Category<E> extends AbstractListItem implements Serializable {
      * @param name        Name for the Category
      * @param description Description for the Category
      *
-     * @throws TooShortInputException
-     * @throws TooLongInputException
+     * @throws TooShortInputException if the input is too short.
+     * @throws TooLongInputException if the input is too long.
      * @see AbstractListItem
      */
     public Category(String name, String description) throws TooShortInputException, TooLongInputException {
@@ -44,13 +43,12 @@ public class Category<E> extends AbstractListItem implements Serializable {
         ArrayList subElements = this.getSubElements();
 
         for(Object subElement : subElements) {
-
             if(subElement instanceof Task) {
                 Task task = (Task) subElement;
-                task.setCategory(null); // TODO?
+                task.setCategory(null); // Default category is null
             }
-
         }
+
     }
 
     @Override

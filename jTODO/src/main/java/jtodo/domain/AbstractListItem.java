@@ -18,7 +18,6 @@ import jtodo.excptions.*;
  *
  * @see Task
  * @see Category
- * @see TaskList
  */
 public abstract class AbstractListItem<E> implements Serializable {
 
@@ -32,8 +31,8 @@ public abstract class AbstractListItem<E> implements Serializable {
      * @param name        Name for the item
      * @param description Description for the item
      *
-     * @throws TooShortInputException
-     * @throws TooLongInputException
+     * @throws TooShortInputException if the input is too short.
+     * @throws TooLongInputException  if the input is too long.
      * @see ListItemColor
      */
     public AbstractListItem(String name, String description) throws TooShortInputException, TooLongInputException {
@@ -57,8 +56,8 @@ public abstract class AbstractListItem<E> implements Serializable {
      *
      * @param name New name
      *
-     * @throws TooLongInputException
-     * @throws TooShortInputException
+     * @throws TooLongInputException  if the input is too long.
+     * @throws TooShortInputException if the input is too short.
      */
     public void setName(String name) throws TooLongInputException, TooShortInputException {
         if(name==null||name.length()<=3) {
@@ -86,8 +85,8 @@ public abstract class AbstractListItem<E> implements Serializable {
      *
      * @param description New description
      *
-     * @throws TooShortInputException
-     * @throws TooLongInputException
+     * @throws TooShortInputException if the input is too short.
+     * @throws TooLongInputException  if the input is too long.
      */
     public void setDescription(String description) throws TooShortInputException, TooLongInputException {
         if(description==null) {
@@ -125,7 +124,7 @@ public abstract class AbstractListItem<E> implements Serializable {
     /**
      * Set a new ListItemColor for AbstractListItem
      *
-     * @param color New ListItemColor
+     * @param listItemColor New ListItemColor
      *
      * @see ListItemColor
      */
@@ -143,10 +142,14 @@ public abstract class AbstractListItem<E> implements Serializable {
      * aren't too many sub-elements already 2) the sub-element is not already a
      * child to this object 3) the sub-element is not child it itself
      *
-     * @param subElement
+     * @param subElement Sub-element to add
      *
-     * @throws TooManySubElementsException
-     * @throws CouldNotAddSubElementException
+     * @throws TooManySubElementsException    if there are already maximum
+     *                                        amount of sub-elements.
+     * @throws CouldNotAddSubElementException if the sub-element is null or the
+     *                                        parent is the same as child.
+     * @throws WrongTypeOfSubElementException if the parent is Task and child is
+     *                                        Category.
      */
     public void addSubElement(E subElement) throws TooManySubElementsException, CouldNotAddSubElementException, WrongTypeOfSubElementException {
         if(this.subElements.size()>100) {
@@ -190,7 +193,7 @@ public abstract class AbstractListItem<E> implements Serializable {
     public void clearSubElements() {
         this.subElements.clear();
     }
-    
+
     @Override
     public int hashCode() {
         int hash = 3;

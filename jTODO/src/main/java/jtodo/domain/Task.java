@@ -11,13 +11,13 @@ import jtodo.excptions.TooShortInputException;
 import org.joda.time.format.DateTimeFormat;
 
 /**
+ * Defines a Task that the user wants to accomplish.
  *
  * @author Ooppa
- * @param <E>
  *
  * @see AbstractListItem
  */
-public class Task<E> extends AbstractListItem implements Serializable {
+public class Task extends AbstractListItem implements Serializable {
 
     private Priority priority;
     private final Deadline deadline;
@@ -29,8 +29,8 @@ public class Task<E> extends AbstractListItem implements Serializable {
      * @param name        Name for the Task
      * @param description Description for the Task
      *
-     * @throws TooShortInputException
-     * @throws TooLongInputException
+     * @throws TooShortInputException if too short input.
+     * @throws TooLongInputException  if too long input-
      * @see AbstractListItem
      */
     public Task(String name, String description) throws TooShortInputException, TooLongInputException {
@@ -43,8 +43,6 @@ public class Task<E> extends AbstractListItem implements Serializable {
      * Returns the priority of the Task
      *
      * @return Priority
-     *
-     * @see Priority
      */
     public Priority getPriority() {
         return priority;
@@ -54,8 +52,6 @@ public class Task<E> extends AbstractListItem implements Serializable {
      * Set new priority for this Task
      *
      * @param priority New priority
-     *
-     * @see Priority
      */
     public void setPriority(Priority priority) {
         this.priority = priority;
@@ -97,8 +93,7 @@ public class Task<E> extends AbstractListItem implements Serializable {
      *
      * @param dateTime DateTime as a String
      *
-     * @see DateTime
-     * @see IllegalArgumentException
+     * @see IllegalArgumentException if the input could not be parsed
      */
     public void setDeadline(String dateTime) throws IllegalArgumentException {
         org.joda.time.format.DateTimeFormatter formatter;

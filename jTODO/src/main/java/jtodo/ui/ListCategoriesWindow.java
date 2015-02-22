@@ -13,7 +13,7 @@ import java.util.logging.Logger;
 import javax.swing.AbstractListModel;
 import javax.swing.JFrame;
 import jtodo.domain.Category;
-import jtodo.domain.DatabaseManager;
+import jtodo.managers.DatabaseManager;
 
 /**
  * List categories saved in the system, allows the user to add and edit.
@@ -31,7 +31,8 @@ public class ListCategoriesWindow extends JFrame {
     /**
      * Creates a new ListCategories with it's location relative to window
      *
-     * @param window Window which ListCategories should be attached to
+     * @param taskViewWindow  TaskViewWindow to update on edit
+     * @param databaseManager Database to update on edit
      */
     public ListCategoriesWindow(TaskViewWindow taskViewWindow, DatabaseManager databaseManager) {
         this.databaseManager = databaseManager;
@@ -44,7 +45,6 @@ public class ListCategoriesWindow extends JFrame {
         logger.log(Level.INFO, "Created a new ListCategories window.");
     }
 
-    // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
         jSeparator1 = new javax.swing.JSeparator();
@@ -56,87 +56,93 @@ public class ListCategoriesWindow extends JFrame {
 
         FormListener formListener = new FormListener();
 
-        jSeparator1.setName("jSeparator1"); // NOI18N
+        jSeparator1.setName("jSeparator1");
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DO_NOTHING_ON_CLOSE);
-        java.util.ResourceBundle bundle = java.util.ResourceBundle.getBundle("jtodo/ui/Bundle"); // NOI18N
-        setTitle(bundle.getString("ListCategoriesWindow.title")); // NOI18N
-        setName("Form"); // NOI18N
+        java.util.ResourceBundle bundle = java.util.ResourceBundle.getBundle("jtodo/ui/Bundle");
+        setTitle(bundle.getString("ListCategoriesWindow.title"));
+        setName("Form");
         addWindowListener(formListener);
         addKeyListener(formListener);
 
-        categoryListScrollPane.setName("categoryListScrollPane"); // NOI18N
+        categoryListScrollPane.setName("categoryListScrollPane");
 
         categoryList.setModel(new javax.swing.AbstractListModel() {
             String[] strings = getCategoryAsStringArray();
-            public int getSize() { return strings.length; }
-            public Object getElementAt(int i) { return strings[i]; }
-            // TODO updateList()
+
+            public int getSize() {
+                return strings.length;
+            }
+
+            public Object getElementAt(int i) {
+                return strings[i];
+            }
         });
         categoryList.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
-        categoryList.setName("categoryList"); // NOI18N
+        categoryList.setName("categoryList");
         categoryListScrollPane.setViewportView(categoryList);
 
-        buttonAdd.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/categoryadd.png"))); // NOI18N
-        buttonAdd.setText(bundle.getString("ListCategoriesWindow.buttonAdd.text")); // NOI18N
-        buttonAdd.setName("buttonAdd"); // NOI18N
+        buttonAdd.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/categoryadd.png")));
+        buttonAdd.setText(bundle.getString("ListCategoriesWindow.buttonAdd.text"));
+        buttonAdd.setName("buttonAdd");
         buttonAdd.addActionListener(formListener);
 
-        buttonEdit.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/categoryedit.png"))); // NOI18N
-        buttonEdit.setText(bundle.getString("ListCategoriesWindow.buttonEdit.text")); // NOI18N
-        buttonEdit.setName("buttonEdit"); // NOI18N
+        buttonEdit.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/categoryedit.png")));
+        buttonEdit.setText(bundle.getString("ListCategoriesWindow.buttonEdit.text"));
+        buttonEdit.setName("buttonEdit");
         buttonEdit.addActionListener(formListener);
 
-        buttonDelete.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/cross.png"))); // NOI18N
-        buttonDelete.setText(bundle.getString("ListCategoriesWindow.buttonDelete.text")); // NOI18N
-        buttonDelete.setName("buttonDelete"); // NOI18N
+        buttonDelete.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/cross.png")));
+        buttonDelete.setText(bundle.getString("ListCategoriesWindow.buttonDelete.text"));
+        buttonDelete.setName("buttonDelete");
         buttonDelete.addActionListener(formListener);
 
         org.jdesktop.layout.GroupLayout layout = new org.jdesktop.layout.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
-            layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
-            .add(layout.createSequentialGroup()
-                .addContainerGap()
-                .add(layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
-                    .add(categoryListScrollPane)
-                    .add(layout.createSequentialGroup()
-                        .add(buttonAdd)
-                        .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
-                        .add(buttonEdit)
-                        .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
-                        .add(buttonDelete)
-                        .add(0, 101, Short.MAX_VALUE)))
-                .addContainerGap())
+                layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
+                .add(layout.createSequentialGroup()
+                        .addContainerGap()
+                        .add(layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
+                                .add(categoryListScrollPane)
+                                .add(layout.createSequentialGroup()
+                                        .add(buttonAdd)
+                                        .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
+                                        .add(buttonEdit)
+                                        .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
+                                        .add(buttonDelete)
+                                        .add(0, 101, Short.MAX_VALUE)))
+                        .addContainerGap())
         );
         layout.setVerticalGroup(
-            layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
-            .add(layout.createSequentialGroup()
-                .addContainerGap()
-                .add(categoryListScrollPane, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 255, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
-                .add(layout.createParallelGroup(org.jdesktop.layout.GroupLayout.BASELINE)
-                    .add(buttonAdd)
-                    .add(buttonEdit)
-                    .add(buttonDelete))
-                .addContainerGap(org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
+                .add(layout.createSequentialGroup()
+                        .addContainerGap()
+                        .add(categoryListScrollPane, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 255, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
+                        .add(layout.createParallelGroup(org.jdesktop.layout.GroupLayout.BASELINE)
+                                .add(buttonAdd)
+                                .add(buttonEdit)
+                                .add(buttonDelete))
+                        .addContainerGap(org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         pack();
     }
 
     // Code for dispatching events from components to event handlers.
+    private class FormListener implements java.awt.event.ActionListener,
+            java.awt.event.KeyListener, java.awt.event.WindowListener {
 
-    private class FormListener implements java.awt.event.ActionListener, java.awt.event.KeyListener, java.awt.event.WindowListener {
-        FormListener() {}
+        FormListener() {
+        }
+
         public void actionPerformed(java.awt.event.ActionEvent evt) {
-            if (evt.getSource() == buttonAdd) {
+            if(evt.getSource()==buttonAdd) {
                 ListCategoriesWindow.this.buttonAddActionPerformed(evt);
-            }
-            else if (evt.getSource() == buttonEdit) {
+            } else if(evt.getSource()==buttonEdit) {
                 ListCategoriesWindow.this.buttonEditActionPerformed(evt);
-            }
-            else if (evt.getSource() == buttonDelete) {
+            } else if(evt.getSource()==buttonDelete) {
                 ListCategoriesWindow.this.buttonDeleteActionPerformed(evt);
             }
         }
@@ -145,7 +151,7 @@ public class ListCategoriesWindow extends JFrame {
         }
 
         public void keyReleased(java.awt.event.KeyEvent evt) {
-            if (evt.getSource() == ListCategoriesWindow.this) {
+            if(evt.getSource()==ListCategoriesWindow.this) {
                 ListCategoriesWindow.this.formKeyReleased(evt);
             }
         }
@@ -160,7 +166,7 @@ public class ListCategoriesWindow extends JFrame {
         }
 
         public void windowClosing(java.awt.event.WindowEvent evt) {
-            if (evt.getSource() == ListCategoriesWindow.this) {
+            if(evt.getSource()==ListCategoriesWindow.this) {
                 ListCategoriesWindow.this.formWindowClosing(evt);
             }
         }
@@ -176,27 +182,35 @@ public class ListCategoriesWindow extends JFrame {
 
         public void windowOpened(java.awt.event.WindowEvent evt) {
         }
-    }// </editor-fold>//GEN-END:initComponents
+    }
 
-    private void buttonDeleteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonDeleteActionPerformed
+    private void buttonDeleteActionPerformed(java.awt.event.ActionEvent evt) {
         if(this.categoryList.getSelectedIndex()!=-1) {
             Category selectedCategory = this.databaseManager.getCategories().get(this.categoryList.getSelectedIndex());
 
+            // Removes the category from all tasks that it is associated to
+            selectedCategory.removeAllTaskAssociations();
+
             this.databaseManager.getCategories().remove(selectedCategory);
             updateList();
+
+            if(taskViewWindow!=null) {
+                taskViewWindow.updateTable();
+                taskViewWindow.updateCategoryPopupSubmenu();
+            }
         }
 
         logEvent(evt);
-    }//GEN-LAST:event_buttonDeleteActionPerformed
+    }
 
-    private void buttonAddActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonAddActionPerformed
+    private void buttonAddActionPerformed(java.awt.event.ActionEvent evt) {
         CategoryEditorWindow categoryEditorWindow = new CategoryEditorWindow(this, databaseManager);
         categoryEditorWindow.setListCategoriesWindow(this); // Make the list auto-updateable
 
         logEvent(evt);
-    }//GEN-LAST:event_buttonAddActionPerformed
+    }
 
-    private void buttonEditActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonEditActionPerformed
+    private void buttonEditActionPerformed(java.awt.event.ActionEvent evt) {
         if(this.categoryList.getSelectedIndex()!=-1) {
             Category selectedCategory = this.databaseManager.getCategories().get(this.categoryList.getSelectedIndex());
 
@@ -205,21 +219,21 @@ public class ListCategoriesWindow extends JFrame {
         }
 
         logEvent(evt);
-    }//GEN-LAST:event_buttonEditActionPerformed
+    }
 
     /*
      * When closing the window update the table in TaskViewWindow one last time
      */
-    private void formWindowClosing(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosing
+    private void formWindowClosing(java.awt.event.WindowEvent evt) {
         taskViewWindow.updateTable();
         dispose();
-    }//GEN-LAST:event_formWindowClosing
+    }
 
-    private void formKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_formKeyReleased
-        if(evt.getKeyCode()==KeyEvent.VK_F5){
+    private void formKeyReleased(java.awt.event.KeyEvent evt) {
+        if(evt.getKeyCode()==KeyEvent.VK_F5) {
             updateList();
         }
-    }//GEN-LAST:event_formKeyReleased
+    }
 
     /*
      * Updates the list found on the ListCategoriesWindow
@@ -258,7 +272,7 @@ public class ListCategoriesWindow extends JFrame {
 
     /*
      * Attempts to update TaskViewWindow
-     * 
+     *
      * @see TaskViewWindow
      */
     public void attemptToUpdateTaskViewWindow() {
@@ -271,12 +285,10 @@ public class ListCategoriesWindow extends JFrame {
         logger.log(Level.INFO, "User performed action: "+evt.toString());
     }
 
-    // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton buttonAdd;
     private javax.swing.JButton buttonDelete;
     private javax.swing.JButton buttonEdit;
     private javax.swing.JList categoryList;
     private javax.swing.JScrollPane categoryListScrollPane;
     private javax.swing.JSeparator jSeparator1;
-    // End of variables declaration//GEN-END:variables
 }

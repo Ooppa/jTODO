@@ -11,11 +11,11 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JFrame;
 import jtodo.domain.Category;
-import jtodo.domain.DatabaseManager;
 import jtodo.domain.ListItemColor;
 import jtodo.domain.Task;
 import jtodo.excptions.TooLongInputException;
 import jtodo.excptions.TooShortInputException;
+import jtodo.managers.DatabaseManager;
 import org.joda.time.DateTime;
 import org.joda.time.format.DateTimeFormat;
 import org.joda.time.format.DateTimeFormatter;
@@ -23,7 +23,6 @@ import org.joda.time.format.DateTimeFormatter;
 /**
  * Creates a new window for editing or creating a new task
  *
- * TODO: Created using Netbeans, will clean up later.
  *
  * @author Ooppa
  * @see Task
@@ -41,7 +40,7 @@ public class CategoryEditorWindow extends JFrame {
     private boolean newCategory;
 
     private DatabaseManager databaseManager;
-    
+
     private ListCategoriesWindow listCategoriesWindow;
     private TaskViewWindow taskViewWindow;
 
@@ -51,8 +50,8 @@ public class CategoryEditorWindow extends JFrame {
      * Creates a new TaskEditorWindow with it's location relative to the given
      * window and a predetermined task to edit
      *
-     * @param window Window which TaskEditorWindow should be attached to
-     * @param task   Task to edit
+     * @param window         Window to set this window relative to
+     * @param categoryToEdit Category to edit
      *
      * @see Task
      */
@@ -71,7 +70,8 @@ public class CategoryEditorWindow extends JFrame {
      * Creates a new TaskEditorWindow with it's location relative to the given
      * window, with new Task that will be generated on the go.
      *
-     * @param window
+     * @param window   Window to set this window relative to
+     * @param database Database to attach to the CategoryEditorWindow
      *
      * @see Task
      */
@@ -93,7 +93,7 @@ public class CategoryEditorWindow extends JFrame {
     public void setListCategoriesWindow(ListCategoriesWindow listCategoriesWindow) {
         this.listCategoriesWindow = listCategoriesWindow;
     }
-    
+
     public void setTaskViewWindow(TaskViewWindow taskViewWindow) {
         this.taskViewWindow = taskViewWindow;
     }
@@ -128,7 +128,7 @@ public class CategoryEditorWindow extends JFrame {
                 listCategoriesWindow.updateList();
                 listCategoriesWindow.attemptToUpdateTaskViewWindow();
             }
-            
+
             // If TaskViewWindow was added, update it
             if(this.taskViewWindow!=null) {
                 taskViewWindow.updateTable();
@@ -177,7 +177,6 @@ public class CategoryEditorWindow extends JFrame {
         return datetime.toString(formatter);
     }
 
-    // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
         comboBoxPriority = new javax.swing.JComboBox(ListItemColor.values());
@@ -191,99 +190,101 @@ public class CategoryEditorWindow extends JFrame {
 
         FormListener formListener = new FormListener();
 
-        comboBoxPriority.setName("comboBoxPriority"); // NOI18N
+        comboBoxPriority.setName("comboBoxPriority");
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
-        setName("Form"); // NOI18N
+        setName("Form");
         setResizable(false);
 
-        java.util.ResourceBundle bundle = java.util.ResourceBundle.getBundle("jtodo/ui/Bundle"); // NOI18N
-        labelDescription.setText(bundle.getString("CategoryEditorWindow.labelDescription.text")); // NOI18N
-        labelDescription.setName("labelDescription"); // NOI18N
+        java.util.ResourceBundle bundle = java.util.ResourceBundle.getBundle("jtodo/ui/Bundle");
+        labelDescription.setText(bundle.getString("CategoryEditorWindow.labelDescription.text"));
+        labelDescription.setName("labelDescription");
 
-        labelCategoryName.setText(bundle.getString("CategoryEditorWindow.labelCategoryName.text")); // NOI18N
-        labelCategoryName.setName("labelCategoryName"); // NOI18N
+        labelCategoryName.setText(bundle.getString("CategoryEditorWindow.labelCategoryName.text"));
+        labelCategoryName.setName("labelCategoryName");
 
-        labelIcon.setText(bundle.getString("CategoryEditorWindow.labelIcon.text")); // NOI18N
-        labelIcon.setName("labelIcon"); // NOI18N
+        labelIcon.setText(bundle.getString("CategoryEditorWindow.labelIcon.text"));
+        labelIcon.setName("labelIcon");
 
-        fieldName.setText(bundle.getString("CategoryEditorWindow.fieldName.text")); // NOI18N
-        fieldName.setName("fieldName"); // NOI18N
+        fieldName.setText(bundle.getString("CategoryEditorWindow.fieldName.text"));
+        fieldName.setName("fieldName");
 
-        fieldDescription.setText(bundle.getString("CategoryEditorWindow.fieldDescription.text")); // NOI18N
-        fieldDescription.setName("fieldDescription"); // NOI18N
+        fieldDescription.setText(bundle.getString("CategoryEditorWindow.fieldDescription.text"));
+        fieldDescription.setName("fieldDescription");
 
-        buttonSave.setText(bundle.getString("CategoryEditorWindow.buttonSave.text")); // NOI18N
-        buttonSave.setName("buttonSave"); // NOI18N
+        buttonSave.setText(bundle.getString("CategoryEditorWindow.buttonSave.text"));
+        buttonSave.setName("buttonSave");
         buttonSave.addActionListener(formListener);
 
-        comboboxColor.setToolTipText(bundle.getString("CategoryEditorWindow.comboboxColor.toolTipText")); // NOI18N
-        comboboxColor.setName("comboboxColor"); // NOI18N
+        comboboxColor.setToolTipText(bundle.getString("CategoryEditorWindow.comboboxColor.toolTipText"));
+        comboboxColor.setName("comboboxColor");
         comboboxColor.setRenderer(new ColorChooserCellRenderer()); // Custom renderer to show the colors on the combobox
         comboboxColor.setSelectedIndex(ListItemColor.values().length-1); // Default value is white, the last one
 
         org.jdesktop.layout.GroupLayout layout = new org.jdesktop.layout.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
-            layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
-            .add(org.jdesktop.layout.GroupLayout.TRAILING, layout.createSequentialGroup()
-                .addContainerGap()
-                .add(layout.createParallelGroup(org.jdesktop.layout.GroupLayout.TRAILING)
-                    .add(layout.createSequentialGroup()
-                        .add(0, 0, Short.MAX_VALUE)
-                        .add(buttonSave, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 104, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE))
-                    .add(org.jdesktop.layout.GroupLayout.LEADING, layout.createSequentialGroup()
-                        .add(labelCategoryName, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 95, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
-                        .add(fieldName))
-                    .add(org.jdesktop.layout.GroupLayout.LEADING, layout.createSequentialGroup()
-                        .add(labelDescription, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 95, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
-                        .add(fieldDescription, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, 355, Short.MAX_VALUE))
-                    .add(org.jdesktop.layout.GroupLayout.LEADING, layout.createSequentialGroup()
-                        .add(labelIcon, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 95, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
-                        .add(comboboxColor, 0, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
-                .addContainerGap())
+                layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
+                .add(org.jdesktop.layout.GroupLayout.TRAILING, layout.createSequentialGroup()
+                        .addContainerGap()
+                        .add(layout.createParallelGroup(org.jdesktop.layout.GroupLayout.TRAILING)
+                                .add(layout.createSequentialGroup()
+                                        .add(0, 0, Short.MAX_VALUE)
+                                        .add(buttonSave, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 104, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE))
+                                .add(org.jdesktop.layout.GroupLayout.LEADING, layout.createSequentialGroup()
+                                        .add(labelCategoryName, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 95, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
+                                        .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
+                                        .add(fieldName))
+                                .add(org.jdesktop.layout.GroupLayout.LEADING, layout.createSequentialGroup()
+                                        .add(labelDescription, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 95, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
+                                        .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
+                                        .add(fieldDescription, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, 355, Short.MAX_VALUE))
+                                .add(org.jdesktop.layout.GroupLayout.LEADING, layout.createSequentialGroup()
+                                        .add(labelIcon, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 95, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
+                                        .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
+                                        .add(comboboxColor, 0, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                        .addContainerGap())
         );
         layout.setVerticalGroup(
-            layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
-            .add(layout.createSequentialGroup()
-                .addContainerGap()
-                .add(layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING, false)
-                    .add(fieldName)
-                    .add(labelCategoryName, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, 30, Short.MAX_VALUE))
-                .addPreferredGap(org.jdesktop.layout.LayoutStyle.UNRELATED)
-                .add(layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
-                    .add(labelDescription, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 30, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
-                    .add(fieldDescription))
-                .addPreferredGap(org.jdesktop.layout.LayoutStyle.UNRELATED)
-                .add(layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING, false)
-                    .add(labelIcon, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, 30, Short.MAX_VALUE)
-                    .add(comboboxColor))
-                .addPreferredGap(org.jdesktop.layout.LayoutStyle.UNRELATED)
-                .add(buttonSave, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 27, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap())
+                layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
+                .add(layout.createSequentialGroup()
+                        .addContainerGap()
+                        .add(layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING, false)
+                                .add(fieldName)
+                                .add(labelCategoryName, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, 30, Short.MAX_VALUE))
+                        .addPreferredGap(org.jdesktop.layout.LayoutStyle.UNRELATED)
+                        .add(layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
+                                .add(labelDescription, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 30, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
+                                .add(fieldDescription))
+                        .addPreferredGap(org.jdesktop.layout.LayoutStyle.UNRELATED)
+                        .add(layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING, false)
+                                .add(labelIcon, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, 30, Short.MAX_VALUE)
+                                .add(comboboxColor))
+                        .addPreferredGap(org.jdesktop.layout.LayoutStyle.UNRELATED)
+                        .add(buttonSave, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 27, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
+                        .addContainerGap())
         );
 
         pack();
     }
 
     // Code for dispatching events from components to event handlers.
-
     private class FormListener implements java.awt.event.ActionListener {
-        FormListener() {}
+
+        FormListener() {
+        }
+
         public void actionPerformed(java.awt.event.ActionEvent evt) {
-            if (evt.getSource() == buttonSave) {
+            if(evt.getSource()==buttonSave) {
                 CategoryEditorWindow.this.buttonSaveActionPerformed(evt);
             }
         }
-    }// </editor-fold>//GEN-END:initComponents
+    }
 
     /*
      * Saving the new task or saving changes to the old one
      */
-    private void buttonSaveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonSaveActionPerformed
+    private void buttonSaveActionPerformed(java.awt.event.ActionEvent evt) {
         logEvent(evt);
 
         if(newCategory) {
@@ -291,7 +292,7 @@ public class CategoryEditorWindow extends JFrame {
         } else {
             attemptToEditCategoryFromForm();
         }
-    }//GEN-LAST:event_buttonSaveActionPerformed
+    }
 
     /*
      * Logs the ActionEvents that the user performs.
@@ -300,7 +301,6 @@ public class CategoryEditorWindow extends JFrame {
         logger.log(Level.INFO, "User performed action: {0}", evt.toString());
     }
 
-    // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton buttonSave;
     private javax.swing.JComboBox comboBoxPriority;
     private javax.swing.JComboBox comboboxColor;
@@ -309,5 +309,4 @@ public class CategoryEditorWindow extends JFrame {
     private javax.swing.JLabel labelCategoryName;
     private javax.swing.JLabel labelDescription;
     private javax.swing.JLabel labelIcon;
-    // End of variables declaration//GEN-END:variables
 }

@@ -7,7 +7,7 @@ package jtodo.application;
 
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import jtodo.domain.DatabaseManager;
+import jtodo.managers.DatabaseManager;
 import jtodo.ui.TaskViewWindow;
 
 /**

@@ -5,11 +5,9 @@
  */
 package jtodo.domain;
 
-import jtodo.excptions.TooLongInputException;
-import jtodo.excptions.TooShortInputException;
+import jtodo.excptions.*;
 import org.junit.*;
 import static org.junit.Assert.assertTrue;
-import static org.junit.Assert.fail;
 
 /**
  *
@@ -23,31 +21,40 @@ public class CategoryTest {
     }
 
     @Test
-    public void testCategoryCreation() {
-        try {
-            Category category = new Category("Name", "Description");
+    public void testCategoryCreation() throws TooShortInputException, TooLongInputException {
+        Category category = new Category("Name", "Description");
 
-            assertTrue(category.getName().equals("Name")
-                    &&category.getDescription().equals("Description")
-            );
-
-        } catch(TooShortInputException|TooLongInputException ex) {
-            fail(EXCEPTIONMESSAGE+ex);
-        }
+        assertTrue(category.getName().equals("Name")
+                &&category.getDescription().equals("Description")
+        );
     }
 
     @Test
-    public void testCategoryToString() {
-        try {
-            Category category = new Category("Name", "Description");
-            String toString = category.toString();
+    public void testCategoryToString() throws TooShortInputException, TooLongInputException {
+        Category category = new Category("Name", "Description");
+        String toString = category.toString();
 
-            assertTrue(toString.contains("Category")
-                    &&toString.contains(category.getName())
-                    &&toString.contains(category.getDescription()));
-
-        } catch(TooShortInputException|TooLongInputException ex) {
-            fail(EXCEPTIONMESSAGE+ex);
-        }
+        assertTrue(toString.contains("Category")
+                &&toString.contains(category.getName())
+                &&toString.contains(category.getDescription()));
     }
+
+    @Test
+    public void testRemoveAllTaskAssociations() throws TooShortInputException, TooLongInputException, TooManySubElementsException, CouldNotAddSubElementException, WrongTypeOfSubElementException {
+        Category category = new Category("Example Category", "Just an example.");
+
+        Task dishes = new Task("Dishes", "Do the dishes.");
+        Task cook = new Task("Cook food", "Cook some delicious food.");
+
+        category.addSubElement(dishes);
+        dishes.setCategory(category);
+
+        category.addSubElement(cook);
+        cook.setCategory(category);
+
+        category.removeAllTaskAssociations();
+
+        assertTrue(cook.getCategory()!=category&&dishes.getCategory()!=category);
+    }
+
 }

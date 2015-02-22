@@ -15,10 +15,10 @@ import javax.swing.ListCellRenderer;
  * Used in CategoryEditorWindow to choose the color for the Category
  *
  * @author Ooppa
- * @see ItemListColor
  * @see CategoryEditorWindow
  */
-public class ColorChooserCellRenderer extends JButton implements ListCellRenderer {
+public class ColorChooserCellRenderer extends JButton implements
+        ListCellRenderer {
 
     static boolean hasBackgroundNotBeenSet = false;
 

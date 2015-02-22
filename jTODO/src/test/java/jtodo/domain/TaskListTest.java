@@ -5,6 +5,7 @@
  */
 package jtodo.domain;
 
+import jtodo.managers.DatabaseManager;
 import org.junit.*;
 
 /**

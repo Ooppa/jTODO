@@ -24,17 +24,21 @@ public class Deadline implements Serializable {
     /**
      * Creates a new Deadline with the following default values:
      * Active: Not active
-     * DateTime: 1 week from now
+     * DateTime: 1 day from now
+     * 
+     * @see DateTime
      */
     public Deadline() {
         this.active = false;
-        this.dateTime = new DateTime().plusWeeks(1);
+        this.dateTime = new DateTime().toDateTime().plusDays(1);
     }
 
     /**
      * Creates a new Deadline with given date and status true.
      *
-     * @param datetime
+     * @param datetime DateTime to associate with the Deadline
+     *
+     * @see DateTime
      */
     public Deadline(DateTime datetime) {
         if(datetime!=null) {
@@ -45,18 +49,42 @@ public class Deadline implements Serializable {
         }
     }
 
+    /**
+     * Returns true if the deadline is set to active.
+     *
+     * @return Boolean
+     */
     public boolean isActive() {
         return active;
     }
 
+    /**
+     * Set a new status for the deadline.
+     *
+     * @param active True if active, false if not-active.
+     */
     public void setActive(boolean active) {
         this.active = active;
     }
 
+    /**
+     * Returns the DateTime associated with the Deadline
+     *
+     * @return DateTime
+     *
+     * @see DateTime
+     */
     public DateTime getDateTime() {
         return dateTime;
     }
 
+    /**
+     * Set a new DateTime to the Deadline
+     *
+     * @param dateTime DateTime to set
+     *
+     * @see DateTime
+     */
     public void setDateTime(DateTime dateTime) {
         this.dateTime = dateTime;
     }

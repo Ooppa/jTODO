@@ -52,6 +52,22 @@ public class Database implements Serializable {
         return tasks;
     }
 
+    public ArrayList<Task> getTasksWithFilter(String filter) {
+        ArrayList<Task> filtered = new ArrayList<>();
+        String filterInLowerCase = filter.toLowerCase();
+
+        for(Task task : tasks) {
+            if(task.getName().toLowerCase().contains(filterInLowerCase)
+                    ||task.getDescription().toLowerCase().contains(filterInLowerCase)
+                    ||task.getDeadlineAsString().toLowerCase().contains(filterInLowerCase)
+                    ||task.getPriority().toString().toLowerCase().contains(filterInLowerCase)) {
+                filtered.add(task);
+            }
+        }
+
+        return filtered;
+    }
+
     /*
      * Updates the "last edited" timestamp
      */
