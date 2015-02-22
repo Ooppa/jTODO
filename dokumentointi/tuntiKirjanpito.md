@@ -19,3 +19,4 @@
 | 15.02.2015    | Tallennus toimii, kategoriaan voi valita värin | 2h |
 | 16.02.2015    | Muokkaus ja poisto toimii, kategorioita voi lisää ja poistaa | 4h |
 | 17.02.2015    | Kategorioiden värit näkyy listassa, uusia UI luokkia | 6h |
+| 22.02.2015    | Filter toiminto toimii, Siistittty, lisätty testetjä ja shady-plugin  | 3h |
