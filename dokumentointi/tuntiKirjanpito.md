@@ -20,3 +20,5 @@
 | 16.02.2015    | Muokkaus ja poisto toimii, kategorioita voi lisää ja poistaa | 4h |
 | 17.02.2015    | Kategorioiden värit näkyy listassa, uusia UI luokkia | 6h |
 | 22.02.2015    | Filter toiminto toimii, Siistittty, lisätty testetjä ja shady-plugin  | 3h |
+| 23.02.2015    | Luokkakaavioon päivityksiä  | 1h |
+| 24.02.2015    | Dokumentaatio valmis  | 3h |

@@ -4,7 +4,7 @@
   <groupId>jtodo</groupId>
   <artifactId>jTODO</artifactId>
   <name>jTODO</name>
-  <version>V6.1</version>
+  <version>R1.0</version>
   <description>Javalla toteutettu tehtävälista-sovellus.</description>
   <build>
     <plugins>
@@ -50,7 +50,7 @@
   <repositories>
     <repository>
       <id>unknown-jars-temp-repo</id>
-      <name>A temporary repository created by NetBeans for libraries and jars it could not identify. Please replace the dependencies in this repository with correct ones and delete this repository.</name>
+      <name>AbsoluteLayout</name>
       <url>file:${project.basedir}/lib</url>
     </repository>
   </repositories>

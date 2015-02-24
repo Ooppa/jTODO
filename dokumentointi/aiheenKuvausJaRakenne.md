@@ -1,31 +1,32 @@
-# Aihem‰‰rittely
+#  Aihem√§√§rittely
 
-**Aihe:** TODO-Lista. Toteutetaan j‰rjestelm‰ johon k‰ytt‰j‰ lis‰‰ itselleen teht‰vi‰ ja merkkaa ne suoritetuiksi. Jokainen teht‰v‰ voi sijaita kategoriassa ja kategoria voi olla toisen kategorian alakategoria ja lis‰ksi kategoria voi sis‰lt‰‰ sek‰ toisen kategorian, ett‰ teht‰vi‰ samaan aikaan. Jokaisella kategorialla on nimi ja tunnistev‰ri, jotta ne voi erottaa paremmin toisistaan. Jokaisella teht‰v‰ll‰ taas on nimi, prioriteetti, kuvaus ja deadline aika.
+**Aihe:** TODO-Lista. Toteutetaan j√§rjestelm√§ johon k√§ytt√§j√§ lis√§√§ itselleen teht√§vi√§. Jokainen teht√§v√§ voidaan assosioida tiettyyn kategoriaan ja teht√§v√§n kategoria ilmenee sen v√§rist√§ p√§√§ikkunan listalla. Teht√§vill√§ on nimi, kuvaus, prioriteetti ja m√§√§r√§aika. Kategorioilla on nimi, kuvaus ja v√§ri. Kun teht√§v√§n m√§√§r√§aika umpeutuu sen voi n√§hd√§ suoraan listasta.
 
-**K‰ytt‰j‰t**: P‰‰k‰ytt‰j‰
+**K√§ytt√§j√§t**: P√§√§k√§ytt√§j√§
 
-**P‰‰k‰ytt‰j‰n Toiminnot: ** 
+**P√§√§k√§ytt√§j√§n Toiminnot: **
 
 Kategoriat:
 
- - Lis‰‰ uusi kategoria
+ - Lis√§√§ uusi kategoria
  - Muokkaa kategoriaa
  - Poista kategoria
 
-Teht‰v‰t:
+Teht√§v√§t:
 
- - Lis‰‰ uusi teht‰v‰
- - Muokaa teht‰v‰‰
- - Merkitse teht‰v‰ tehdyksi
-	 - Mik‰li teht‰v‰ on t‰ll‰ hetkell‰ keskener‰inen
- - Merkitse teht‰v‰ keskener‰iseksi
-	 - Mik‰li teht‰v‰ on t‰ll‰ hetkell‰ tehty
- - Poista teht‰v‰
+ - Lis√§√§ uusi teht√§v√§
+ - Muokaa teht√§v√§√§
+ - Assosioi teht√§v√§ kategoriaan
+ - Poista teht√§v√§
 
-J‰rjestelm‰:
+J√§rjestelm√§:
 
  - Luo uusi tietokanta
  - Tallenna nykyinen tietokanta
  - Lataa toinen tietokanta
- - Tuhoa nykyinen tietokanta
 
+# Ohjelman rakenne
+
+Ohjelman suoritus aloitetaan pakkauksesta application luokasta Application, jossa luodaan uusi TaskViewWindow (p√§√§asiallinen UI ikkuna) ja DatabaseManager. Database manager on luokka, joka yll√§pit√§√§ Database oliota, jonka DatabaseManager osaa tallentaa tiedostoon ja lukea sen sielt√§. DatabaseManager my√∂s muistaa mihin tiedostoon nykyinen tietokanta on tallennettu, joten se osaa ylikirjoittaa sen jos muutoksia tapahtuu. Lis√§ksi DatabaseManager osaa my√∂s luoda tietokannasta TaskTableModel -esityksen, jota UI voi k√§ytt√§√§ hy√∂dykseen.
+
+Teht√§v√§listan teht√§v√§t koostuvat Task -olioista. Task olio laajentaa AbstracatListItem luokan toiminnallisuutta. AbstractListItem sis√§lt√§√§ (String) nimen,  (string) kuvauksen, listan ali-elementeist√§ ja (ListItemColor) v√§rin. Task oliolla on t√§m√§n lis√§ksi (Priority) Prioriteetti, (Deadline) m√§√§r√§aika ja (Category) kategoria. (Category) Kategoria on my√∂s laajennettu luokasta AbstractListItem.

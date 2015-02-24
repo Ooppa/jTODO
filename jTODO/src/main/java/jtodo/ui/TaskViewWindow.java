@@ -345,11 +345,13 @@ public class TaskViewWindow extends JFrame {
      * requirements and only display those in the JTable
      */
     private void textfieldFilterCaretUpdate(javax.swing.event.CaretEvent evt) {
-        tableTasks.setModel(
-                databaseManager.getTasksAsDefaultTableModelWithFilter(
-                        textfieldFilter.getText()
-                )
-        );
+        if(textfieldFilter.getText()!="") {
+            tableTasks.setModel(
+                    databaseManager.getTasksAsDefaultTableModelWithFilter(
+                            textfieldFilter.getText()
+                    )
+            );
+        }
     }
 
     /*
@@ -563,6 +565,8 @@ public class TaskViewWindow extends JFrame {
 
                         logger.log(Level.INFO, "Changing the category of ''{0}'' to ''{1}''", new Object[] {taskSelected.toString(), customCategoryJMenuItem.getCategory().toString()});
                     }
+
+                    tableTasks.updateUI();
                 }
 
             });
