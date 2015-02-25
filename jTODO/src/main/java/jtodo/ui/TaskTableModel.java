@@ -82,8 +82,7 @@ public class TaskTableModel extends AbstractTableModel {
         } catch(IndexOutOfBoundsException ex) {
             logger.log(Level.WARNING, "Tried to retrieve a row from table with an empty index.");
         }
-
-        logger.log(Level.WARNING, "Tried to retrieve a column from table with an empty index.");
+        
         return "None";
     }
 

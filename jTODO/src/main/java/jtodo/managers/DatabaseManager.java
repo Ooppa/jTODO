@@ -58,8 +58,6 @@ public class DatabaseManager {
      * Save current Database object in a savefile
      */
     public void saveDB() {
-        database.updateSavetime();
-
         if(getDatabaseFile()==null) {
             // No database found
             JFileChooser fileChooser = new JFileChooser();
@@ -153,7 +151,7 @@ public class DatabaseManager {
             ErrorWindow error = new ErrorWindow("File could not be read. Might not be proper savefile.");
             logger.log(Level.WARNING, "File could not be read (might not be proper savefile): {0}", ex.toString());
         } catch(ClassNotFoundException ex) {
-            ErrorWindow error = new ErrorWindow("File was not found.");
+            ErrorWindow error = new ErrorWindow("Could not close File Output Stream.");
             logger.log(Level.WARNING, "Could not close File Output Stream: {0}", ex.toString());
         } finally {
             // Finally we close the connection no matter what

@@ -18,16 +18,12 @@ public class Database implements Serializable {
     private ArrayList<Category> categories;
     private ArrayList<Task> tasks;
 
-    private long savetime;
-
     /**
      * Creates a new Database object
      */
     public Database() {
         categories = new ArrayList<>();
         tasks = new ArrayList<>();
-
-        updateSavetime();
     }
 
     /**
@@ -66,13 +62,6 @@ public class Database implements Serializable {
         }
 
         return filtered;
-    }
-
-    /*
-     * Updates the "last edited" timestamp
-     */
-    public void updateSavetime() {
-        savetime = System.nanoTime();
     }
 
 }
