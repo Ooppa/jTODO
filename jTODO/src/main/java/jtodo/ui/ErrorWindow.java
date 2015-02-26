@@ -89,6 +89,7 @@ public class ErrorWindow extends JFrame {
         FormListener() {
         }
 
+        @Override
         public void actionPerformed(java.awt.event.ActionEvent evt) {
             if(evt.getSource()==buttonConfirm) {
                 ErrorWindow.this.buttonConfirmActionPerformed(evt);

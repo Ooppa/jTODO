@@ -71,13 +71,15 @@ public class TaskEditorWindow extends javax.swing.JFrame {
     public TaskEditorWindow(TaskViewWindow taskViewWindow) {
         try {
             this.task = new Task("Name", "Description");
+            this.task.setDeadline(getCurrentTimeFormattedAsString());
+            
             this.taskViewWindow = taskViewWindow;
             this.newTask = true;
 
             createWindow(taskViewWindow, "Create new task");
             fillInValues();
         } catch(TooShortInputException|TooLongInputException ex) {
-            logger.log(Level.WARNING, "Default task created caused an exception: "+ex.toString());
+            logger.log(Level.WARNING, "Default task created caused an exception: {0}", ex.toString());
         }
 
         logger.log(Level.INFO, "Created a new TaskEditorWindow window.");
@@ -306,6 +308,7 @@ public class TaskEditorWindow extends javax.swing.JFrame {
         FormListener() {
         }
 
+        @Override
         public void actionPerformed(java.awt.event.ActionEvent evt) {
             if(evt.getSource()==buttonSave) {
                 TaskEditorWindow.this.buttonSaveActionPerformed(evt);
@@ -389,7 +392,7 @@ public class TaskEditorWindow extends javax.swing.JFrame {
      * Logs the ActionEvents that the user performs.
      */
     private void logEvent(ActionEvent evt) {
-        logger.log(Level.INFO, "User performed action: "+evt.toString());
+        logger.log(Level.INFO, "User performed action: {0}", evt.toString());
     }
 
     private javax.swing.JButton buttonSave;

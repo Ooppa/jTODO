@@ -22,7 +22,7 @@ import jtodo.excptions.WrongTypeOfSubElementException;
 import jtodo.managers.DatabaseManager;
 
 /**
- * TODO: Created using NetBeans, will clean up later.
+ * Creates a new TaskViewWindow
  *
  * @author Ooppa
  */
@@ -87,6 +87,7 @@ public class TaskViewWindow extends JFrame {
         popupMenuItemEditTask.setToolTipText("");
         popupMenuItemEditTask.setName("popupMenuItemEditTask");
         popupMenuItemEditTask.addActionListener(new java.awt.event.ActionListener() {
+            @Override
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 popupMenuItemEditTaskActionPerformed(evt);
             }
@@ -102,6 +103,7 @@ public class TaskViewWindow extends JFrame {
         popupMenuSubMenuCategoryItemDefault.setToolTipText("Default category for all tasks.");
         popupMenuSubMenuCategoryItemDefault.setName("popupMenuSubmenuCategoryItemDefault");
         popupMenuSubMenuCategoryItemDefault.addActionListener(new java.awt.event.ActionListener() {
+            @Override
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 popupMenuSubMenuCategoryItemDefaultActionPerformed(evt);
             }
@@ -115,6 +117,7 @@ public class TaskViewWindow extends JFrame {
         popupMenuItemDeleteTask.setToolTipText("");
         popupMenuItemDeleteTask.setName("popupMenuItemDeleteTask");
         popupMenuItemDeleteTask.addActionListener(new java.awt.event.ActionListener() {
+            @Override
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 popupMenuItemDeleteTaskActionPerformed(evt);
             }
@@ -134,9 +137,17 @@ public class TaskViewWindow extends JFrame {
         tableTasks.setName("tableTasks");
         tableTasks.setRowHeight(20);
         tableTasks.setAutoCreateRowSorter(true); // Automatically creates the row sorters
+
+        // The context-menu event is different for different platforms
         tableTasks.addMouseListener(new java.awt.event.MouseAdapter() {
+            @Override
             public void mouseReleased(java.awt.event.MouseEvent evt) {
-                tableTasksMouseReleased(evt);
+                tableTasksMouseActionPerformed(evt);
+            }
+
+            @Override
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                tableTasksMouseActionPerformed(evt);
             }
         });
         scrollPanelForTasks.setViewportView(tableTasks);
@@ -155,6 +166,7 @@ public class TaskViewWindow extends JFrame {
         buttonAdd.setText("New Task");
         buttonAdd.setName("buttonAdd");
         buttonAdd.addActionListener(new java.awt.event.ActionListener() {
+            @Override
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 buttonAddActionPerformed(evt);
             }
@@ -167,11 +179,13 @@ public class TaskViewWindow extends JFrame {
         textfieldFilter.setBorder(null);
         textfieldFilter.setName("textfieldFilter");
         textfieldFilter.addCaretListener(new javax.swing.event.CaretListener() {
+            @Override
             public void caretUpdate(javax.swing.event.CaretEvent evt) {
                 textfieldFilterCaretUpdate(evt);
             }
         });
         textfieldFilter.addFocusListener(new java.awt.event.FocusAdapter() {
+            @Override
             public void focusGained(java.awt.event.FocusEvent evt) {
                 textfieldFilterFocusGained(evt);
             }
@@ -191,6 +205,7 @@ public class TaskViewWindow extends JFrame {
         menuItemNewTasklist.setText("New Tasklist");
         menuItemNewTasklist.setName("menuItemNewTasklist");
         menuItemNewTasklist.addActionListener(new java.awt.event.ActionListener() {
+            @Override
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 menuItemNewTasklistActionPerformed(evt);
             }
@@ -202,6 +217,7 @@ public class TaskViewWindow extends JFrame {
         menuItemSaveTasklist.setText("Save Tasklist");
         menuItemSaveTasklist.setName("menuItemSaveTasklist");
         menuItemSaveTasklist.addActionListener(new java.awt.event.ActionListener() {
+            @Override
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 menuItemSaveTasklistActionPerformed(evt);
             }
@@ -212,6 +228,7 @@ public class TaskViewWindow extends JFrame {
         menuItemLoadTasklist.setText("Load Tasklist");
         menuItemLoadTasklist.setName("menuItemLoadTasklist");
         menuItemLoadTasklist.addActionListener(new java.awt.event.ActionListener() {
+            @Override
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 menuItemLoadTasklistActionPerformed(evt);
             }
@@ -263,6 +280,7 @@ public class TaskViewWindow extends JFrame {
         menuItemNewCategory.setText("New Category");
         menuItemNewCategory.setName("menuItemNewCategory");
         menuItemNewCategory.addActionListener(new java.awt.event.ActionListener() {
+            @Override
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 menuItemNewCategoryActionPerformed(evt);
             }
@@ -273,6 +291,7 @@ public class TaskViewWindow extends JFrame {
         menuItemViewCategories.setText("View Categories");
         menuItemViewCategories.setName("menuItemViewCategories");
         menuItemViewCategories.addActionListener(new java.awt.event.ActionListener() {
+            @Override
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 menuItemViewCategoriesActionPerformed(evt);
             }
@@ -420,28 +439,28 @@ public class TaskViewWindow extends JFrame {
         logEvent(evt);
     }
 
-    private void tableTasksMouseReleased(java.awt.event.MouseEvent evt) {
-        int rowPoint = tableTasks.rowAtPoint(evt.getPoint());
-
-        if(rowPoint>=0&&rowPoint<tableTasks.getRowCount()) {
-            tableTasks.setRowSelectionInterval(rowPoint, rowPoint);
-        } else {
-            tableTasks.clearSelection();
-        }
-
-        int rowindex = -1;
-
-        try {
-            rowindex = tableTasks.convertRowIndexToModel(tableTasks.getSelectedRow());
-        } catch(IndexOutOfBoundsException ex) {
-            // index out of bounds counts as empty selection
-        }
-
-        if(rowindex<0) {
-            return; // -1 is mark for empty selection
-        }
-
+    private void tableTasksMouseActionPerformed(java.awt.event.MouseEvent evt) {
         if(evt.isPopupTrigger()&&evt.getComponent() instanceof JTable) {
+            int rowPoint = tableTasks.rowAtPoint(evt.getPoint());
+
+            if(rowPoint>=0&&rowPoint<tableTasks.getRowCount()) {
+                tableTasks.setRowSelectionInterval(rowPoint, rowPoint);
+            } else {
+                tableTasks.clearSelection();
+            }
+
+            int rowindex = -1;
+
+            try {
+                rowindex = tableTasks.convertRowIndexToModel(tableTasks.getSelectedRow());
+            } catch(IndexOutOfBoundsException ex) {
+                // index out of bounds counts as empty selection
+            }
+
+            if(rowindex<0) {
+                return; // -1 is mark for empty selection
+            }
+
             JPopupMenu popup = this.tablePopupMenuContextMenu;
             popup.show(evt.getComponent(), evt.getX(), evt.getY());
         }

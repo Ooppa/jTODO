@@ -70,10 +70,12 @@ public class ListCategoriesWindow extends JFrame {
         categoryList.setModel(new javax.swing.AbstractListModel() {
             String[] strings = getCategoryAsStringArray();
 
+            @Override
             public int getSize() {
                 return strings.length;
             }
 
+            @Override
             public Object getElementAt(int i) {
                 return strings[i];
             }
@@ -137,6 +139,7 @@ public class ListCategoriesWindow extends JFrame {
         FormListener() {
         }
 
+        @Override
         public void actionPerformed(java.awt.event.ActionEvent evt) {
             if(evt.getSource()==buttonAdd) {
                 ListCategoriesWindow.this.buttonAddActionPerformed(evt);
@@ -147,39 +150,49 @@ public class ListCategoriesWindow extends JFrame {
             }
         }
 
+        @Override
         public void keyPressed(java.awt.event.KeyEvent evt) {
         }
 
+        @Override
         public void keyReleased(java.awt.event.KeyEvent evt) {
             if(evt.getSource()==ListCategoriesWindow.this) {
                 ListCategoriesWindow.this.formKeyReleased(evt);
             }
         }
 
+        @Override
         public void keyTyped(java.awt.event.KeyEvent evt) {
         }
 
+        @Override
         public void windowActivated(java.awt.event.WindowEvent evt) {
         }
 
+        @Override
         public void windowClosed(java.awt.event.WindowEvent evt) {
         }
 
+        @Override
         public void windowClosing(java.awt.event.WindowEvent evt) {
             if(evt.getSource()==ListCategoriesWindow.this) {
                 ListCategoriesWindow.this.formWindowClosing(evt);
             }
         }
 
+        @Override
         public void windowDeactivated(java.awt.event.WindowEvent evt) {
         }
 
+        @Override
         public void windowDeiconified(java.awt.event.WindowEvent evt) {
         }
 
+        @Override
         public void windowIconified(java.awt.event.WindowEvent evt) {
         }
 
+        @Override
         public void windowOpened(java.awt.event.WindowEvent evt) {
         }
     }
@@ -243,10 +256,12 @@ public class ListCategoriesWindow extends JFrame {
         categoryList.setModel(new AbstractListModel() {
             String[] strings = getCategoryAsStringArray();
 
+            @Override
             public int getSize() {
                 return strings.length;
             }
 
+            @Override
             public Object getElementAt(int i) {
                 return strings[i];
             }
@@ -282,7 +297,7 @@ public class ListCategoriesWindow extends JFrame {
     }
 
     private void logEvent(ActionEvent evt) {
-        logger.log(Level.INFO, "User performed action: "+evt.toString());
+        logger.log(Level.INFO, "User performed action: {0}", evt.toString());
     }
 
     private javax.swing.JButton buttonAdd;

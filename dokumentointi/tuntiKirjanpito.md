@@ -22,3 +22,7 @@
 | 22.02.2015    | Filter toiminto toimii, Siistittty, lisätty testetjä ja shady-plugin  | 3h |
 | 23.02.2015    | Luokkakaavioon päivityksiä  | 1h |
 | 24.02.2015    | Dokumentaatio valmis  | 3h |
+| 26.02.2015    | Testausta laitoksen koneilla, pari korjausta context-menuun Linuxilla | 2h |
+| 27.02.2015    | **Demotilaisuus** | 2h |
+
+Yhteensä 59 tuntia.

@@ -4,7 +4,7 @@
   <groupId>jtodo</groupId>
   <artifactId>jTODO</artifactId>
   <name>jTODO</name>
-  <version>R1.0</version>
+  <version>R1.1</version>
   <description>Javalla toteutettu tehtävälista-sovellus.</description>
   <build>
     <plugins>
