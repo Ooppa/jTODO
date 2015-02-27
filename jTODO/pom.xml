@@ -5,7 +5,7 @@
     <artifactId>jTODO</artifactId>
     <name>jTODO</name>
     <description>Javalla toteutettu tehtävälista-sovellus.</description>
-    <version>R1.1</version><!-- Release 1.1 fix -->
+    <version>F1.1</version><!-- Final 1.1 -->
     <packaging>jar</packaging>
 
     <dependencies>
