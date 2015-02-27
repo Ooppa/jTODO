@@ -167,7 +167,6 @@ public class DatabaseManager {
      * Creates new Database object on top of the existing one.
      */
     public void createNewDatabase() {
-        this.saveDB(); // Save old work
         this.databaseFile = null;
         database = new Database();
 

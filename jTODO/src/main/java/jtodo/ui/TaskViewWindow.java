@@ -6,7 +6,6 @@
 package jtodo.ui;
 
 import java.awt.event.ActionEvent;
-import java.awt.event.KeyEvent;
 import java.awt.event.MouseEvent;
 import java.util.ArrayList;
 import java.util.logging.Level;
@@ -246,6 +245,7 @@ public class TaskViewWindow extends JFrame {
         menuItemRefresh.setText("Refresh");
         menuItemRefresh.setName("menuItemRefresh");
         menuItemRefresh.addActionListener(new java.awt.event.ActionListener() {
+            @Override
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 menuItemRefreshActionPerformed(evt);
             }
@@ -255,6 +255,7 @@ public class TaskViewWindow extends JFrame {
         menuItemCheckboxAutosave.setText("Autosave");
         menuItemCheckboxAutosave.setName("menuItemCheckboxAutosave");
         menuItemCheckboxAutosave.addActionListener(new java.awt.event.ActionListener() {
+            @Override
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 menuItemCheckboxAutosaveActionPerformed(evt);
             }
@@ -264,6 +265,7 @@ public class TaskViewWindow extends JFrame {
         menuItemCheckboxAlwaysOnTop.setText("Always on top");
         menuItemCheckboxAlwaysOnTop.setName("menuItemCheckboxAlwaysOnTop");
         menuItemCheckboxAlwaysOnTop.addActionListener(new java.awt.event.ActionListener() {
+            @Override
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 menuItemCheckboxAlwaysOnTopActionPerformed(evt);
             }
@@ -349,6 +351,8 @@ public class TaskViewWindow extends JFrame {
      */
     private void menuItemNewTasklistActionPerformed(java.awt.event.ActionEvent evt) {
         databaseManager.createNewDatabase();
+        updateTable();
+
         logEvent(evt);
     }
 
@@ -364,12 +368,9 @@ public class TaskViewWindow extends JFrame {
      * requirements and only display those in the JTable
      */
     private void textfieldFilterCaretUpdate(javax.swing.event.CaretEvent evt) {
-        if(textfieldFilter.getText()!="") {
-            tableTasks.setModel(
-                    databaseManager.getTasksAsDefaultTableModelWithFilter(
-                            textfieldFilter.getText()
-                    )
-            );
+        if(!textfieldFilter.getText().equals("")) {
+            TaskTableModel tasksAsDefaultTableModelWithFilter = databaseManager.getTasksAsDefaultTableModelWithFilter(textfieldFilter.getText());
+            setCellRenderersForJTable(tasksAsDefaultTableModelWithFilter);
         }
     }
 
@@ -510,20 +511,7 @@ public class TaskViewWindow extends JFrame {
         }
 
         TaskTableModel generatedTaskTableModel = databaseManager.getTasksAsTaskTableModel();
-        generatedTaskTableModel.setTable(tableTasks);
-        tableTasks.setModel(generatedTaskTableModel);
-
-        // Name
-        tableTasks.getColumnModel().getColumn(0).setCellRenderer(new TaskTableCategoryBasedCellRenderer(generatedTaskTableModel));
-
-        // Description
-        tableTasks.getColumnModel().getColumn(1).setCellRenderer(new TaskTableCategoryBasedCellRenderer(generatedTaskTableModel));
-
-        // Priority
-        tableTasks.getColumnModel().getColumn(2).setCellRenderer(new TaskTableCategoryBasedCellRenderer(generatedTaskTableModel));
-
-        // Deadline
-        tableTasks.getColumnModel().getColumn(3).setCellRenderer(new TaskTableDeadlineBasedCellRenderer(generatedTaskTableModel));
+        setCellRenderersForJTable(generatedTaskTableModel);
 
         updateCategoryPopupSubmenu(); // Also update the submenu that contains the categories
     }
@@ -616,6 +604,16 @@ public class TaskViewWindow extends JFrame {
         this.databaseManager = tasklist;
     }
 
+    private void setCellRenderersForJTable(TaskTableModel taskTableModel) {
+        taskTableModel.setTable(tableTasks);
+        tableTasks.setModel(taskTableModel);
+
+        tableTasks.getColumnModel().getColumn(0).setCellRenderer(new TaskTableCategoryBasedCellRenderer(taskTableModel));
+        tableTasks.getColumnModel().getColumn(1).setCellRenderer(new TaskTableCategoryBasedCellRenderer(taskTableModel));
+        tableTasks.getColumnModel().getColumn(2).setCellRenderer(new TaskTableCategoryBasedCellRenderer(taskTableModel));
+        tableTasks.getColumnModel().getColumn(3).setCellRenderer(new TaskTableDeadlineBasedCellRenderer(taskTableModel));
+    }
+
     /*
      * Logs the ActionEvents that the user performs.
      */
@@ -628,13 +626,6 @@ public class TaskViewWindow extends JFrame {
      */
     private void logEvent(MouseEvent evt) {
         logger.log(Level.INFO, "User performed mouse-action: "+"mousebutton_{0} at [{1},{2}] with {3} clicks", new Object[] {evt.getButton(), evt.getXOnScreen(), evt.getYOnScreen(), evt.getClickCount()});
-    }
-
-    /*
-     * Logs the KeyEvent that the user performs.
-     */
-    private void logEvent(KeyEvent evt) {
-        logger.log(Level.INFO, "User performed keyboard-action: {0} with modifier {1}", new Object[] {evt.getKeyChar(), evt.getModifiers()});
     }
 
     private javax.swing.JPanel bottomPanel;

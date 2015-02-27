@@ -50,18 +50,43 @@ public class Database implements Serializable {
 
     public ArrayList<Task> getTasksWithFilter(String filter) {
         ArrayList<Task> filtered = new ArrayList<>();
-        String filterInLowerCase = filter.toLowerCase();
 
         for(Task task : tasks) {
-            if(task.getName().toLowerCase().contains(filterInLowerCase)
-                    ||task.getDescription().toLowerCase().contains(filterInLowerCase)
-                    ||task.getDeadlineAsString().toLowerCase().contains(filterInLowerCase)
-                    ||task.getPriority().toString().toLowerCase().contains(filterInLowerCase)) {
+            if(doesTaskFitTheFilter(task, filter.toLowerCase())) {
                 filtered.add(task);
             }
         }
 
         return filtered;
+    }
+
+    /*
+     * Check if the filter String matches anything in the task
+     */
+    private boolean doesTaskFitTheFilter(Task task, String string) {
+        if(task.getName().toLowerCase().contains(string)) {
+            return true;
+        }
+
+        if(task.getDescription().toLowerCase().contains(string)) {
+            return true;
+        }
+
+        if(task.getDeadlineAsString().toLowerCase().contains(string)) {
+            return true;
+        }
+
+        if(task.getPriority().toString().toLowerCase().contains(string)) {
+            return true;
+        }
+
+        if(task.getCategory()!=null) {
+            if(task.getCategory().getName().toLowerCase().contains(string)) {
+                return true;
+            }
+        }
+
+        return false;
     }
 
 }

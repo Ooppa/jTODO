@@ -31,6 +31,8 @@ public class DatabaseTest {
         database.getTasks().add(new Task("Temporary", "This is only temporary."));
         
         Task task = new Task("Advanced Task", "This is really advanced.");
+        Category category = new Category("Category", "Nothing special");
+        task.setCategory(category);
         task.setDeadline("01.01.2022 12:15");
         task.setPriority(Priority.VERY_LOW);
         database.getTasks().add(task);
@@ -74,8 +76,14 @@ public class DatabaseTest {
     }
     
     @Test
-    public void testGetTasksWithFilterIncludespriority() {
+    public void testGetTasksWithFilterIncludesPriority() {
         ArrayList<Task> results = database.getTasksWithFilter("VERY LOW");
+        assertEquals(1, results.size());
+    }
+    
+    @Test
+    public void testGetTasksWithFilterIncludesCategoryName() {
+        ArrayList<Task> results = database.getTasksWithFilter("Category");
         assertEquals(1, results.size());
     }
     
